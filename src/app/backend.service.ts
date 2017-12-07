@@ -196,11 +196,14 @@ export class BackendService {
   }
 
   computeUsers() : void {
-    if (this.viewstate.all_items.count_pars.searchterm.length > 0) {
+    console.log(this.content);
+    console.log(this.viewstate);
+    if (this.viewstate.all_users.count_pars.searchterm.length > 0) {
       this.content.computed_users_in_list = this.content.AllUsers.results;
     } else {
       this.content.computed_users_in_list = this.content.TopUsers.results;
     }
+    console.log(this.content);
   }
 
   updateUserlist(term : string) : void {
@@ -208,10 +211,13 @@ export class BackendService {
     const queryjson = //encodeURIComponent
     (JSON.stringify(term.length > 0 ? this.viewstate.all_users : this.viewstate.top_users));
     const endp = term.length > 0 ? endpoint_allusers : endpoint_topusers;
-    // Make the HTTP request:
-    this.http.get<PaginatedResult<User>>(endp, {params: {query: queryjson}}).subscribe(data => {
+    console.log(queryjson);
+    // Make the HTTP request: <PaginatedResult<User>>
+    this.http.get(endp, {params: {query: queryjson}}).subscribe(dat => {
+      console.log(dat);
+      let data = dat as PaginatedResult<User>;
       if (term == null || term.length == 0) {
-      this.content.TopUsers = data;
+        this.content.TopUsers = data;
       } else {
         this.content.AllUsers = data;
       }
