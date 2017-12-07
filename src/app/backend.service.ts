@@ -32,7 +32,7 @@ interface Purchase {
 }
 
 interface DetailInfo {
-  consumed: object; //string to count number map
+  consumed: Map<string, number>;
   last_bill_date: number;
   last_bill_cost: number;
   currently_cost: number;
@@ -149,16 +149,18 @@ const endpoint_globallog = '/api/purchases/global';
 const endpoint_userdetails = '/api/users/detail';
 const post_endpoint_simple_purchase = '/api/purchases';
 
+const MAX_NUMBER_OF_USERS_SHOWN = 40;
+
 @Injectable()
 export class BackendService {
 
   viewstate: AppState = {
-    top_users: {n: 40},
+    top_users: {n: MAX_NUMBER_OF_USERS_SHOWN},
     all_users: {
       count_pars: {searchterm: ""},
       pagination: {
         start_inclusive: 0,
-        end_exclusive: 400,
+        end_exclusive: MAX_NUMBER_OF_USERS_SHOWN,
       }},
     all_items: null,
     global_log: null,
