@@ -1,0 +1,12 @@
+<p>
+  userselection works!
+</p>
+
+
+<input [formControl]="searchControl">
+
+<ul>
+  <li *ngFor="let user of backend.content.computed_users_in_list">
+    {{user.username}}
+  </li>
+</ul>
