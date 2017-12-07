@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BackendService } from '../backend.service';
+import { BackendService , User } from '../backend.service';
 
-import {ReactiveFormsModule, FormsModule, FormControl} from '@angular/forms'
-import {Observable, Observer} from 'rxjs/Rx'
+import {ReactiveFormsModule, FormsModule, FormControl} from '@angular/forms';
+import {Observable, Observer} from 'rxjs/Rx';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
@@ -27,11 +27,17 @@ export class UserselectionComponent implements OnInit {
     .debounceTime(250)
     .distinctUntilChanged()
     .subscribe((term: string) => {
-      console.log("Triggered with term = " + term);
+      console.log('Triggered with term = ' + term);
       backend.updateUserlist(term);
     });
 
-    backend.updateUserlist("");
+    backend.updateUserlist('');
+  }
+
+
+  public pressedUser(event, user: User) {
+    console.log('Pressed User:');
+    console.log(user);
   }
 
 }

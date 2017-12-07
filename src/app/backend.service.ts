@@ -11,27 +11,27 @@ interface PaginatedResult<T> {
   results: T[];
 }
 
-interface Item {
+export interface Item {
   name: string;
   item_id: number;
   category: string;
   cost_cents: number;
 }
 
-interface User {
+export interface User {
   username: string;
   user_id: number;
   is_billed: boolean;
 }
 
-interface Purchase {
+export interface Purchase {
   unique_id: number;
   timestamp_epoch_millis: number;
   item_id: number;
   consumer_id: number;
 }
 
-interface DetailInfo {
+export interface DetailInfo {
   consumed: Map<string, number>;
   last_bill_date: number;
   last_bill_cost: number;
@@ -157,7 +157,7 @@ export class BackendService {
   viewstate: AppState = {
     top_users: {n: MAX_NUMBER_OF_USERS_SHOWN},
     all_users: {
-      count_pars: {searchterm: ""},
+      count_pars: {searchterm: ''},
       pagination: {
         start_inclusive: 0,
         end_exclusive: MAX_NUMBER_OF_USERS_SHOWN,
@@ -197,7 +197,7 @@ export class BackendService {
     });
   }
 
-  computeUsers() : void {
+  computeUsers(): void {
     console.log(this.content);
     console.log(this.viewstate);
     if (this.viewstate.all_users.count_pars.searchterm.length > 0) {
@@ -208,7 +208,7 @@ export class BackendService {
     console.log(this.content);
   }
 
-  updateUserlist(term : string) : void {
+  updateUserlist(term: string): void {
     this.viewstate.all_users.count_pars.searchterm = term;
     const queryjson = //encodeURIComponent
     (JSON.stringify(term.length > 0 ? this.viewstate.all_users : this.viewstate.top_users));

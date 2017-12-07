@@ -1,0 +1,22 @@
+li {
+	flex: 1 0 18%;
+  box-sizing: border-box;
+  color: #171e42;
+  padding: 10px;
+  margin: 10px;
+    height: 60px;
+}
+
+li:nth-child(odd) {
+    background: skyblue;
+}
+
+li:nth-child(even) {
+    background: white;
+}
+
+ul {
+	display: flex;
+    flex-wrap: wrap;
+    background: grey;
+}

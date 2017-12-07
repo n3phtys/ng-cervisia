@@ -1,12 +1,11 @@
-<p>
-  userselection works!
-</p>
 
+<form class="navbar-form" role="search">
+<input class="form-control" style="margin:20px;padding:20px;" placeholder="Search" [formControl]="searchControl">
+</form>
 
-<input [formControl]="searchControl">
 
 <ul>
-  <li *ngFor="let user of backend.content.computed_users_in_list">
+  <li *ngFor="let user of backend.content.computed_users_in_list" (click)="pressedUser($event, user)">
     {{user.username}}
   </li>
 </ul>
