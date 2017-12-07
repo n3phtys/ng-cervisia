@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BackendService } from '../backend.service';
+import { BackendService, Item } from '../backend.service';
 
 @Component({
   selector: 'app-quickmenu',
@@ -15,6 +15,11 @@ export class QuickmenuComponent implements OnInit {
   constructor(private backend: BackendService) { }
 
   ngOnInit() {
+  }
+
+
+  onClickedItem(item: Item, event) {
+
   }
 
 }

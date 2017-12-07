@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ViewContainerRef } from '@angular/core';
+import { Overlay } from 'ngx-modialog';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
 import { BackendService , User } from '../backend.service';
 
 import {ReactiveFormsModule, FormsModule, FormControl} from '@angular/forms';
@@ -17,7 +20,9 @@ import 'rxjs/add/operator/map';
 export class UserselectionComponent implements OnInit {
   searchControl: FormControl = new FormControl();
 
-  constructor(private backend: BackendService) { 
+
+
+  constructor(private backend: BackendService, public modal: Modal) { 
   }
 
   ngOnInit() {
@@ -38,6 +43,26 @@ export class UserselectionComponent implements OnInit {
   public pressedUser(event, user: User) {
     console.log('Pressed User:');
     console.log(user);
+    this.openPopup(user);
   }
 
+
+  public openPopup(user: User) {
+
+    this.backend.quickselect(user);
+
+    this.backend.detailselect(user.user_id);
+
+    const dialogRef = this.modal.alert()
+    .size('lg')
+    .showClose(true)
+    .title('Quickmenu for ' + user.username)
+    .body(`
+    <app-quickmenu></app-quickmenu>`)
+    .open();
+
+//dialogRef.result
+    //.then( result => alert(`The result is: ${result}`) )
+    //;
+  }
 }

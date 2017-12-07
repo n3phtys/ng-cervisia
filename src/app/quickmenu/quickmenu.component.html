@@ -1,3 +1,9 @@
 <p>
   quickmenu works!
 </p>
+
+<ul>
+  <li *ngFor="let item of backend.content.selected_users_top_itmes" (click)="onClickedItem(item, $event)">
+    {{item.name}}
+  </li>
+</ul>

@@ -1,3 +1,23 @@
 <p>
   full-purchase works!
 </p>
+
+
+
+<form class="navbar-form" role="search">
+  <input class="form-control" style="margin:20px;padding:20px;" placeholder="Search for item" [formControl]="searchControl">
+  </form>
+
+<ul>
+  <li *ngFor="let item of backend.content.AllItems.results" (click)="onClickedItem(item, $event)">
+    {{item.name}}
+  </li>
+</ul>
+
+
+  <div *ngFor="let detailinfo of backend.DetailInfoForUser">
+    current cost = {{detailinfo.currently_cost}}<br>
+    lastbill cost = {{detailinfo.last_bill_cost}}<br>
+    lastbill date = {{detailinfo.last_bill_date}}<br>
+  </div>
+

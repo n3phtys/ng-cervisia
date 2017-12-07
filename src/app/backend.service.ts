@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 
 // Import HttpClient from @angular/common/http
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+
+import { Observable, Observer } from 'rxjs/Rx';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/map';
+import { ReferenceAst } from '@angular/compiler';
 
 
 interface PaginatedResult<T> {
@@ -39,13 +45,13 @@ export interface DetailInfo {
 }
 
 interface AppState {
-top_users: ParametersTopUsers;
-all_users: ParametersAllUsers;
-all_items: ParametersAllItems;
-global_log: ParametersPurchaseLogGlobal;
-top_personal_drinks: ParametersTopPersonalDrinks;
-personal_log: ParametersPurchaseLogPersonal;
-personal_detail_infos: ParametersDetailInfoForUser;
+  top_users: ParametersTopUsers;
+  all_users: ParametersAllUsers;
+  all_items: ParametersAllItems;
+  global_log: ParametersPurchaseLogGlobal;
+  top_personal_drinks: ParametersTopPersonalDrinks;
+  personal_log: ParametersPurchaseLogPersonal;
+  personal_detail_infos: ParametersDetailInfoForUser;
 }
 
 interface ParametersSearchterm {
@@ -121,7 +127,7 @@ interface Freeby {
 
 }
 
-interface  AllResults {
+interface AllResults {
   DetailInfoForUser: PaginatedResult<DetailInfo>;
   TopUsers: PaginatedResult<User>;
   AllUsers: PaginatedResult<User>;
@@ -135,7 +141,10 @@ interface  AllResults {
   IncomingFreebies: PaginatedResult<Freeby>;
   OutgoingFreebies: PaginatedResult<Freeby>;
 
+  top_items_cache: Map<number, Item[]>;
+
   computed_users_in_list: User[];
+  selected_users_top_itmes: Item[];
 }
 
 
@@ -150,48 +159,151 @@ const endpoint_userdetails = '/api/users/detail';
 const post_endpoint_simple_purchase = '/api/purchases';
 
 const MAX_NUMBER_OF_USERS_SHOWN = 40;
+const MAX_NUMBER_OF_TOP_ITEMS_SHOWN = 4;
+const MAX_NUMBER_OF_ALL_ITEMS_SHOWN = 40;
 
 @Injectable()
 export class BackendService {
 
   viewstate: AppState = {
-    top_users: {n: MAX_NUMBER_OF_USERS_SHOWN},
+    top_users: { n: MAX_NUMBER_OF_USERS_SHOWN },
     all_users: {
-      count_pars: {searchterm: ''},
+      count_pars: { searchterm: '' },
       pagination: {
         start_inclusive: 0,
         end_exclusive: MAX_NUMBER_OF_USERS_SHOWN,
-      }},
-    all_items: null,
+      }
+    },
+    all_items: {
+      count_pars: {
+        searchterm: '',
+      },
+      pagination: {
+        start_inclusive: 0,
+        end_exclusive: MAX_NUMBER_OF_ALL_ITEMS_SHOWN,
+      }
+    },
     global_log: null,
-    top_personal_drinks: null,
-    personal_log: null,    personal_detail_infos: null,
-    };
+    top_personal_drinks: {
+      user_id: 0,
+      n: MAX_NUMBER_OF_TOP_ITEMS_SHOWN,
+    },
+    personal_log: null,
+    personal_detail_infos: {
+      user_id: 0,
+    },
+  };
 
   content: AllResults = {
-  DetailInfoForUser: null,
-  TopUsers: null,
-  AllUsers: null,
-  AllItems: null,
-  PurchaseLogGlobal: null,
-  BillsCount: null,
-  Bills: null,
-  OpenFFAFreebies: null,
-  TopPersonalDrinks: null,
-  PurchaseLogPersonal: null,
-  IncomingFreebies: null,
-  OutgoingFreebies: null,
+    DetailInfoForUser: {
+      from: 0,
+      to: 0,
+      total_count: 0,
+      results: [],
+    },
+    TopUsers: {
+      from: 0,
+      to: MAX_NUMBER_OF_USERS_SHOWN,
+      total_count: MAX_NUMBER_OF_USERS_SHOWN,
+      results: [],
+    },
+    AllUsers: {
+      from: 0,
+      to: MAX_NUMBER_OF_USERS_SHOWN,
+      total_count: MAX_NUMBER_OF_USERS_SHOWN,
+      results: [],
+    },
+    AllItems: {
+      from: 0,
+      to: MAX_NUMBER_OF_ALL_ITEMS_SHOWN,
+      total_count: MAX_NUMBER_OF_ALL_ITEMS_SHOWN,
+      results: [],
+    },
+    PurchaseLogGlobal: null,
+    BillsCount: null,
+    Bills: null,
+    OpenFFAFreebies: null,
+    TopPersonalDrinks: {
+      from: 0,
+      to: MAX_NUMBER_OF_TOP_ITEMS_SHOWN,
+      total_count: MAX_NUMBER_OF_TOP_ITEMS_SHOWN,
+      results: [],
+    },
+    PurchaseLogPersonal: null,
+    IncomingFreebies: null,
+    OutgoingFreebies: null,
     computed_users_in_list: [],
+    top_items_cache: new Map(),
+    selected_users_top_itmes: [],
   };
 
   constructor(private http: HttpClient) { }
+
+
+  detailselect(user: number) {
+    this.viewstate.personal_detail_infos.user_id = user;
+    this.refreshAllItems();
+    this.refreshDetailInfo();
+  }
+
+  updateItemlist(searchterm: string) {
+    this.viewstate.all_items.count_pars.searchterm = searchterm;
+    this.refreshAllItems();
+  }
+
+  refreshAllItems() {
+    const queryjson = (JSON.stringify(this.viewstate.all_items));
+    const endp = endpoint_allitems;
+    console.log(queryjson);
+    // Make the HTTP request: <PaginatedResult<User>>
+    this.http.get<PaginatedResult<Item>>(endp, { params: { query: queryjson } }).subscribe(data => {
+      this.content.AllItems = data;
+    });
+  }
+
+  refreshDetailInfo() {
+    const queryjson = (JSON.stringify(this.viewstate.personal_detail_infos));
+    const endp = endpoint_userdetails;
+    console.log(queryjson);
+    // Make the HTTP request: <PaginatedResult<User>>
+    this.http.get<PaginatedResult<DetailInfo>>(endp, { params: { query: queryjson } }).subscribe(data => {
+      this.content.DetailInfoForUser = data;
+    });
+  }
+
+  quickselect(user: User) {
+    // update appstate
+    this.viewstate.top_personal_drinks.user_id = user.user_id;
+
+    // first select from existing entries
+    this.select_top_items_from_cache();
+
+    // add http call for future ref
+    this.updateTopItemsForCurrentlySelected();
+  }
+
+  private select_top_items_from_cache() {
+    this.content.selected_users_top_itmes = this.content.top_items_cache[this.viewstate.top_personal_drinks.user_id];
+  }
+
+  private updateTopItemsForCurrentlySelected() {
+    const userId = this.viewstate.top_personal_drinks.user_id;
+    const queryjson = (JSON.stringify(this.viewstate.top_personal_drinks));
+    const endp = endpoint_topitems;
+    console.log(queryjson);
+    // Make the HTTP request: <PaginatedResult<User>>
+    this.http.get<PaginatedResult<Item>>(endp, { params: { query: queryjson } }).subscribe(data => {
+      this.content.top_items_cache.set(userId, data.results);
+      this.select_top_items_from_cache();
+    });
+  }
 
 
   callhttp(): void {
 
     const queryjson = encodeURIComponent(JSON.stringify(this.viewstate.top_users));
     // Make the HTTP request:
-    this.http.get<PaginatedResult<User>>(endpoint_topusers, {params: {query: queryjson}}).subscribe(data => {
+    this.http.get<PaginatedResult<User>>(endpoint_topusers, { params: { query: queryjson } }).subscribe(data => {
       // Read the result field from the JSON response.
       console.log(data);
     });
@@ -210,15 +322,14 @@ export class BackendService {
 
   updateUserlist(term: string): void {
     this.viewstate.all_users.count_pars.searchterm = term;
-    const queryjson = //encodeURIComponent
-    (JSON.stringify(term.length > 0 ? this.viewstate.all_users : this.viewstate.top_users));
+    const queryjson = (JSON.stringify(term.length > 0 ? this.viewstate.all_users : this.viewstate.top_users));
     const endp = term.length > 0 ? endpoint_allusers : endpoint_topusers;
     console.log(queryjson);
     // Make the HTTP request: <PaginatedResult<User>>
-    this.http.get(endp, {params: {query: queryjson}}).subscribe(dat => {
+    this.http.get(endp, { params: { query: queryjson } }).subscribe(dat => {
       console.log(dat);
-      let data = dat as PaginatedResult<User>;
-      if (term == null || term.length == 0) {
+      const data = dat as PaginatedResult<User>;
+      if (term == null || term.length === 0) {
         this.content.TopUsers = data;
       } else {
         this.content.AllUsers = data;
