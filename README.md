@@ -1,6 +1,40 @@
 # NgCervisia
 
+
+## How to get starting 
+
+### Prerequisites
+* Operating system with a user that has a home directory, called ${HOME}
+* [Node.js >= 9.2.0, with builtin NPM](https://nodejs.org/en/)
+* [Rustup installed, with builtin rustc and cargo](https://www.rustup.rs/)
+* Angular-CLI installed via NPM: npm install -g @angular/cli 
+
+### Running Backend & Frontend
+#### Frontend
+* git clone https://github.com/n3phtys/ng-cervisia
+* cd ng-cervisia
+* npm install
+* ng build
+* please note the directory path, used as ${FRONTEND} afterwards in this README
+* if you actively develop, use 'ng build --watch' to automatically compile the frontend on each file save
+
+#### Backend
+* git clone https://github.com/n3phtys/cervisia-server
+* cd cervisia-server
+* cargo run
+* edit file '${HOME}/.cervisia-server/Settings.toml' and set variable 'web_path = "${FRONTEND}/dist"' for the Backend to find the correct Frontend files. This step has to be done only once per machine
+* visit localhost:8080 in your browser. The frontend page should appear
+
+
+
+
+
+
+
+# Angular CLI based README:
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.5.
+
 
 ## Development server
 

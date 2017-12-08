@@ -72,6 +72,6 @@ export class UserselectionComponent implements OnInit {
   }
 
   openQuickmenu(u: User) {
-    return this.modal.open(QuickmenuComponent,  overlayConfigFactory({ user: u, content: this.backend.content }, BSModalContext));
+    return this.modal.open(QuickmenuComponent,  overlayConfigFactory({ user: u }, BSModalContext));
   }
 }

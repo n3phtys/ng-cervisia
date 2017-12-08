@@ -8,7 +8,7 @@
     <div class="col-xs-12">
       <div class="jumbotron">
         <ul>
-          <li *ngFor="let item of context.content.selected_users_top_items" (click)="onClickedItem(item, $event)">
+          <li *ngFor="let item of backend.content.selected_users_top_items" (click)="onClickedItem(item, $event)">
             {{item.name}}
           </li>
         </ul>
@@ -17,9 +17,9 @@
   </div>
   <div class="row custom-modal-footer">
     <div class="col-sm-12">
-      <button>Statistics</button>
-      <button>Giveouts</button>
-      <button>More...</button>
+      <button (click)="showStatistics()">Statistics</button>
+      <button (click)="showGiveoutDialog()">Giveouts</button>
+      <button (click)="showDetail()">More...</button>
       <button (click)="close()">Close</button>
     </div>
   </div>

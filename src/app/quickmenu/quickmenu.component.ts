@@ -6,7 +6,6 @@ import { BSModalContext } from 'ngx-modialog/plugins/bootstrap';
 
 export class CustomModalContext extends BSModalContext {
   public user: User;
-  public content: AllResults;
 }
 
 @Component({
@@ -18,7 +17,7 @@ export class QuickmenuComponent implements CloseGuard, ModalComponent<CustomModa
 
   public context: CustomModalContext;
 
-  constructor(public dialog: DialogRef<CustomModalContext>) {
+  constructor(public dialog: DialogRef<CustomModalContext>, public backend: BackendService) {
     this.context = dialog.context;
     console.log(this.context);
     dialog.setCloseGuard(this);
@@ -35,7 +34,7 @@ export class QuickmenuComponent implements CloseGuard, ModalComponent<CustomModa
   }
 
   onClickedItem(item: Item, event) {
-      console.log("Buying item = " + item.name);
+      console.log('Buying item = ' + item.name);
       this.close();
   }
 
@@ -45,15 +44,20 @@ export class QuickmenuComponent implements CloseGuard, ModalComponent<CustomModa
   }
 
   showDetail() {
-
+    console.log('showing detail dialog');
+    this.dialog.close();
+    this.backend.detailselect(this.context.user.user_id);
   }
 
-  showPersonalLog() {
+  showStatistics() {
+    console.log('showing statistic dialog');
+    this.dialog.close();
 
   }
 
   showGiveoutDialog() {
-
+    console.log('showing giveout dialog');
+    this.dialog.close();
   }
 
 }
