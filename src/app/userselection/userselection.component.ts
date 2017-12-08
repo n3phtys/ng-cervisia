@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ViewContainerRef } from '@angular/core';
-import { Overlay } from 'ngx-modialog';
-import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { Overlay, overlayConfigFactory } from 'ngx-modialog';
+import { Modal, BSModalContext } from 'ngx-modialog/plugins/bootstrap';
+import {CustomModalContext, QuickmenuComponent} from '../quickmenu/quickmenu.component';
 import { BackendService , User } from '../backend.service';
 
 import {ReactiveFormsModule, FormsModule, FormControl} from '@angular/forms';
@@ -15,14 +16,15 @@ import 'rxjs/add/operator/map';
 @Component({
   selector: 'app-userselection',
   templateUrl: './userselection.component.html',
-  styleUrls: ['./userselection.component.css']
+  styleUrls: ['./userselection.component.css'],
+  providers: [Modal]
 })
 export class UserselectionComponent implements OnInit {
   searchControl: FormControl = new FormControl();
 
 
 
-  constructor(private backend: BackendService, public modal: Modal) { 
+  constructor(private backend: BackendService, public modal: Modal) {
   }
 
   ngOnInit() {
@@ -53,16 +55,23 @@ export class UserselectionComponent implements OnInit {
 
     this.backend.detailselect(user.user_id);
 
+    this.openQuickmenu();
+
+    /*
     const dialogRef = this.modal.alert()
     .size('lg')
     .showClose(true)
     .title('Quickmenu for ' + user.username)
     .body(`
     <app-quickmenu></app-quickmenu>`)
-    .open();
+    .open();*/
 
 //dialogRef.result
     //.then( result => alert(`The result is: ${result}`) )
     //;
+  }
+
+  openQuickmenu() {
+    return this.modal.open(QuickmenuComponent,  overlayConfigFactory({ num1: 2, num2: 3 }, BSModalContext));
   }
 }
