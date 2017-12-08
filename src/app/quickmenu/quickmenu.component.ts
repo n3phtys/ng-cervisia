@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { BackendService, Item } from '../backend.service';
+import { BackendService, Item, AllResults, User } from '../backend.service';
 
 import { DialogRef, ModalComponent, CloseGuard } from 'ngx-modialog';
 import { BSModalContext } from 'ngx-modialog/plugins/bootstrap';
 
 export class CustomModalContext extends BSModalContext {
-  public num1: number;
-  public num2: number;
+  public user: User;
+  public content: AllResults;
 }
 
 @Component({
@@ -16,37 +16,43 @@ export class CustomModalContext extends BSModalContext {
 })
 export class QuickmenuComponent implements CloseGuard, ModalComponent<CustomModalContext> {
 
-  context: CustomModalContext;
-
-    public wrongAnswer: boolean;
-
-  //@Input() items: any[]
-  //@Output() onUpdate: EventEmitter<MyReactiveInputEvent> = new EventEmitter()
-
+  public context: CustomModalContext;
 
   constructor(public dialog: DialogRef<CustomModalContext>) {
     this.context = dialog.context;
-    this.wrongAnswer = true;
+    console.log(this.context);
     dialog.setCloseGuard(this);
   }
 
-  onKeyUp(value) {
-    const i = parseInt(value, 10);
-    this.wrongAnswer = i !== 5;
-    this.dialog.close();
-  }
 
 
   beforeDismiss(): boolean {
-    return true;
+    return false;
   }
 
   beforeClose(): boolean {
-    return this.wrongAnswer;
+    return false;
   }
 
-
   onClickedItem(item: Item, event) {
+      console.log("Buying item = " + item.name);
+      this.close();
+  }
+
+  close() {
+    console.log('closing modal');
+    this.dialog.close();
+  }
+
+  showDetail() {
+
+  }
+
+  showPersonalLog() {
+
+  }
+
+  showGiveoutDialog() {
 
   }
 

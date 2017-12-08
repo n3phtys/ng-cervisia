@@ -1,0 +1,23 @@
+li {
+	flex: 1 0 40%;
+  box-sizing: border-box;
+  color: #171e42;
+  padding: 10px;
+  margin: 10px;
+    height: 60px;
+    background: white;
+}
+
+li:first-child {
+    background: skyblue;
+}
+li:last-child {
+    background: skyblue;
+}
+
+ul {
+	display: flex;
+    flex-wrap: wrap;
+    background: grey;
+    list-style-type: none;
+}

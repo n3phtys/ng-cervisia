@@ -1,24 +1,26 @@
-
-<!--ul>
-  <li *ngFor="let item of backend.content.selected_users_top_itmes" (click)="onClickedItem(item, $event)">
-    {{item.name}}
-  </li>
-</ul-->
-
 <div class="container-fluid custom-modal-container">
   <div class="row custom-modal-header">
-      <div class="col-sm-12">
-          <h1>quickmenu works - A Custom modal design</h1>
-      </div>
+    <div class="col-sm-12">
+      <h1>Quickmenu for {{context.user.username}}</h1>
+    </div>
   </div>
   <div class="row" [ngClass]="{'myclass' : shouldUseMyClass}">
-      <div class="col-xs-12">
-          <div class="jumbotron">
-              <h1>Do the math to quit:</h1>
-              <p class="lead">I received an injection of the number <strong>{{context.num1}}</strong> and the number <strong>{{context.num2}}</strong></p>
-              <span>What is the sum?</span>
-               <input class="form-control" type="text" #answer (keyup)="onKeyUp(answer.value)" autofocus>
-          </div>
+    <div class="col-xs-12">
+      <div class="jumbotron">
+        <ul>
+          <li *ngFor="let item of context.content.selected_users_top_items" (click)="onClickedItem(item, $event)">
+            {{item.name}}
+          </li>
+        </ul>
       </div>
+    </div>
+  </div>
+  <div class="row custom-modal-footer">
+    <div class="col-sm-12">
+      <button>Statistics</button>
+      <button>Giveouts</button>
+      <button>More...</button>
+      <button (click)="close()">Close</button>
+    </div>
   </div>
 </div>

@@ -55,7 +55,7 @@ export class UserselectionComponent implements OnInit {
 
     this.backend.detailselect(user.user_id);
 
-    this.openQuickmenu();
+    this.openQuickmenu(user);
 
     /*
     const dialogRef = this.modal.alert()
@@ -71,7 +71,7 @@ export class UserselectionComponent implements OnInit {
     //;
   }
 
-  openQuickmenu() {
-    return this.modal.open(QuickmenuComponent,  overlayConfigFactory({ num1: 2, num2: 3 }, BSModalContext));
+  openQuickmenu(u: User) {
+    return this.modal.open(QuickmenuComponent,  overlayConfigFactory({ user: u, content: this.backend.content }, BSModalContext));
   }
 }

@@ -44,7 +44,7 @@ export interface DetailInfo {
   currently_cost: number;
 }
 
-interface AppState {
+export interface AppState {
   top_users: ParametersTopUsers;
   all_users: ParametersAllUsers;
   all_items: ParametersAllItems;
@@ -77,7 +77,7 @@ interface ParametersAllItems {
   pagination: ParametersPagination;
 }
 
-interface Timespan {
+export interface Timespan {
   millis_start: number;
   millis_end: number;
 }
@@ -104,30 +104,30 @@ interface ParametersPurchaseLogPersonal {
   pagination: ParametersPagination;
 }
 
-interface ParametersDetailInfoForUser {
+export interface ParametersDetailInfoForUser {
   user_id: number;
 }
 
-interface SuccessContent {
+export interface SuccessContent {
   timestamp_epoch_millis: number;
   refreshed_data: AllResults;
 }
 
-interface ServerWriteResult {
+export interface ServerWriteResult {
   error_message: string;
   is_success: boolean;
   content: SuccessContent;
 }
 
-interface Bill {
+export interface Bill {
 
 }
 
-interface Freeby {
+export interface Freeby {
 
 }
 
-interface AllResults {
+export interface AllResults {
   DetailInfoForUser: PaginatedResult<DetailInfo>;
   TopUsers: PaginatedResult<User>;
   AllUsers: PaginatedResult<User>;
@@ -144,7 +144,7 @@ interface AllResults {
   top_items_cache: Map<number, Item[]>;
 
   computed_users_in_list: User[];
-  selected_users_top_itmes: Item[];
+  selected_users_top_items: Item[];
 }
 
 
@@ -234,7 +234,7 @@ export class BackendService {
     OutgoingFreebies: null,
     computed_users_in_list: [],
     top_items_cache: new Map(),
-    selected_users_top_itmes: [],
+    selected_users_top_items: [],
   };
 
   constructor(private http: HttpClient) { }
@@ -283,7 +283,10 @@ export class BackendService {
   }
 
   private select_top_items_from_cache() {
-    this.content.selected_users_top_itmes = this.content.top_items_cache[this.viewstate.top_personal_drinks.user_id];
+    console.log("Selecting Top Items for id = " + this.viewstate.top_personal_drinks.user_id);
+    console.log(this.content);
+    this.content.selected_users_top_items = this.content.top_items_cache.get(this.viewstate.top_personal_drinks.user_id);
+    console.log(this.content.selected_users_top_items);
   }
 
   private updateTopItemsForCurrentlySelected() {

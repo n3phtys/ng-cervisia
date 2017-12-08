@@ -19,4 +19,5 @@ ul {
 	display: flex;
     flex-wrap: wrap;
     background: grey;
+    list-style-type: none;
 }
