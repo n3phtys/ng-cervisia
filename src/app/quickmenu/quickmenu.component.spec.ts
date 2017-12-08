@@ -8,6 +8,8 @@ import {ReactiveFormsModule, FormsModule, FormControl} from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuickmenuComponent } from './quickmenu.component';
+import { ModalModule } from 'ngx-modialog';
+import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
 
 describe('QuickmenuComponent', () => {
   let component: QuickmenuComponent;
@@ -20,6 +22,8 @@ describe('QuickmenuComponent', () => {
         HttpClientModule,
         ReactiveFormsModule,
         FormsModule,
+        ModalModule.forRoot(),
+        BootstrapModalModule
       ],
       providers: [BackendService],
       declarations: [ QuickmenuComponent ]
@@ -33,7 +37,4 @@ describe('QuickmenuComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });

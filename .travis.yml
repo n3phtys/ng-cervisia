@@ -1,0 +1,22 @@
+#.travis.yml
+
+language: node_js
+node_js:
+  - "9.2"
+
+branches:
+  only:
+    - master
+
+before_script:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y firefox
+  - npm install -g @angular/cli
+
+script:
+  - ng test --watch=false
+
+notifications:
+  email:
+    on_failure: change
+    on_success: change
