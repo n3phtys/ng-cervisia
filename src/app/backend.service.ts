@@ -36,8 +36,8 @@ export interface Purchase {
 export interface SimplePurchase {
   unique_id: number;
   timestamp_epoch_millis: number;
-  item_id: number;
-  consumer_id: number;
+  item: Item;
+  consumer: User;
 }
 
 export interface DetailInfo {
