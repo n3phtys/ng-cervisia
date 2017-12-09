@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { UserselectionComponent } from './userselection/userselection.component';
 import { QuickmenuComponent } from './quickmenu/quickmenu.component';
 import { FullPurchaseComponent } from './full-purchase/full-purchase.component';
+import { TabService } from './tab.service';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -23,7 +24,7 @@ describe('AppComponent', () => {
         ModalModule.forRoot(),
         BootstrapModalModule
       ],
-      providers: [BackendService],
+      providers: [BackendService, TabService],
       declarations: [
         AppComponent,
         UserselectionComponent,

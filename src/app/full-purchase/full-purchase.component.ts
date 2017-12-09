@@ -6,6 +6,8 @@ import {Observable, Observer} from 'rxjs/Rx';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
+import { TabService } from '../tab.service';
+import { TabActive } from '../tab-active.enum';
 
 @Component({
   selector: 'app-full-purchase',
@@ -15,7 +17,7 @@ import 'rxjs/add/operator/map';
 export class FullPurchaseComponent implements OnInit {
   searchControl: FormControl = new FormControl();
 
-  constructor(private backend: BackendService) { }
+  constructor(private backend: BackendService, public tabs: TabService) { }
 
   ngOnInit() {
 
@@ -39,4 +41,7 @@ export class FullPurchaseComponent implements OnInit {
   }
 
 
+
+
+  
 }

@@ -10,6 +10,7 @@ import {Observable, Observer} from 'rxjs/Rx';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
+import { TabService } from '../tab.service';
 
 
 
@@ -24,7 +25,7 @@ export class UserselectionComponent implements OnInit {
 
 
 
-  constructor(private backend: BackendService, public modal: Modal) {
+  constructor(private backend: BackendService, public modal: Modal, public tabs: TabService) {
   }
 
   ngOnInit() {
@@ -52,8 +53,6 @@ export class UserselectionComponent implements OnInit {
   public openPopup(user: User) {
 
     this.backend.quickselect(user);
-
-    this.backend.detailselect(user.user_id);
 
     this.openQuickmenu(user);
 
