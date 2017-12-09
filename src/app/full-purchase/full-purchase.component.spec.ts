@@ -9,6 +9,7 @@ import {ReactiveFormsModule, FormsModule, FormControl} from '@angular/forms'
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FullPurchaseComponent } from './full-purchase.component';
+import { TabService } from '../tab.service';
 
 describe('FullPurchaseComponent', () => {
   let component: FullPurchaseComponent;
@@ -22,7 +23,7 @@ describe('FullPurchaseComponent', () => {
         ReactiveFormsModule,
         FormsModule,
       ],
-      providers: [BackendService],
+      providers: [BackendService, TabService],
       declarations: [ FullPurchaseComponent ]
     })
     .compileComponents();

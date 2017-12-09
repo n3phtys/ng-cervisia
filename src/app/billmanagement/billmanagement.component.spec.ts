@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BillmanagementComponent } from './billmanagement.component';
+import { TabService } from '../tab.service';
+import { BackendService } from '../backend.service';
 
 describe('BillmanagementComponent', () => {
   let component: BillmanagementComponent;
@@ -8,6 +10,7 @@ describe('BillmanagementComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [BackendService, TabService],
       declarations: [ BillmanagementComponent ]
     })
     .compileComponents();

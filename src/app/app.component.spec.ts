@@ -13,6 +13,13 @@ import { UserselectionComponent } from './userselection/userselection.component'
 import { QuickmenuComponent } from './quickmenu/quickmenu.component';
 import { FullPurchaseComponent } from './full-purchase/full-purchase.component';
 import { TabService } from './tab.service';
+import { UsermanagementComponent } from './usermanagement/usermanagement.component';
+import { ItemmanagementComponent } from './itemmanagement/itemmanagement.component';
+import { AdministrationComponent } from './administration/administration.component';
+import { BillmanagementComponent } from './billmanagement/billmanagement.component';
+import { GlobalstatisticsComponent } from './globalstatistics/globalstatistics.component';
+import { PersonalstatisticsComponent } from './personalstatistics/personalstatistics.component';
+import { GiveoutComponent } from './giveout/giveout.component';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -30,6 +37,13 @@ describe('AppComponent', () => {
         UserselectionComponent,
         QuickmenuComponent,
         FullPurchaseComponent,
+        UsermanagementComponent,
+        ItemmanagementComponent,
+        AdministrationComponent,
+        BillmanagementComponent,
+        GlobalstatisticsComponent,
+        PersonalstatisticsComponent,
+        GiveoutComponent,
       ],
     }).compileComponents();
   }));

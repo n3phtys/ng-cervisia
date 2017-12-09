@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GlobalstatisticsComponent } from './globalstatistics.component';
+import { BackendService } from '../backend.service';
+import { TabService } from '../tab.service';
 
 describe('GlobalstatisticsComponent', () => {
   let component: GlobalstatisticsComponent;
@@ -8,6 +10,7 @@ describe('GlobalstatisticsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [BackendService, TabService],
       declarations: [ GlobalstatisticsComponent ]
     })
     .compileComponents();

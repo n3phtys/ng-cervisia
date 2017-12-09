@@ -10,6 +10,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserselectionComponent } from './userselection.component';
 import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
+import { TabService } from '../tab.service';
 
 describe('UserselectionComponent', () => {
   let component: UserselectionComponent;
@@ -25,7 +26,7 @@ describe('UserselectionComponent', () => {
         ModalModule.forRoot(),
         BootstrapModalModule
       ],
-      providers: [BackendService],
+      providers: [BackendService, TabService],
       declarations: [ UserselectionComponent ]
     })
     .compileComponents();

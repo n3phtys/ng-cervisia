@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ItemmanagementComponent } from './itemmanagement.component';
+import { TabService } from '../tab.service';
+import { BackendService } from '../backend.service';
 
 describe('ItemmanagementComponent', () => {
   let component: ItemmanagementComponent;
@@ -8,6 +10,7 @@ describe('ItemmanagementComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [BackendService, TabService],
       declarations: [ ItemmanagementComponent ]
     })
     .compileComponents();
