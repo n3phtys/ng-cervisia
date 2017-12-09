@@ -18,7 +18,7 @@ interface PaginatedResult<T> {
 }
 
 export interface Item {
-  name: string;
+name: string;
   item_id: number;
   category: string;
   cost_cents: number;
@@ -29,8 +29,11 @@ export interface User {
   user_id: number;
   is_billed: boolean;
 }
-
 export interface Purchase {
+  SimplePurchase: SimplePurchase;
+}
+
+export interface SimplePurchase {
   unique_id: number;
   timestamp_epoch_millis: number;
   item_id: number;
@@ -52,6 +55,31 @@ export interface AppState {
   top_personal_drinks: ParametersTopPersonalDrinks;
   personal_log: ParametersPurchaseLogPersonal;
   personal_detail_infos: ParametersDetailInfoForUser;
+  bills: ParametersBills;
+  open_ffa_freebies: ParametersOpenFFAFreebies;
+  incoming_freebies: ParametersIncomingFreebies;
+  outgoing_freebies: ParametersOutgoingFreebies;
+}
+
+interface ParametersBills {
+  count_pars: ParametersBillsCount;
+  pagination: ParametersPagination;
+}
+
+interface ParametersOpenFFAFreebies {
+
+}
+
+interface ParametersIncomingFreebies {
+
+}
+
+interface ParametersOutgoingFreebies {
+
+}
+
+interface ParametersBillsCount {
+
 }
 
 interface ParametersSearchterm {
@@ -147,6 +175,10 @@ export interface AllResults {
   selected_users_top_items: Item[];
 }
 
+export interface MakeSimplePurchase {
+  user_id: number;
+  item_id: number;
+}
 
 
 const endpoint_topusers = '/api/users/top';
@@ -183,15 +215,44 @@ export class BackendService {
         end_exclusive: MAX_NUMBER_OF_ALL_ITEMS_SHOWN,
       }
     },
-    global_log: null,
+    global_log: {
+      count_pars : {
+        millis_start: new Date().getTime() - (1000 * 60 * 60 * 24 * 14),
+        millis_end: new Date().getTime() + (1000 * 60 * 60 * 24 * 14),
+      },
+      pagination : {
+        start_inclusive: 0,
+        end_exclusive: 100,
+      },
+    },
     top_personal_drinks: {
       user_id: 0,
       n: MAX_NUMBER_OF_TOP_ITEMS_SHOWN,
     },
-    personal_log: null,
+    personal_log: {
+      count_pars : {
+  user_id: 0,
+  millis_start: new Date().getTime() - (1000 * 60 * 60 * 24 * 14),
+  millis_end: new Date().getTime() + (1000 * 60 * 60 * 24 * 14),
+      },
+      pagination : {
+        start_inclusive: 0,
+        end_exclusive: 100,
+      },
+    },
     personal_detail_infos: {
       user_id: 0,
     },
+    bills: {
+      count_pars : {},
+      pagination : {
+        start_inclusive: 0,
+        end_exclusive: 100,
+      }
+    },
+    open_ffa_freebies: {},
+    incoming_freebies: {},
+    outgoing_freebies: {},
   };
 
   content: AllResults = {
@@ -219,19 +280,54 @@ export class BackendService {
       total_count: MAX_NUMBER_OF_ALL_ITEMS_SHOWN,
       results: [],
     },
-    PurchaseLogGlobal: null,
-    BillsCount: null,
-    Bills: null,
-    OpenFFAFreebies: null,
+    PurchaseLogGlobal: {
+      from: 0,
+      to: 0,
+      total_count: 0,
+      results: [],
+    },
+    BillsCount: {
+      from: 0,
+      to: 0,
+      total_count: 0,
+      results: [],
+    },
+    Bills: {
+      from: 0,
+      to: 0,
+      total_count: 0,
+      results: [],
+    },
+    OpenFFAFreebies: {
+      from: 0,
+      to: 0,
+      total_count: 0,
+      results: [],
+    },
     TopPersonalDrinks: {
       from: 0,
       to: MAX_NUMBER_OF_TOP_ITEMS_SHOWN,
       total_count: MAX_NUMBER_OF_TOP_ITEMS_SHOWN,
       results: [],
     },
-    PurchaseLogPersonal: null,
-    IncomingFreebies: null,
-    OutgoingFreebies: null,
+    PurchaseLogPersonal: {
+      from: 0,
+      to: 0,
+      total_count: 0,
+      results: [],
+    },
+    IncomingFreebies: {
+      from: 0,
+      to: 0,
+      total_count: 0,
+      results: [],
+    },
+    OutgoingFreebies: {
+      from: 0,
+      to: 0,
+      total_count: 0,
+      results: [],
+    },
     computed_users_in_list: [],
     top_items_cache: new Map(),
     selected_users_top_items: [],
@@ -302,6 +398,22 @@ export class BackendService {
   }
 
 
+  updateGlobalLog() {
+    const queryjson = (JSON.stringify(this.viewstate.global_log));
+    const endp = endpoint_globallog;
+    console.log(queryjson);
+    // Make the HTTP request: <PaginatedResult<User>>
+    this.http.get<PaginatedResult<Purchase>>(endp, { params: { query: queryjson } }).subscribe(data => {
+      console.log("updating global log");
+      console.log(data);
+      for (let x of data.results) {
+        x['placeholder'] = 'my name';
+      }
+      this.content.PurchaseLogGlobal = data;
+    });
+  }
+
+
   callhttp(): void {
 
     const queryjson = encodeURIComponent(JSON.stringify(this.viewstate.top_users));
@@ -339,6 +451,38 @@ export class BackendService {
       }
       this.computeUsers();
     });
+  }
+
+  updateContentWithWriteResult(result: AllResults) {
+    for (var key in result) {
+      if (result.hasOwnProperty(key)) {
+        const v = result[key];
+        if (v !== null) {
+          this.content[key] = v;
+        } else {
+         console.log('' + key + " was null") 
+        }   
+      }
+    }
+    
+  }
+
+  makeSimplePurchase(itemId: number, userId: number) {
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_simple_purchase;
+    const payload : MakeSimplePurchase = {
+      user_id : userId,
+      item_id : itemId,
+    };
+
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+      console.log("Success of post simple purchase");
+      console.log(data);
+      if (data.is_success) {
+      this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+  );
   }
 
 }

@@ -2,7 +2,12 @@
   globalstatistics works!
 </p>
 
-
 <button (click)="tabs.goToUserSelection()">
   Back to all users
 </button>
+
+<!--*ngIf="backend.content.PurchaseLogGlobal !== null"-->
+  <div *ngFor="let purchase of backend.content.PurchaseLogGlobal.results">
+    
+    #{{purchase.SimplePurchase.unique_id}} of date {{purchase.SimplePurchase.timestamp_epoch_millis | date}} bought {{purchase.SimplePurchase.item_id}} by {{purchase.SimplePurchase.consumer_id}}
+  </div>
