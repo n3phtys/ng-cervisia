@@ -18,4 +18,13 @@ export class GlobalstatisticsComponent implements OnInit {
       this.backend.updateGlobalLog();
     }
 
+
+
+
+    pageNavigation(page : number) {
+        console.log("Navigating to page " + page);
+        BackendService.moveToPage(this.backend.viewstate.global_log.pagination, page);
+        this.backend.updateGlobalLog();
+    } 
+
 }

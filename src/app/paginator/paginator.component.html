@@ -1,0 +1,19 @@
+<div>
+
+  <div>
+
+    <button type="submit" [disabled]="selectedPage == 0" (click)="goToFirstPage()">First</button>
+    <button type="submit" [disabled]="selectedPage == 0" (click)="goToPreviousPage()">Previous</button>
+    <span>
+      <span *ngFor="let p of pages">
+        <button type="submit" [disabled]="p == selectedPage" (click)="goToPage(p)">{{p+1}}</button>
+      </span>
+    </span>
+
+    <button [disabled]="selectedPage >= numberOfPages - 1" (click)="goToNextPage()">Next</button>
+    <button [disabled]="selectedPage >= numberOfPages - 1" (click)="goToLastPage()">Last</button>
+  </div>
+  <div>
+    Showing {{parameters.from}} to {{parameters.to}} (total results: {{parameters.total_count}})
+  </div>
+</div>

@@ -20,6 +20,7 @@ import { BillmanagementComponent } from './billmanagement/billmanagement.compone
 import { GlobalstatisticsComponent } from './globalstatistics/globalstatistics.component';
 import { PersonalstatisticsComponent } from './personalstatistics/personalstatistics.component';
 import { GiveoutComponent } from './giveout/giveout.component';
+import { PaginatorComponent } from './paginator/paginator.component';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -44,6 +45,7 @@ describe('AppComponent', () => {
         GlobalstatisticsComponent,
         PersonalstatisticsComponent,
         GiveoutComponent,
+        PaginatorComponent,
       ],
     }).compileComponents();
   }));

@@ -21,6 +21,7 @@ import { ItemmanagementComponent } from './itemmanagement/itemmanagement.compone
 import { BillmanagementComponent } from './billmanagement/billmanagement.component';
 import { AdministrationComponent } from './administration/administration.component';
 import { TabService } from './tab.service';
+import { PaginatorComponent } from './paginator/paginator.component';
 
 
 
@@ -36,7 +37,8 @@ import { TabService } from './tab.service';
     UsermanagementComponent,
     ItemmanagementComponent,
     BillmanagementComponent,
-    AdministrationComponent
+    AdministrationComponent,
+    PaginatorComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-modialog';
+import { PaginatorComponent } from '../paginator/paginator.component';
 
 describe('GlobalstatisticsComponent', () => {
   let component: GlobalstatisticsComponent;
@@ -22,7 +23,7 @@ describe('GlobalstatisticsComponent', () => {
         ModalModule.forRoot(),
       ],
       providers: [BackendService, TabService],
-      declarations: [ GlobalstatisticsComponent ]
+      declarations: [ GlobalstatisticsComponent, PaginatorComponent ]
     })
     .compileComponents();
   }));

@@ -11,3 +11,6 @@
     
     #{{purchase.SimplePurchase.unique_id}} on date {{purchase.SimplePurchase.timestamp_epoch_millis | date:'short'}} : {{purchase.SimplePurchase.consumer.username}} bought {{purchase.SimplePurchase.item.name}}
   </div>
+
+
+  <app-paginator [parameters]="backend.content.PurchaseLogGlobal" (onPageChange)="pageNavigation($event)"></app-paginator>

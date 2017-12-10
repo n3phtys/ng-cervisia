@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 import { ReferenceAst } from '@angular/compiler';
 
 
-interface PaginatedResult<T> {
+export interface PaginatedResult<T> {
   total_count: number;
   from: number;
   to: number;
@@ -90,6 +90,7 @@ interface ParametersPagination {
   start_inclusive: number;
   end_exclusive: number;
 }
+
 
 interface ParametersTopUsers {
   n: number;
@@ -217,12 +218,12 @@ export class BackendService {
     },
     global_log: {
       count_pars : {
-        millis_start: new Date().getTime() - (1000 * 60 * 60 * 24 * 14),
+        millis_start: 0 - (1000 * 60 * 60 * 24 * 14),
         millis_end: new Date().getTime() + (1000 * 60 * 60 * 24 * 14),
       },
       pagination : {
         start_inclusive: 0,
-        end_exclusive: 100,
+        end_exclusive: 10,
       },
     },
     top_personal_drinks: {
@@ -237,7 +238,7 @@ export class BackendService {
       },
       pagination : {
         start_inclusive: 0,
-        end_exclusive: 100,
+        end_exclusive: 10,
       },
     },
     personal_detail_infos: {
@@ -247,7 +248,7 @@ export class BackendService {
       count_pars : {},
       pagination : {
         start_inclusive: 0,
-        end_exclusive: 100,
+        end_exclusive: 5,
       }
     },
     open_ffa_freebies: {},
@@ -422,6 +423,12 @@ export class BackendService {
       // Read the result field from the JSON response.
       console.log(data);
     });
+  }
+
+  static moveToPage(par : ParametersPagination, i : number) {
+    const pageSize = par.end_exclusive - par.start_inclusive;
+    par.start_inclusive = i * pageSize;
+    par.end_exclusive = (i+1)  * pageSize; 
   }
 
   computeUsers(): void {
