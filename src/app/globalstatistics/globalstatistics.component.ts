@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TabService } from '../tab.service';
 import { TabActive } from '../tab-active.enum';
-import { BackendService } from '../backend.service';
+import { BackendService, Timespan } from '../backend.service';
 
 @Component({
   selector: 'app-globalstatistics',
@@ -27,4 +27,10 @@ export class GlobalstatisticsComponent implements OnInit {
         this.backend.updateGlobalLog();
     } 
 
+    timeFilterChange(filter : Timespan) {
+      console.log("received filter");
+      console.log(filter);
+      this.backend.viewstate.global_log.count_pars = filter;
+      this.backend.updateGlobalLog();
+    }
 }

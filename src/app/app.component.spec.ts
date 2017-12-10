@@ -21,6 +21,7 @@ import { GlobalstatisticsComponent } from './globalstatistics/globalstatistics.c
 import { PersonalstatisticsComponent } from './personalstatistics/personalstatistics.component';
 import { GiveoutComponent } from './giveout/giveout.component';
 import { PaginatorComponent } from './paginator/paginator.component';
+import { TimespanFilterComponent } from './timespan-filter/timespan-filter.component';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -46,6 +47,7 @@ describe('AppComponent', () => {
         PersonalstatisticsComponent,
         GiveoutComponent,
         PaginatorComponent,
+        TimespanFilterComponent,
       ],
     }).compileComponents();
   }));

@@ -1,0 +1,11 @@
+<div class="maindiv">
+    <label>Filter by date</label>
+<div class="form-inline">
+  <span class="form-group">
+    <input class="form-control" [ngModel]="startDate | date:'yyyy-MM-dd'" (ngModelChange)="startChanged($event)" type="date" name="startDate" />
+  </span>
+  <span class="form-group">
+    <input class="form-control" [ngModel]="endDate | date:'yyyy-MM-dd'" (ngModelChange)="endChanged($event)" type="date" name="endDate" />
+  </span>
+</div>
+</div>

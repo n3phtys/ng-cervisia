@@ -111,7 +111,7 @@ export interface Timespan {
   millis_end: number;
 }
 
-interface TimespanWithUserId {
+export interface TimespanWithUserId extends Timespan {
   user_id: number;
   millis_start: number;
   millis_end: number;

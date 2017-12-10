@@ -22,6 +22,7 @@ import { BillmanagementComponent } from './billmanagement/billmanagement.compone
 import { AdministrationComponent } from './administration/administration.component';
 import { TabService } from './tab.service';
 import { PaginatorComponent } from './paginator/paginator.component';
+import { TimespanFilterComponent } from './timespan-filter/timespan-filter.component';
 
 
 
@@ -38,7 +39,8 @@ import { PaginatorComponent } from './paginator/paginator.component';
     ItemmanagementComponent,
     BillmanagementComponent,
     AdministrationComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    TimespanFilterComponent
   ],
   imports: [
     BrowserModule,

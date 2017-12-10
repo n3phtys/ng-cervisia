@@ -6,6 +6,9 @@
   Back to all users
 </button>
 
+
+<app-timespan-filter [timespan]="backend.viewstate.global_log.count_pars" (onTimespanFilterChange)="timeFilterChange($event)"></app-timespan-filter>
+
 <!--*ngIf="backend.content.PurchaseLogGlobal !== null"-->
   <div *ngFor="let purchase of backend.content.PurchaseLogGlobal.results">
     
