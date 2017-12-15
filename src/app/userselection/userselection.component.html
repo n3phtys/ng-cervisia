@@ -11,7 +11,12 @@
 </ul>
 
 
-
+<div>
+  <label>Last Purchase:</label>
+  <div *ngIf="backend.content.LastPurchases.total_count > 0">
+      #{{backend.content.LastPurchases.results[0].SimplePurchase.unique_id}} on date {{backend.content.LastPurchases.results[0].SimplePurchase.timestamp_epoch_millis | date:'short'}} : {{backend.content.LastPurchases.results[0].SimplePurchase.consumer.username}} bought {{backend.content.LastPurchases.results[0].SimplePurchase.item.name}}
+  </div>
+</div>
 
 <button (click)="tabs.goToAdministration()">
   Administration

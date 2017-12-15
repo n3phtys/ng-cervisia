@@ -156,12 +156,18 @@ export interface Freeby {
 
 }
 
+export interface NamedArray {
+  name: string;
+  arr: Array<Item>;
+} 
+
 export interface AllResults {
   DetailInfoForUser: PaginatedResult<DetailInfo>;
   TopUsers: PaginatedResult<User>;
   AllUsers: PaginatedResult<User>;
   AllItems: PaginatedResult<Item>;
   PurchaseLogGlobal: PaginatedResult<Purchase>;
+  LastPurchases: PaginatedResult<Purchase>;
   BillsCount: PaginatedResult<Bill>;
   Bills: PaginatedResult<Bill>;
   OpenFFAFreebies: PaginatedResult<Freeby>;
@@ -174,6 +180,12 @@ export interface AllResults {
 
   computed_users_in_list: User[];
   selected_users_top_items: Item[];
+  all_items_per_category: Array<NamedArray>;
+}
+
+export interface KeyValue {
+  key: number;
+  value: number;
 }
 
 export interface MakeSimplePurchase {
@@ -181,6 +193,23 @@ export interface MakeSimplePurchase {
   item_id: number;
 }
 
+export interface MakeCartPurchase {
+  user_id: number;
+  items: KeyValue[];
+  specials: string[];
+}
+
+
+export interface MakeSpecialPurchase {
+  user_id: number;
+  item_name: string;
+}
+
+
+export interface ShoppingCartElement {
+  item: Item;
+  count: number;
+}
 
 const endpoint_topusers = '/api/users/top';
 const endpoint_allusers = '/api/users/all';
@@ -190,10 +219,13 @@ const endpoint_personallog = '/api/purchases/personal';
 const endpoint_globallog = '/api/purchases/global';
 const endpoint_userdetails = '/api/users/detail';
 const post_endpoint_simple_purchase = '/api/purchases';
+const post_endpoint_cart_purchase = '/api/purchases/cart';
 
 const MAX_NUMBER_OF_USERS_SHOWN = 40;
 const MAX_NUMBER_OF_TOP_ITEMS_SHOWN = 4;
 const MAX_NUMBER_OF_ALL_ITEMS_SHOWN = 40;
+
+const NAME_OF_NO_CATEGORY = "Misc."
 
 @Injectable()
 export class BackendService {
@@ -287,6 +319,12 @@ export class BackendService {
       total_count: 0,
       results: [],
     },
+    LastPurchases: {
+        from: 0,
+        to: 0,
+        total_count: 0,
+        results: [],
+    },
     BillsCount: {
       from: 0,
       to: 0,
@@ -332,9 +370,11 @@ export class BackendService {
     computed_users_in_list: [],
     top_items_cache: new Map(),
     selected_users_top_items: [],
+    all_items_per_category: [],
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+   }
 
 
   detailselect(user: number) {
@@ -348,6 +388,26 @@ export class BackendService {
     this.refreshAllItems();
   }
 
+  refreshLastPurchase() {
+    const queriy : ParametersPurchaseLogGlobal = {
+      count_pars : {
+        millis_start: new Date().getTime() + 1000,
+        millis_end: new Date().getTime() - (1000 * 60 * 60 * 24),
+      }, 
+      pagination : {
+        start_inclusive: 0,
+        end_exclusive: 5,
+      },
+    };
+    const queryjson = (JSON.stringify(queriy));
+    const endp = endpoint_allitems;
+    console.log(queryjson);
+    // Make the HTTP request: <PaginatedResult<User>>
+    this.http.get<PaginatedResult<Purchase>>(endp, { params: { query: queryjson } }).subscribe(data => {
+      this.content.LastPurchases = data;
+    });
+  }
+
   refreshAllItems() {
     const queryjson = (JSON.stringify(this.viewstate.all_items));
     const endp = endpoint_allitems;
@@ -355,6 +415,25 @@ export class BackendService {
     // Make the HTTP request: <PaginatedResult<User>>
     this.http.get<PaginatedResult<Item>>(endp, { params: { query: queryjson } }).subscribe(data => {
       this.content.AllItems = data;
+
+      const v : Array<NamedArray> = [];
+      
+      for (let i = 0; i < data.results.length; i++) {
+        const it : Item =  data.results[i];
+        let idx = v.findIndex(a => (it.category != null && a.name === it.category) || (it.category == null && NAME_OF_NO_CATEGORY === it.category) );
+        if (idx >= 0) {
+          //add to existing list
+          v[idx].arr.push(it);
+        } else {
+          //append
+          v.push({
+            name: it.category != null ? it.category : NAME_OF_NO_CATEGORY,
+            arr: [it]
+          });
+        }
+      }
+
+      this.content.all_items_per_category = v;
     });
   }
 
@@ -458,6 +537,35 @@ export class BackendService {
       }
       this.computeUsers();
     });
+  }
+
+  purchaseList(userId: number, purchases: Array<ShoppingCartElement>) {
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_cart_purchase;
+
+    const specialNames: string[] = purchases.filter(i => i.item.item_id < 0).map(i => i.item.name);
+
+    console.log("specialnames =");
+    console.log(specialNames);
+    const items : KeyValue[] = purchases.filter(i => i.item.item_id >= 0).map(i => <KeyValue> {key : i.item.item_id, value: i.count});
+
+    console.log("items = ");
+    console.log(items);
+
+    const payload : MakeCartPurchase = {
+      user_id : userId,
+      specials: specialNames,
+      items : items,
+    };
+
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+      console.log("Success of post simple purchase");
+      console.log(data);
+      if (data.is_success) {
+      this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+  );
   }
 
   updateContentWithWriteResult(result: AllResults) {
