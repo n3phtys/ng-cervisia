@@ -17,7 +17,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let bill of backend.content.Bills.results">
-            <td>{{ bill.timestamp }}</td>
+            <td>{{ bill.timestamp  | date }}</td>
             <td>{{ bill.comment }}</td>
             <td>{{ bill.users }}</td>
             <td>
@@ -32,7 +32,7 @@
 
     <div>
       <label>billing date of new bill</label>
-        <input type="datetime-local" [ngModel] ="dt | date:'yyyy-MM-dd'" (ngModelChange)="dt = $event">
+        <input type="datetime-local" [ngModel] ="dt | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="dt = $event">
         <label>comment for new bill</label>
         <input [(ngModel)] ="commentField">
     <button (click)="createBill()">Create new Bill on this date</button>
