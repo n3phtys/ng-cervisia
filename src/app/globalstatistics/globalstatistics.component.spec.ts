@@ -25,6 +25,15 @@ describe('GlobalstatisticsComponent', () => {
       ],
       providers: [BackendService, TabService],
       declarations: [ GlobalstatisticsComponent, PaginatorComponent, TimespanFilterComponent ]
+      imports: [
+        BrowserModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        FormsModule,
+        ModalModule.forRoot(),
+      ],
+      providers: [BackendService, TabService],
+      declarations: [ GlobalstatisticsComponent, PaginatorComponent, TimespanFilterComponent ]
     })
     .compileComponents();
   }));
