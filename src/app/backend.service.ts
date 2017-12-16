@@ -79,7 +79,9 @@ interface ParametersOutgoingFreebies {
 }
 
 interface ParametersBillsCount {
-
+  start_inclusive: number;
+  end_exclusive: number;
+  scope_user_id: number; //may be null for all users
 }
 
 interface ParametersSearchterm {
@@ -148,8 +150,30 @@ export interface ServerWriteResult {
   content: SuccessContent;
 }
 
-export interface Bill {
+export interface UserGroupSingle {
+  user_id: number;
+}
 
+export interface UserGroupAll {
+  
+}
+
+export interface UserGroupMulti {
+  user_ids: number[];
+}
+
+export interface UserGroup {
+  SingleUser : UserGroupSingle;
+  AllUsers : UserGroupAll;
+  MultipleUsers : UserGroupMulti;
+}
+
+export interface Bill {
+  
+  timestamp: number;
+  users: UserGroup;
+  //TODO: include maps
+  comment: string;
 }
 
 export interface Freeby {
@@ -219,6 +243,7 @@ const endpoint_allitems = '/api/items/all';
 const endpoint_personallog = '/api/purchases/personal';
 const endpoint_globallog = '/api/purchases/global';
 const endpoint_userdetails = '/api/users/detail';
+const endpoint_bills = '/api/bills';
 const post_endpoint_simple_purchase = '/api/purchases';
 const post_endpoint_cart_purchase = '/api/purchases/cart';
 
@@ -278,7 +303,11 @@ export class BackendService {
       user_id: 0,
     },
     bills: {
-      count_pars: {},
+      count_pars: {
+        start_inclusive: 0,
+        end_exclusive: new Date().getTime() + (1000 * 60 * 60 * 24 * 14),
+        scope_user_id: null,
+      },
       pagination: {
         start_inclusive: 0,
         end_exclusive: 5,
@@ -390,6 +419,15 @@ export class BackendService {
     this.refreshAllItems();
   }
 
+  updateBills() {
+    const queryjson = (JSON.stringify(this.viewstate.bills));
+    const endp = endpoint_bills;
+    console.log(queryjson);
+    this.http.get<PaginatedResult<Bill>>(endp, { params: { query: queryjson } }).subscribe(data => {
+      this.content.Bills = data;
+    });
+  }
+
   refreshLastPurchase() {
     const queriy: ParametersPurchaseLogGlobal = {
       count_pars: {
@@ -455,7 +493,14 @@ export class BackendService {
     });
   }
 
-
+  createBill(date: Date, comment: string) {
+    throw new Error('Not yet implemented');
+  }
+  
+  exportBillToEmail(scopedToUserIdOrNull: User, billTimestamp : number, receiverEmailAddress: string) {
+    throw new Error('Not yet implemented');
+  }
+  
   createUser(username: string) {
     //TODO: implement
     throw new Error('Not yet implemented');
