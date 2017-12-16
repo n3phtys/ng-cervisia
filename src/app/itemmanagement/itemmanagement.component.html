@@ -56,11 +56,11 @@
         <div>
             <div class="form-group">
               <label for="itemname">Itemname:</label>
-              <input [(ngModel)]="detailItem.itemname" class="form-control" id="itemname">
+              <input [(ngModel)]="detailItem.name" class="form-control" id="itemname">
             </div>
             <div class="form-group">
               <label for="cost">Cost in Cents:</label>
-              <input [(ngModel)]="detailItem.cost_cents" type="range" min="0" max="100000" class="form-control" id="cost">
+              <input [(ngModel)]="detailItem.cost_cents" type="number" min="0" max="100000" class="form-control" id="cost">
             </div>
             <div class="form-group">
               <label for="category">Category:</label>

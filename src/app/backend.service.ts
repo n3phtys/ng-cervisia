@@ -26,8 +26,10 @@ export interface Item {
 
 export interface User {
   username: string;
+  external_user_id: string;
   user_id: number;
   is_billed: boolean;
+  highlight_in_ui: boolean;
 }
 export interface Purchase {
   SimplePurchase: SimplePurchase;
@@ -155,7 +157,7 @@ export interface UserGroupSingle {
 }
 
 export interface UserGroupAll {
-  
+
 }
 
 export interface UserGroupMulti {
@@ -163,13 +165,13 @@ export interface UserGroupMulti {
 }
 
 export interface UserGroup {
-  SingleUser : UserGroupSingle;
-  AllUsers : UserGroupAll;
-  MultipleUsers : UserGroupMulti;
+  SingleUser: UserGroupSingle;
+  AllUsers: UserGroupAll;
+  MultipleUsers: UserGroupMulti;
 }
 
 export interface Bill {
-  
+
   timestamp: number;
   users: UserGroup;
   //TODO: include maps
@@ -213,6 +215,33 @@ export interface KeyValue {
   value: number;
 }
 
+export interface CreateUser {
+  username: String;
+}
+
+export interface UpdateUser extends DeleteUser, CreateUser {
+  external_user_id: string;
+  is_billed: boolean;
+  highlight_in_ui: boolean;
+}
+
+export interface DeleteUser {
+  user_id: number;
+}
+
+export interface CreateItem {
+  name: string;
+  price_cents: number;
+  category: string;
+}
+
+export interface UpdateItem extends DeleteItem, CreateItem { }
+
+export interface DeleteItem {
+  item_id: number;
+}
+
+
 export interface MakeSimplePurchase {
   user_id: number;
   item_id: number;
@@ -246,6 +275,12 @@ const endpoint_userdetails = '/api/users/detail';
 const endpoint_bills = '/api/bills';
 const post_endpoint_simple_purchase = '/api/purchases';
 const post_endpoint_cart_purchase = '/api/purchases/cart';
+const post_endpoint_add_user = '/api/users';
+const post_endpoint_update_user = '/api/users/update';
+const post_endpoint_delete_user = '/api/users/delete';
+const post_endpoint_add_item = '/api/items';
+const post_endpoint_update_item = '/api/items/update';
+const post_endpoint_delete_item = '/api/items/delete';
 
 const MAX_NUMBER_OF_USERS_SHOWN = 40;
 const MAX_NUMBER_OF_TOP_ITEMS_SHOWN = 4;
@@ -496,40 +531,111 @@ export class BackendService {
   createBill(date: Date, comment: string) {
     throw new Error('Not yet implemented');
   }
-  
-  exportBillToEmail(scopedToUserIdOrNull: User, billTimestamp : number, receiverEmailAddress: string) {
+
+  exportBillToEmail(scopedToUserIdOrNull: User, billTimestamp: number, receiverEmailAddress: string) {
     throw new Error('Not yet implemented');
   }
-  
+
   createUser(username: string) {
-    //TODO: implement
-    throw new Error('Not yet implemented');
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_add_user;
+    const payload: CreateUser = {
+      username: username,
+    };
+
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
   }
 
   deleteUser(userId: number) {
-    //TODO: implement
-    throw new Error('Not yet implemented');
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_delete_user;
+    const payload: DeleteUser = {
+      user_id: userId,
+    };
+
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
   }
 
   updateUser(user: User) {
-    //TODO: implement
-    throw new Error('Not yet implemented');
+    
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_update_user;
+    const payload: UpdateUser = {
+      user_id: user.user_id,
+      username: user.username,
+      external_user_id: user.external_user_id,
+      is_billed: user.is_billed,
+      highlight_in_ui: user.highlight_in_ui,
+    };
+
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
   }
 
 
-  createItem(itemname: string, cost_cents: number, category: string) {
-    //TODO: implement
-    throw new Error('Not yet implemented');
+  createItem(itemname: string, price_cents: number, category: string) {
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_add_item;
+    const payload: CreateItem = {
+      name: itemname,
+      price_cents: price_cents,
+      category: category,
+    };
+
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
+
   }
 
   deleteItem(itemId: number) {
-    //TODO: implement
-    throw new Error('Not yet implemented');
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_delete_item;
+    const payload: DeleteItem = {
+      item_id: itemId,
+    };
+
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
   }
 
   updateItem(item: Item) {
-    //TODO: implement
-    throw new Error('Not yet implemented');
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_update_item;
+    const payload: UpdateItem = {
+      item_id: item.item_id,
+      name: item.name,
+      price_cents: item.cost_cents,
+      category: item.category,
+    };
+
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
   }
 
 

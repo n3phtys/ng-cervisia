@@ -55,7 +55,7 @@ export class ItemmanagementComponent implements OnInit {
     createItem() {
       const c = prompt("Enter the name of the new item or leave empty to cancel");
       if (c != null && c.length > 0) {
-        //this.backend.createItem(c);
+        this.backend.createItem(c, 100, null);
       }
     }
   
