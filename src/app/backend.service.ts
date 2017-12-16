@@ -18,7 +18,7 @@ export interface PaginatedResult<T> {
 }
 
 export interface Item {
-name: string;
+  name: string;
   item_id: number;
   category: string;
   cost_cents: number;
@@ -159,7 +159,7 @@ export interface Freeby {
 export interface NamedArray {
   name: string;
   arr: Array<Item>;
-} 
+}
 
 export interface AllResults {
   DetailInfoForUser: PaginatedResult<DetailInfo>;
@@ -177,6 +177,7 @@ export interface AllResults {
   OutgoingFreebies: PaginatedResult<Freeby>;
 
   top_items_cache: Map<number, Item[]>;
+  autocomplete_collection: string[];
 
   computed_users_in_list: User[];
   selected_users_top_items: Item[];
@@ -249,11 +250,11 @@ export class BackendService {
       }
     },
     global_log: {
-      count_pars : {
+      count_pars: {
         millis_start: 0 - (1000 * 60 * 60 * 24 * 14),
         millis_end: new Date().getTime() + (1000 * 60 * 60 * 24 * 14),
       },
-      pagination : {
+      pagination: {
         start_inclusive: 0,
         end_exclusive: 10,
       },
@@ -263,12 +264,12 @@ export class BackendService {
       n: MAX_NUMBER_OF_TOP_ITEMS_SHOWN,
     },
     personal_log: {
-      count_pars : {
-  user_id: 0,
-  millis_start: new Date().getTime() - (1000 * 60 * 60 * 24 * 14),
-  millis_end: new Date().getTime() + (1000 * 60 * 60 * 24 * 14),
+      count_pars: {
+        user_id: 0,
+        millis_start: new Date().getTime() - (1000 * 60 * 60 * 24 * 14),
+        millis_end: new Date().getTime() + (1000 * 60 * 60 * 24 * 14),
       },
-      pagination : {
+      pagination: {
         start_inclusive: 0,
         end_exclusive: 10,
       },
@@ -277,8 +278,8 @@ export class BackendService {
       user_id: 0,
     },
     bills: {
-      count_pars : {},
-      pagination : {
+      count_pars: {},
+      pagination: {
         start_inclusive: 0,
         end_exclusive: 5,
       }
@@ -320,10 +321,10 @@ export class BackendService {
       results: [],
     },
     LastPurchases: {
-        from: 0,
-        to: 0,
-        total_count: 0,
-        results: [],
+      from: 0,
+      to: 0,
+      total_count: 0,
+      results: [],
     },
     BillsCount: {
       from: 0,
@@ -369,12 +370,13 @@ export class BackendService {
     },
     computed_users_in_list: [],
     top_items_cache: new Map(),
+    autocomplete_collection: [],
     selected_users_top_items: [],
     all_items_per_category: [],
   };
 
   constructor(private http: HttpClient) {
-   }
+  }
 
 
   detailselect(user: number) {
@@ -389,12 +391,12 @@ export class BackendService {
   }
 
   refreshLastPurchase() {
-    const queriy : ParametersPurchaseLogGlobal = {
-      count_pars : {
+    const queriy: ParametersPurchaseLogGlobal = {
+      count_pars: {
         millis_start: new Date().getTime() + 1000,
         millis_end: new Date().getTime() - (1000 * 60 * 60 * 24),
-      }, 
-      pagination : {
+      },
+      pagination: {
         start_inclusive: 0,
         end_exclusive: 5,
       },
@@ -416,16 +418,22 @@ export class BackendService {
     this.http.get<PaginatedResult<Item>>(endp, { params: { query: queryjson } }).subscribe(data => {
       this.content.AllItems = data;
 
-      const v : Array<NamedArray> = [];
-      
+      const v: Array<NamedArray> = [];
+
       for (let i = 0; i < data.results.length; i++) {
-        const it : Item =  data.results[i];
-        let idx = v.findIndex(a => (it.category != null && a.name === it.category) || (it.category == null && NAME_OF_NO_CATEGORY === it.category) );
+        const it: Item = data.results[i];
+        let idx = v.findIndex(a => (it.category != null && a.name === it.category) || (it.category == null && NAME_OF_NO_CATEGORY === it.category));
         if (idx >= 0) {
           //add to existing list
           v[idx].arr.push(it);
         } else {
           //append
+          if (it.category != null && it.category.length > 0) {
+            if (-1 === this.content.autocomplete_collection.findIndex(i => i == it.category)) {
+              this.content.autocomplete_collection.push(it.category);
+            }
+          }
+
           v.push({
             name: it.category != null ? it.category : NAME_OF_NO_CATEGORY,
             arr: [it]
@@ -446,6 +454,39 @@ export class BackendService {
       this.content.DetailInfoForUser = data;
     });
   }
+
+
+  createUser(username: string) {
+    //TODO: implement
+    throw new Error('Not yet implemented');
+  }
+
+  deleteUser(userId: number) {
+    //TODO: implement
+    throw new Error('Not yet implemented');
+  }
+
+  updateUser(user: User) {
+    //TODO: implement
+    throw new Error('Not yet implemented');
+  }
+
+
+  createItem(itemname: string, cost_cents: number, category: string) {
+    //TODO: implement
+    throw new Error('Not yet implemented');
+  }
+
+  deleteItem(itemId: number) {
+    //TODO: implement
+    throw new Error('Not yet implemented');
+  }
+
+  updateItem(item: Item) {
+    //TODO: implement
+    throw new Error('Not yet implemented');
+  }
+
 
   quickselect(user: User) {
     // update appstate
@@ -504,10 +545,10 @@ export class BackendService {
     });
   }
 
-  static moveToPage(par : ParametersPagination, i : number) {
+  static moveToPage(par: ParametersPagination, i: number) {
     const pageSize = par.end_exclusive - par.start_inclusive;
     par.start_inclusive = i * pageSize;
-    par.end_exclusive = (i+1)  * pageSize; 
+    par.end_exclusive = (i + 1) * pageSize;
   }
 
   computeUsers(): void {
@@ -521,7 +562,7 @@ export class BackendService {
     console.log(this.content);
   }
 
-  updateUserlist(term: string): void {
+  updateMainUserlist(term: string): void {
     this.viewstate.all_users.count_pars.searchterm = term;
     const queryjson = (JSON.stringify(term.length > 0 ? this.viewstate.all_users : this.viewstate.top_users));
     const endp = term.length > 0 ? endpoint_allusers : endpoint_topusers;
@@ -539,6 +580,22 @@ export class BackendService {
     });
   }
 
+
+  updateAllUserlist(term: string): void {
+    this.viewstate.all_users.count_pars.searchterm = term;
+    const queryjson = (JSON.stringify(this.viewstate.all_users));
+    const endp = endpoint_allusers;
+    console.log(queryjson);
+    // Make the HTTP request: <PaginatedResult<User>>
+    this.http.get(endp, { params: { query: queryjson } }).subscribe(dat => {
+      console.log(dat);
+      const data = dat as PaginatedResult<User>;
+      this.content.AllUsers = data;
+    });
+  }
+
+
+
   purchaseList(userId: number, purchases: Array<ShoppingCartElement>) {
     const queryjson = (JSON.stringify(this.viewstate));
     const endp = post_endpoint_cart_purchase;
@@ -547,25 +604,25 @@ export class BackendService {
 
     console.log("specialnames =");
     console.log(specialNames);
-    const items : KeyValue[] = purchases.filter(i => i.item.item_id >= 0).map(i => <KeyValue> {key : i.item.item_id, value: i.count});
+    const items: KeyValue[] = purchases.filter(i => i.item.item_id >= 0).map(i => <KeyValue>{ key: i.item.item_id, value: i.count });
 
     console.log("items = ");
     console.log(items);
 
-    const payload : MakeCartPurchase = {
-      user_id : userId,
+    const payload: MakeCartPurchase = {
+      user_id: userId,
       specials: specialNames,
-      items : items,
+      items: items,
     };
 
     this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
       console.log("Success of post simple purchase");
       console.log(data);
       if (data.is_success) {
-      this.updateContentWithWriteResult(data.content.refreshed_data);
+        this.updateContentWithWriteResult(data.content.refreshed_data);
       }
     }
-  );
+    );
   }
 
   updateContentWithWriteResult(result: AllResults) {
@@ -575,29 +632,29 @@ export class BackendService {
         if (v !== null) {
           this.content[key] = v;
         } else {
-         console.log('' + key + " was null") 
-        }   
+          console.log('' + key + " was null")
+        }
       }
     }
-    
+
   }
 
   makeSimplePurchase(itemId: number, userId: number) {
     const queryjson = (JSON.stringify(this.viewstate));
     const endp = post_endpoint_simple_purchase;
-    const payload : MakeSimplePurchase = {
-      user_id : userId,
-      item_id : itemId,
+    const payload: MakeSimplePurchase = {
+      user_id: userId,
+      item_id: itemId,
     };
 
     this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
       console.log("Success of post simple purchase");
       console.log(data);
       if (data.is_success) {
-      this.updateContentWithWriteResult(data.content.refreshed_data);
+        this.updateContentWithWriteResult(data.content.refreshed_data);
       }
     }
-  );
+    );
   }
 
 }

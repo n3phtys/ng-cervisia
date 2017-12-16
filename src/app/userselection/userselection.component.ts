@@ -36,10 +36,10 @@ export class UserselectionComponent implements OnInit {
     .distinctUntilChanged()
     .subscribe((term: string) => {
       console.log('Triggered with term = ' + term);
-      backend.updateUserlist(term);
+      backend.updateMainUserlist(term);
     });
 
-    backend.updateUserlist('');
+    backend.updateMainUserlist('');
   }
 
 

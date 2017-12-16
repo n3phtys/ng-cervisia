@@ -62,7 +62,7 @@ export class TabService {
     // console.log(TabActive.GlobalStatisticsPage);
     // this.openTab = TabActive.GlobalStatisticsPage;
     // console.log("Changed openTab to " + this.openTab);
-    this.resetFlags(TabActive.GlobalStatisticsPage);
+    this.resetFlags(TabActive.UsermanagementPage);
   }
 
   public goToBillManagement() {

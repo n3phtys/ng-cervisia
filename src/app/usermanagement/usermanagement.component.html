@@ -1,8 +1,66 @@
-<p>
-  usermanagement works!
-</p>
+<div>
 
 
-<button (click)="tabs.goToUserSelection()">
-  Back to all users
-</button>
+    <button class="btn" (click)="tabs.goToAdministration()">
+        Back to administration
+      </button>
+
+  <div *ngIf="detailUser == null">
+    <form class="navbar-form" role="search">
+      <input class="form-control" style="margin:20px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;"
+        placeholder="Search for user" [formControl]="searchControl">
+    </form>
+
+
+    <div>
+      <table class="table table-striped table-condensed">
+        <thead>
+          <tr>
+            <th style="min-width: 20px;">ID</th>
+            <th style="min-width: 80px;">Username</th>
+            <th style="min-width: 20px;">is billed</th>
+            <th style="width:20px;"> </th>
+            <th style="width:20px;"> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of backend.content.AllUsers.results">
+            <td>{{ user.user_id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.is_billed }}</td>
+            <td>
+              <a (click)="editUser(user)" class="btn btn-small btn-primary">edit</a>
+            </td>
+            <td>
+              <a (click)="deleteUser(user.user_id)" class="btn btn-small btn-danger">delete</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <app-paginator [parameters]="backend.content.AllUsers" (onPageChange)="pageNavigation($event)"></app-paginator>
+
+    <button (click)="createUser()">Create new user</button>
+
+  </div>
+
+  <div *ngIf="detailUser != null">
+    <h3>Detail Page for UserId {{detailUser.user_id}}</h3>
+    <div>
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input [(ngModel)]="detailUser.username" class="form-control" id="username">
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" [checked]="detailUser.is_billed" (change)="detailUser.is_billed = !detailUser.is_billed" /> should be billed</label>
+      </div>
+    </div>
+
+    <button (click)="cancelDetail()" class="btn btn-warning">Cancel</button>
+    <button (click)="saveDetail()" class="btn btn-success">Save</button>
+  </div>
+
+</div>
