@@ -30,6 +30,24 @@
 
 
 
+## Screenshots
+
+Current work in progress of frontend:
+
+### Userselection
+
+![Userselection Screen](https://github.com/n3phtys/ng-cervisia/blob/master/doc/cervisia6userselection.png)
+
+### Usermanagement
+
+![Usermanagement Screen](https://github.com/n3phtys/ng-cervisia/blob/master/doc/cervisia6usermanagement.png)
+
+### Bills
+
+![Billmanagement Screen](https://github.com/n3phtys/ng-cervisia/blob/master/doc/cervisia6billmanagement.png)
+
+
+
 
 # Angular CLI based README:
 
