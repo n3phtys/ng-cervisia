@@ -32,7 +32,7 @@ export class UserselectionComponent implements OnInit {
     //this.searchControl.valueChanges.subscribe(e => console.log("Term = " + e));
     const backend = this.backend;
     this.searchControl.valueChanges
-    .debounceTime(250)
+    .debounceTime(450)
     .distinctUntilChanged()
     .subscribe((term: string) => {
       console.log('Triggered with term = ' + term);

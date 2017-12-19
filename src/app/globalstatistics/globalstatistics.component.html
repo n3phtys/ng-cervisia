@@ -1,10 +1,12 @@
-<p>
-  globalstatistics works!
-</p>
-
-<button (click)="tabs.goToUserSelection()">
-  Back to all users
-</button>
+<div>
+    <div>
+    <button class="btn" (click)="tabs.goToUserSelection()">
+      Back to users
+    </button>
+    </div>
+<h4>
+  Log of all purchases and all users:
+</h4>
 
 
 <app-timespan-filter [timespan]="backend.viewstate.global_log.count_pars" (onTimespanFilterChange)="timeFilterChange($event)"></app-timespan-filter>
@@ -17,3 +19,10 @@
 
 
   <app-paginator [parameters]="backend.content.PurchaseLogGlobal" (onPageChange)="pageNavigation($event)"></app-paginator>
+
+
+  <div>
+  <a>Require older entry or you haven't found yours? Already billed purchases are only visible in the respective bill. Click here to search the bill archive.</a>
+  </div>
+  
+</div>

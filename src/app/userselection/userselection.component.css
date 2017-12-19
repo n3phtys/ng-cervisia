@@ -21,3 +21,9 @@ ul {
     background: grey;
     list-style-type: none;
 }
+
+.highlighted-user {
+    border: gold;
+    border-style: solid;
+    border-width: 5px;
+}

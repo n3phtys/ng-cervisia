@@ -1,11 +1,11 @@
 
 <form class="navbar-form" role="search">
-<input class="form-control" style="margin:20px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;" placeholder="Search for user" [formControl]="searchControl">
+<input class="form-control" style="margin:0px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;" placeholder="Search for user by name (case insensitive)" [formControl]="searchControl">
 </form>
 
 
 <ul>
-  <li *ngFor="let user of backend.content.computed_users_in_list" (click)="pressedUser($event, user)">
+  <li *ngFor="let user of backend.content.computed_users_in_list" (click)="pressedUser($event, user)" [ngClass]="{'highlighted-user' : user.highlight_in_ui}">
     {{user.username}}
   </li>
 </ul>

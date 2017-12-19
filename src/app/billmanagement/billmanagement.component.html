@@ -12,7 +12,7 @@
             <th style="min-width: 80px;">Created at date</th>
             <th style="min-width: 80px;">Comment</th>
             <th style="min-width: 20px;">Who was billed?</th>
-            <th style="width:20px;"> </th>
+            <th style="width:50px;"> </th>
           </tr>
         </thead>
         <tbody>
@@ -21,7 +21,7 @@
             <td>{{ bill.comment }}</td>
             <td>{{ bill.users }}</td>
             <td>
-              <a (click)="exportBill(bill)" class="btn btn-small btn-primary">export</a>
+              <a (click)="exportBill(bill)" class="btn btn-small btn-primary">export per mail</a>
             </td>
           </tr>
         </tbody>
@@ -31,9 +31,14 @@
     <app-paginator [parameters]="backend.content.Bills" (onPageChange)="pageNavigation($event)"></app-paginator>
 
     <div>
+      <h4>Create a new bill candidate</h4>
+      <div>
       <label>billing date of new bill</label>
         <input type="datetime-local" [ngModel] ="dt | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="dt = $event">
+      </div>
+      <div>
         <label>comment for new bill</label>
         <input [(ngModel)] ="commentField">
+      </div>
     <button (click)="createBill()">Create new Bill on this date</button>
   </div>
