@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BackendService, Item, DetailInfo, User, Purchase, ShoppingCartElement } from '../backend.service';
+import { BackendService, ShoppingCartElement } from '../backend.service';
 
 import { ReactiveFormsModule, FormsModule, FormControl } from '@angular/forms';
 import { Observable, Observer } from 'rxjs/Rx';
@@ -8,6 +8,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import { TabService } from '../tab.service';
 import { TabActive } from '../tab-active.enum';
+import { Item } from '../backend-types';
 
 
 @Component({
@@ -62,12 +63,11 @@ export class FullPurchaseComponent implements OnInit {
       this.specialCounter--;
       this.shoppingCart.push({
         count: 1, item: {
-
           name: c,
           item_id: id,
           category: null,
           cost_cents: 0.00,
-
+          deleted: false,
         }
       })
     }

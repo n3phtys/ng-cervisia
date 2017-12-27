@@ -6,7 +6,8 @@ import { Observable, Observer } from 'rxjs/Rx';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
-import { Item, BackendService } from '../backend.service';
+import { BackendService } from '../backend.service';
+import { Item } from '../backend-types';
 
 @Component({
   selector: 'app-itemmanagement',

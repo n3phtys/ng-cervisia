@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TabService } from '../tab.service';
 import { TabActive } from '../tab-active.enum';
-import { Bill, BackendService, Timespan } from '../backend.service';
+import { BackendService} from '../backend.service';
+import { ParametersPurchaseLogGlobalCount, Bill } from '../backend-types';
 
 @Component({
   selector: 'app-billmanagement',
@@ -13,6 +14,8 @@ export class BillmanagementComponent implements OnInit {
 
   dt: Date;
   commentField: string;
+  filter : ParametersPurchaseLogGlobalCount;
+  
   
 
   constructor(public tabs: TabService, public backend: BackendService) { }
@@ -30,7 +33,7 @@ export class BillmanagementComponent implements OnInit {
       this.backend.updateBills();
   } 
 
-  timeFilterChange(filter : Timespan) {
+  timeFilterChange(filter : ParametersPurchaseLogGlobalCount) {
     console.log("received filter");
     console.log(filter);
     this.backend.viewstate.bills.count_pars.end_exclusive = filter.millis_end;
@@ -41,13 +44,13 @@ export class BillmanagementComponent implements OnInit {
     exportBill(bill: Bill) {
       const c = prompt("To which email address should I sent this bill? Leave empty to cancel");
       if (c != null && c.length > 0) {
-        this.backend.exportBillToEmail(null, bill.timestamp, c);
+        this.backend.exportBillToEmail(null, bill.timestamp_from, bill.timestamp_to, c);
       }
     }
 
     createBill() {
       if (this.dt != null && !Number.isNaN(this.dt.getTime() )) {
-          this.backend.createBill(this.dt, this.commentField);
+          this.backend.createBill(this.dt, this.commentField, this.filter.millis_start, this.filter.millis_end);
       }
     }
 

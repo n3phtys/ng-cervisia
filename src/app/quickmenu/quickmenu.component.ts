@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { BackendService, Item, AllResults, User } from '../backend.service';
+import { BackendService, AllResults} from '../backend.service';
 
 import { DialogRef, ModalComponent, CloseGuard } from 'ngx-modialog';
 import { BSModalContext } from 'ngx-modialog/plugins/bootstrap';
 import { TabService } from '../tab.service';
 import { TabActive } from '../tab-active.enum';
+import { User, Item } from '../backend-types';
 
 export class CustomModalContext extends BSModalContext {
   public user: User;

@@ -3,7 +3,7 @@ import { ViewContainerRef } from '@angular/core';
 import { Overlay, overlayConfigFactory } from 'ngx-modialog';
 import { Modal, BSModalContext } from 'ngx-modialog/plugins/bootstrap';
 import {CustomModalContext, QuickmenuComponent} from '../quickmenu/quickmenu.component';
-import { BackendService , User } from '../backend.service';
+import { BackendService } from '../backend.service';
 
 import {ReactiveFormsModule, FormsModule, FormControl} from '@angular/forms';
 import {Observable, Observer} from 'rxjs/Rx';
@@ -11,6 +11,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import { TabService } from '../tab.service';
+import { User } from '../backend-types';
 
 
 

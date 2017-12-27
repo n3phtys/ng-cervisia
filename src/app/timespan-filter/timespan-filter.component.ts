@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { Timespan } from '../backend.service';
+import { ParametersPurchaseLogGlobal, ParametersPurchaseLogGlobalCount } from '../backend-types';
 
 const ONE_MONTH: number = 1000 * 60 * 60 * 24 * 30;
 
@@ -13,13 +13,13 @@ export class TimespanFilterComponent implements OnInit {
   endDate: Date = new Date();
 
 
-  @Input() set timespan(value: Timespan) {
+  @Input() set timespan(value: ParametersPurchaseLogGlobalCount) {
     this.startDate = new Date(value.millis_start);
     this.endDate = new Date(value.millis_end);
     console.log("Timespan Input changed:");
     console.log(this);
   }
-  @Output() onTimespanFilterChange = new EventEmitter<Timespan>();
+  @Output() onTimespanFilterChange = new EventEmitter<ParametersPurchaseLogGlobalCount>();
 
   constructor() { }
 

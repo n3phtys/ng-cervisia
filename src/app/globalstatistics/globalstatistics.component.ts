@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TabService } from '../tab.service';
 import { TabActive } from '../tab-active.enum';
-import { BackendService, Timespan } from '../backend.service';
+import { BackendService } from '../backend.service';
+import { ParametersBillsCount, ParametersPurchaseLogGlobalCount } from '../backend-types';
 
 @Component({
   selector: 'app-globalstatistics',
@@ -27,7 +28,7 @@ export class GlobalstatisticsComponent implements OnInit {
         this.backend.updateGlobalLog();
     } 
 
-    timeFilterChange(filter : Timespan) {
+    timeFilterChange(filter : ParametersPurchaseLogGlobalCount) {
       console.log("received filter");
       console.log(filter);
       this.backend.viewstate.global_log.count_pars = filter;

@@ -6,7 +6,8 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import { TabService } from '../tab.service';
-import { BackendService, User } from '../backend.service';
+import { BackendService } from '../backend.service';
+import { User } from '../backend-types';
 
 @Component({
   selector: 'app-usermanagement',

@@ -8,6 +8,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import { ReferenceAst } from '@angular/compiler';
+import { Item, Freeby, Purchase, Bill, User, UserDetailInfo, ParametersAll, ParametersPurchaseLogGlobal, ServerWriteResult, RefreshedData, ParametersPagination } from './backend-types';
 
 
 export interface PaginatedResult<T> {
@@ -17,178 +18,13 @@ export interface PaginatedResult<T> {
   results: T[];
 }
 
-export interface Item {
-  name: string;
-  item_id: number;
-  category: string;
-  cost_cents: number;
-}
-
-export interface User {
-  username: string;
-  external_user_id: string;
-  user_id: number;
-  is_billed: boolean;
-  highlight_in_ui: boolean;
-}
-export interface Purchase {
-  SimplePurchase: SimplePurchase;
-}
-
-export interface SimplePurchase {
-  unique_id: number;
-  timestamp_epoch_millis: number;
-  item: Item;
-  consumer: User;
-}
-
-export interface DetailInfo {
-  consumed: Map<string, number>;
-  last_bill_date: number;
-  last_bill_cost: number;
-  currently_cost: number;
-}
-
-export interface AppState {
-  top_users: ParametersTopUsers;
-  all_users: ParametersAllUsers;
-  all_items: ParametersAllItems;
-  global_log: ParametersPurchaseLogGlobal;
-  top_personal_drinks: ParametersTopPersonalDrinks;
-  personal_log: ParametersPurchaseLogPersonal;
-  personal_detail_infos: ParametersDetailInfoForUser;
-  bills: ParametersBills;
-  open_ffa_freebies: ParametersOpenFFAFreebies;
-  incoming_freebies: ParametersIncomingFreebies;
-  outgoing_freebies: ParametersOutgoingFreebies;
-}
-
-interface ParametersBills {
-  count_pars: ParametersBillsCount;
-  pagination: ParametersPagination;
-}
-
-interface ParametersOpenFFAFreebies {
-
-}
-
-interface ParametersIncomingFreebies {
-
-}
-
-interface ParametersOutgoingFreebies {
-
-}
-
-interface ParametersBillsCount {
-  start_inclusive: number;
-  end_exclusive: number;
-  scope_user_id: number; //may be null for all users
-}
-
-interface ParametersSearchterm {
-  searchterm: string;
-}
-
-interface ParametersPagination {
-  start_inclusive: number;
-  end_exclusive: number;
-}
-
-
-interface ParametersTopUsers {
-  n: number;
-}
-
-interface ParametersAllUsers {
-  count_pars: ParametersSearchterm;
-  pagination: ParametersPagination;
-}
-
-interface ParametersAllItems {
-  count_pars: ParametersSearchterm;
-  pagination: ParametersPagination;
-}
-
-export interface Timespan {
-  millis_start: number;
-  millis_end: number;
-}
-
-export interface TimespanWithUserId extends Timespan {
-  user_id: number;
-  millis_start: number;
-  millis_end: number;
-
-}
-
-interface ParametersPurchaseLogGlobal {
-  count_pars: Timespan;
-  pagination: ParametersPagination;
-}
-
-interface ParametersTopPersonalDrinks {
-  user_id: number;
-  n: number;
-}
-
-interface ParametersPurchaseLogPersonal {
-  count_pars: TimespanWithUserId;
-  pagination: ParametersPagination;
-}
-
-export interface ParametersDetailInfoForUser {
-  user_id: number;
-}
-
-export interface SuccessContent {
-  timestamp_epoch_millis: number;
-  refreshed_data: AllResults;
-}
-
-export interface ServerWriteResult {
-  error_message: string;
-  is_success: boolean;
-  content: SuccessContent;
-}
-
-export interface UserGroupSingle {
-  user_id: number;
-}
-
-export interface UserGroupAll {
-
-}
-
-export interface UserGroupMulti {
-  user_ids: number[];
-}
-
-export interface UserGroup {
-  SingleUser: UserGroupSingle;
-  AllUsers: UserGroupAll;
-  MultipleUsers: UserGroupMulti;
-}
-
-export interface Bill {
-
-  timestamp: number;
-  users: UserGroup;
-  //TODO: include maps
-  comment: string;
-}
-
-export interface Freeby {
-
-}
-
 export interface NamedArray {
   name: string;
   arr: Array<Item>;
 }
 
 export interface AllResults {
-  DetailInfoForUser: PaginatedResult<DetailInfo>;
+  DetailInfoForUser: PaginatedResult<UserDetailInfo>;
   TopUsers: PaginatedResult<User>;
   AllUsers: PaginatedResult<User>;
   AllItems: PaginatedResult<Item>;
@@ -291,7 +127,7 @@ const NAME_OF_NO_CATEGORY = "Misc."
 @Injectable()
 export class BackendService {
 
-  viewstate: AppState = {
+  viewstate: ParametersAll = {
     top_users: { n: MAX_NUMBER_OF_USERS_SHOWN },
     all_users: {
       count_pars: { searchterm: '' },
@@ -523,16 +359,16 @@ export class BackendService {
     const endp = endpoint_userdetails;
     console.log(queryjson);
     // Make the HTTP request: <PaginatedResult<User>>
-    this.http.get<PaginatedResult<DetailInfo>>(endp, { params: { query: queryjson } }).subscribe(data => {
+    this.http.get<PaginatedResult<UserDetailInfo>>(endp, { params: { query: queryjson } }).subscribe(data => {
       this.content.DetailInfoForUser = data;
     });
   }
 
-  createBill(date: Date, comment: string) {
+  createBill(date: Date, comment: string, billTimestampFrom: number, billTimestampTo: number) {
     throw new Error('Not yet implemented');
   }
 
-  exportBillToEmail(scopedToUserIdOrNull: User, billTimestamp: number, receiverEmailAddress: string) {
+  exportBillToEmail(scopedToUserIdOrNull: User, billTimestampFrom: number, billTimestampTo: number, receiverEmailAddress: string) {
     throw new Error('Not yet implemented');
   }
 
@@ -776,7 +612,7 @@ export class BackendService {
     );
   }
 
-  updateContentWithWriteResult(result: AllResults) {
+  updateContentWithWriteResult(result: RefreshedData) {
     for (var key in result) {
       if (result.hasOwnProperty(key)) {
         const v = result[key];
