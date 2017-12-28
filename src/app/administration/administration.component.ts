@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TabService } from '../tab.service';
 import { TabActive } from '../tab-active.enum';
+import { PasswordCheckService } from '../password-check.service';
 
 @Component({
   selector: 'app-administration',
@@ -10,11 +11,10 @@ import { TabActive } from '../tab-active.enum';
 export class AdministrationComponent implements OnInit {
 
  
-  constructor(public tabs: TabService) { }
+  constructor(public tabs: TabService, public passmanager: PasswordCheckService) { }
   
     ngOnInit() {
     }
-  
   
 
 }

@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { GiveoutComponent } from './giveout.component';
 import { BackendService } from '../backend.service';
 import { TabService } from '../tab.service';
+import { PasswordCheckService } from '../password-check.service';
 
 describe('GiveoutComponent', () => {
   let component: GiveoutComponent;
@@ -10,7 +11,7 @@ describe('GiveoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      providers: [BackendService, TabService],
+      providers: [BackendService, TabService, PasswordCheckService],
       declarations: [ GiveoutComponent ]
     })
     .compileComponents();

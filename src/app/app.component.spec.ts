@@ -22,6 +22,7 @@ import { PersonalstatisticsComponent } from './personalstatistics/personalstatis
 import { GiveoutComponent } from './giveout/giveout.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { TimespanFilterComponent } from './timespan-filter/timespan-filter.component';
+import { PasswordCheckService } from './password-check.service';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -33,7 +34,7 @@ describe('AppComponent', () => {
         ModalModule.forRoot(),
         BootstrapModalModule
       ],
-      providers: [BackendService, TabService],
+      providers: [BackendService, TabService, PasswordCheckService],
       declarations: [
         AppComponent,
         UserselectionComponent,

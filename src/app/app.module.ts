@@ -23,6 +23,7 @@ import { AdministrationComponent } from './administration/administration.compone
 import { TabService } from './tab.service';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { TimespanFilterComponent } from './timespan-filter/timespan-filter.component';
+import { PasswordCheckService } from './password-check.service';
 
 
 
@@ -50,7 +51,7 @@ import { TimespanFilterComponent } from './timespan-filter/timespan-filter.compo
     ModalModule.forRoot(),
     BootstrapModalModule
   ],
-  providers: [BackendService, TabService],
+  providers: [BackendService, TabService, PasswordCheckService],
   bootstrap: [AppComponent],
 
   // IMPORTANT:

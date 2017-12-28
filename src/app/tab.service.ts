@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TabActive } from './tab-active.enum';
+import { PasswordCheckService } from './password-check.service';
 
 @Injectable()
 export class TabService {
@@ -29,7 +30,7 @@ export class TabService {
   }
 
 
-  constructor() {
+  constructor(public passmanager: PasswordCheckService) {
     this.resetFlags(TabActive.UserSelectionPage);
    }
 
@@ -42,11 +43,13 @@ export class TabService {
     this.resetFlags(TabActive.GlobalStatisticsPage);
   }
   public goToAdministration() {
+    if (this.passmanager.checkPassword()) {
     // console.log("Changed openTab from " + this.openTab);
     // console.log(TabActive.AdministrationPage);
     // this.openTab = TabActive.AdministrationPage;
     // console.log("Changed openTab to " + this.openTab);
     this.resetFlags(TabActive.AdministrationPage);
+    }
   }
 
   public goToItemManagement() {

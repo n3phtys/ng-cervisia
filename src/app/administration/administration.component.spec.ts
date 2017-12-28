@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AdministrationComponent } from './administration.component';
 import { BackendService } from '../backend.service';
 import { TabService } from '../tab.service';
+import { PasswordCheckService } from '../password-check.service';
 
 describe('AdministrationComponent', () => {
   let component: AdministrationComponent;
@@ -10,7 +11,7 @@ describe('AdministrationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      providers: [BackendService, TabService],
+      providers: [BackendService, TabService, PasswordCheckService],
       declarations: [ AdministrationComponent ]
     })
     .compileComponents();
