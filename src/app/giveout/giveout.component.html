@@ -5,3 +5,39 @@
 <button (click)="tabs.goToUserSelection()">
   Back to all users
 </button>
+
+
+<div>
+  select if FFA or specific person budget or specific person count
+
+  <select [(ngModel)]="freebytype">
+    <option *ngFor="let fbt of freebytypes | enumPipe" [value]="fbt.key">{{fbt.value}}</option>
+ </select>
+
+</div>
+<div *ngIf="freebytype!=freebytypes.FFA">
+  select person 
+
+  <app-single-user-selection (selectionChanged)="selectedUser($event)"></app-single-user-selection>
+</div>
+<div *ngIf="freebytype!=freebytypes.Budget">
+  multi item / multi category selection 
+  <app-multi-item-selection (selectionChanged)="selectedItemsAndCategories($event)"></app-multi-item-selection>
+</div>
+<div *ngIf="freebytype==freebytypes.Budget">
+  select amount in cents 
+
+  <label for="budgetAmount">Budget in Cents:</label>
+  <input [(ngModel)]="amountCents" type="number" min="1" max="100000" class="form-control" id="budgetAmount">
+</div>
+<div *ngIf="freebytype!=freebytypes.Budget">
+  select amount in units 
+  <label for="countAmount">Number of items to donate:</label>
+  <input [(ngModel)]="amountUnits" type="number" min="1" max="100000" class="form-control" id="countAmount">
+</div>
+<div>
+  Message Input TextArea
+  <input type="textarea" [(ngModel)]="message" placeholder="The text to present the recipient when seeing this donation." />
+</div>
+
+<button (click)="finalize()" >Finalize Donation</button>
