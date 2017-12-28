@@ -117,6 +117,8 @@ const post_endpoint_delete_user = '/api/users/delete';
 const post_endpoint_add_item = '/api/items';
 const post_endpoint_update_item = '/api/items/update';
 const post_endpoint_delete_item = '/api/items/delete';
+const post_endpoint_undo_purchase_user = '/api/purchases/undo/user';
+const post_endpoint_undo_purchase_admin = '/api/purchases/undo/admin';
 
 const MAX_NUMBER_OF_USERS_SHOWN = 40;
 const MAX_NUMBER_OF_TOP_ITEMS_SHOWN = 4;
@@ -370,6 +372,34 @@ export class BackendService {
 
   exportBillToEmail(scopedToUserIdOrNull: User, billTimestampFrom: number, billTimestampTo: number, receiverEmailAddress: string) {
     throw new Error('Not yet implemented');
+  }
+
+  undoPurchaseByUser(purchase_id: number) {
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_undo_purchase_user;
+    const payload = {
+      unique_id: purchase_id,
+    };
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
+  }
+
+  undoPurchaseByAdmin(purchase_id: number) {
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_undo_purchase_admin;
+    const payload = {
+      unique_id: purchase_id,
+    };
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
   }
 
   createUser(username: string) {

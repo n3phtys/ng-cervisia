@@ -14,7 +14,7 @@
 <!--*ngIf="backend.content.PurchaseLogGlobal !== null"-->
   <div *ngFor="let purchase of backend.content.PurchaseLogGlobal.results">
     
-    #{{purchase.SimplePurchase.unique_id}} on date {{purchase.SimplePurchase.timestamp_epoch_millis | date:'short'}} : {{purchase.SimplePurchase.consumer.username}} bought {{purchase.SimplePurchase.item.name}}
+    #{{purchase.SimplePurchase.unique_id}} on date {{purchase.SimplePurchase.timestamp_epoch_millis | date:'short'}} : {{purchase.SimplePurchase.consumer.username}} bought {{purchase.SimplePurchase.item.name}} <a (click)="undoPurchase(purchase.SimplePurchase.unique_id, purchase.SimplePurchase.timestamp_epoch_millis)">Cancel Purchase</a>
   </div>
 
 
