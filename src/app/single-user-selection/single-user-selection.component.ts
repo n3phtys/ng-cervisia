@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { User } from '../backend-types';
+import { BackendService } from '../backend.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-single-user-selection',
@@ -7,11 +9,39 @@ import { User } from '../backend-types';
   styleUrls: ['./single-user-selection.component.css']
 })
 export class SingleUserSelectionComponent implements OnInit {
+  searchControl: FormControl = new FormControl();
+  term: string = '';
+
+
   @Output() selectionChanged = new EventEmitter<User>();
 
-  constructor() { }
+  selected: User = null;
+
+  constructor(public backend: BackendService) { }
 
   ngOnInit() {
+    this.selected = null;
+    this.searchControl.valueChanges
+      .debounceTime(500)
+      .distinctUntilChanged()
+      .subscribe((term: string) => {
+        this.term = term;
+        console.log('Triggered with term = ' + term);
+        this.backend.updateAllUserlist(term);
+      });
+    this.backend.updateAllUserlist('');
+    this.term = '';
   }
+
+  selectUser(user: User) {
+    this.selected = user;
+    this.selectionChanged.emit(user);
+  }
+
+  pageNavigation(page : number) {
+    console.log("Navigating to page " + page);
+    BackendService.moveToPage(this.backend.viewstate.all_users.pagination, page);
+    this.backend.updateAllUserlist(this.term);
+} 
 
 }

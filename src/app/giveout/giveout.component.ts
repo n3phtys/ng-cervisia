@@ -17,13 +17,13 @@ export class GiveoutComponent implements OnInit {
   freebytypes = FreebyEnum;
 
 
-  freebytype: FreebyEnum = FreebyEnum.FFA;
+  freebytype: FreebyEnum;
   message: string;
   selectedPersonId: User;
   selectedItems: Array<Item>;
   selectedCategories: Array<string>;
-  amountCents: number = 100;
-  amountUnits: number = 1;
+  amountCents: number;
+  amountUnits: number;
 
 
   constructor(public tabs: TabService, public backend: BackendService) { }
@@ -33,17 +33,38 @@ export class GiveoutComponent implements OnInit {
   }
 
   clear() {
-    throw new Error('Not yet implemented');
+    this.freebytype = FreebyEnum.FFA;
+    this.message = "";
+    this.selectedPersonId = null;
+    this.selectedItems = [];
+    this.selectedCategories = [];
+    this.amountCents = 100;
+    this.amountUnits = 1;
   }
 
   finalize() {
       if (confirm("Do you really want to give this donation? Cannot be undone!")) {
-        throw new Error('Not yet implemented'); 
+        switch(this.freebytype) {
+          case FreebyEnum.Budget: {
+            throw new Error('Not yet implemented');
+            //break;
+          }
+          case FreebyEnum.Set: {
+            throw new Error('Not yet implemented');
+            //break;
+          }
+          case FreebyEnum.FFA: {
+            throw new Error('Not yet implemented');
+            //break;
+          }
+        }
       }
   } 
 
   selectedUser(user: User) {
-    throw new Error('Not yet implemented');
+    console.log("selectedUser with user:");
+    console.log(user);
+    this.selectedPersonId = user;
   }
 
   selectedItemsAndCategories(selection: MultiItemSelection) {

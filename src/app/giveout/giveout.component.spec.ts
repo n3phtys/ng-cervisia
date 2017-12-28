@@ -11,6 +11,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ModalModule } from 'ngx-modialog';
+import { PaginatorComponent } from '../paginator/paginator.component';
 
 describe('GiveoutComponent', () => {
   let component: GiveoutComponent;
@@ -26,7 +27,9 @@ describe('GiveoutComponent', () => {
         ModalModule.forRoot(),
       ],
       providers: [BackendService, TabService, PasswordCheckService],
-      declarations: [ GiveoutComponent, MultiItemSelectionComponent, 
+      declarations: [ GiveoutComponent, 
+        PaginatorComponent,
+        MultiItemSelectionComponent, 
         EnumPipePipe,
         SingleUserSelectionComponent ]
     })
