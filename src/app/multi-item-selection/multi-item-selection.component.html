@@ -3,3 +3,32 @@
 </p>
 
 TODO: implement multi selection
+
+every category becomes a collapse
+Those without category come afterwards
+category is clickable (turns green if selected), as is any item
+
+
+
+
+<form class="navbar-form" role="search">
+  <input class="form-control" style="margin:20px;padding:20px;" placeholder="Search for item" [formControl]="searchControl">
+</form>
+
+
+<div>
+  <div *ngFor="let category of backend.content.all_items_per_category">
+    <button (click)="onClickedCategory(category, $event)" >Category: {{category.name}} <span *ngIf="selectedCategories.has(category)">is selected</span></button>
+    <ul>
+      <li *ngFor="let item of category.arr" (click)="onClickedItem(item, $event)">
+        {{item.name}} <span *ngIf="selectedItems.has(item)">is selected</span>
+      </li>
+    </ul>
+  </div>
+
+  <div>
+    <button (click)="onSpecialClicked()">
+      Something else
+    </button>
+  </div>
+</div>

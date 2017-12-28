@@ -314,6 +314,64 @@ export interface SuccessContent {
 }
 
 
+export interface MakeSimplePurchase {
+    user_id: number;
+    item_id: number;
+}
+
+
+export interface MakeCartPurchase {
+    user_id: number;
+    items: Array<KeyValue>;
+    specials: Array<string>;
+}
+
+
+export interface MakeFFAPurchase {
+    ffa_id: number;
+    item_id: number;
+}
+
+
+export interface CreateFreeForAll {
+    allowed_categories: Array<string>;
+    allowed_drinks: Array<number>;
+    allowed_number_total: number;
+    text_message: string;
+    donor: number;
+}
+
+
+export interface CreateBudgetGiveout {
+    cents_worth_total: number;
+    text_message: string;
+    donor: number;
+    recipient: number;
+}
+
+
+export interface CreateCountGiveout {
+    allowed_categories: Array<string>;
+    allowed_drinks: Array<number>;
+    allowed_number_total: number;
+    text_message: string;
+    donor: number;
+    recipient: number;
+}
+
+
+export interface SetPriceForSpecial {
+    unique_id: number;
+    price: number;
+}
+
+
+export interface KeyValue {
+    key: number;
+    value: number;
+}
+
+
 export interface RefreshedData {
     DetailInfoForUser: any;
     TopUsers: any;

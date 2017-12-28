@@ -8,7 +8,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import { ReferenceAst } from '@angular/compiler';
-import { Item, Freeby, Purchase, Bill, User, UserDetailInfo, ParametersAll, ParametersPurchaseLogGlobal, ServerWriteResult, RefreshedData, ParametersPagination } from './backend-types';
+import { Item, Freeby, Purchase, Bill, User, UserDetailInfo, ParametersAll, ParametersPurchaseLogGlobal, ServerWriteResult, RefreshedData, ParametersPagination, MakeFFAPurchase, CreateBudgetGiveout, CreateCountGiveout, CreateFreeForAll } from './backend-types';
 
 
 export interface PaginatedResult<T> {
@@ -119,6 +119,11 @@ const post_endpoint_update_item = '/api/items/update';
 const post_endpoint_delete_item = '/api/items/delete';
 const post_endpoint_undo_purchase_user = '/api/purchases/undo/user';
 const post_endpoint_undo_purchase_admin = '/api/purchases/undo/admin';
+const post_endpoint_freeby_create_ffa = '/api/giveout/ffa';
+const post_endpoint_freeby_create_count = '/api/giveout/count';
+const post_endpoint_freeby_create_budget = '/api/giveout/budget';
+const post_endpoint_ffa_purchase = '/api/purchases/ffa';
+
 
 const MAX_NUMBER_OF_USERS_SHOWN = 40;
 const MAX_NUMBER_OF_TOP_ITEMS_SHOWN = 4;
@@ -666,6 +671,92 @@ export class BackendService {
 
     this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
       console.log("Success of post simple purchase");
+      console.log(data);
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
+  }
+
+  createBudgetFreeby(doner_id: number, recipient_id: number, amountCents: number, message: string) {
+
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_freeby_create_budget;
+    const payload: CreateBudgetGiveout = {
+      cents_worth_total: amountCents,
+      text_message: message,
+      donor: doner_id,
+      recipient: recipient_id,
+    };
+
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+      console.log("Success of create budget");
+      console.log(data);
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
+  }
+
+  createCountFreeby(doner_id: number, recipient_id: number, allowedItems: Array<number>, selectedCategories: Array<string>, amountUnits: number, message: string) {
+
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_freeby_create_count;
+    const payload: CreateCountGiveout = {
+      allowed_categories: selectedCategories,
+      allowed_drinks: allowedItems,
+      allowed_number_total: amountUnits,
+      text_message: message,
+      donor: doner_id,
+      recipient: recipient_id,
+    };
+
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+      console.log("Success of create count");
+      console.log(data);
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
+  }
+
+  createFFAFreeby(doner_id: number, allowedItems: Array<number>, selectedCategories: Array<string>, amountUnits: number, message: string) {
+    
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_freeby_create_ffa;
+    const payload: CreateFreeForAll = {
+      allowed_categories: selectedCategories,
+      allowed_drinks: allowedItems,
+      allowed_number_total: amountUnits,
+      text_message: message,
+      donor: doner_id,
+    };
+
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+      console.log("Success of create ffa");
+      console.log(data);
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
+  }
+
+
+  makeFFAPurchase(ffaId: number, itemId: number) {
+    
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_ffa_purchase;
+    const payload: MakeFFAPurchase = {
+      ffa_id: ffaId,
+      item_id: itemId,
+    };
+
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+      console.log("Success of post ffa purchase");
       console.log(data);
       if (data.is_success) {
         this.updateContentWithWriteResult(data.content.refreshed_data);

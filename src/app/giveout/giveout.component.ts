@@ -43,19 +43,24 @@ export class GiveoutComponent implements OnInit {
   }
 
   finalize() {
-      if (confirm("Do you really want to give this donation? Cannot be undone!")) {
+      const doner_id: number = this.backend.viewstate.personal_detail_infos.user_id;
+      if ((this.freebytype == FreebyEnum.FFA || this.selectedUser != null) && confirm("Do you really want to give this donation? Cannot be undone!")) {
         switch(this.freebytype) {
           case FreebyEnum.Budget: {
-            throw new Error('Not yet implemented');
-            //break;
+            const recipient_id: number = this.selectedPersonId.user_id;
+            this.backend.createBudgetFreeby(doner_id, recipient_id, this.amountCents, this.message);
+            break;
           }
           case FreebyEnum.Set: {
-            throw new Error('Not yet implemented');
-            //break;
+            const recipient_id: number = this.selectedPersonId.user_id;
+            const allowedItems: Array<number> = this.selectedItems.map((it, idx) => it.item_id);
+            this.backend.createCountFreeby(doner_id, recipient_id, allowedItems, this.selectedCategories, this.amountUnits, this.message);
+            break;
           }
           case FreebyEnum.FFA: {
-            throw new Error('Not yet implemented');
-            //break;
+            const allowedItems: Array<number> = this.selectedItems.map((it, idx) => it.item_id);
+            this.backend.createFFAFreeby(doner_id, allowedItems, this.selectedCategories, this.amountUnits, this.message);
+            break;
           }
         }
       }
@@ -68,6 +73,9 @@ export class GiveoutComponent implements OnInit {
   }
 
   selectedItemsAndCategories(selection: MultiItemSelection) {
-    throw new Error('Not yet implemented');
+    console.log("selectedUser with user:");
+    console.log(selection);
+    this.selectedCategories = selection.categories;
+    this.selectedItems = selection.items;
   }
 }
