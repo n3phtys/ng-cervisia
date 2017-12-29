@@ -191,9 +191,30 @@ export class BackendService {
         end_exclusive: 5,
       }
     },
-    open_ffa_freebies: {},
-    incoming_freebies: {},
-    outgoing_freebies: {},
+    open_ffa_freebies: {
+      pagination: {
+        start_inclusive: 0,
+        end_exclusive: 5,
+      }
+    },
+    incoming_freebies: {
+      count_pars: {
+        recipient_id: 0,
+      },
+      pagination: {
+        start_inclusive: 0,
+        end_exclusive: 5,
+      }
+    },
+    outgoing_freebies: {
+      count_pars: {
+        donor_id: 0,
+      },
+      pagination: {
+        start_inclusive: 0,
+        end_exclusive: 5,
+      }
+    },
   };
 
   content: AllResults = {
@@ -331,7 +352,12 @@ export class BackendService {
     const endp = endpoint_allitems;
     console.log(queryjson);
     // Make the HTTP request: <PaginatedResult<User>>
-    this.http.get<PaginatedResult<Item>>(endp, { params: { query: queryjson } }).subscribe(data => {
+      console.log("refreshing all items");
+    this.http.get(endp, { params: { query: queryjson } }).subscribe(dat => {
+      console.log("received all items");
+    
+      const data = dat as PaginatedResult<Item>;
+
       this.content.AllItems = data;
 
       const v: Array<NamedArray> = [];
@@ -359,6 +385,7 @@ export class BackendService {
 
       this.content.all_items_per_category = v;
     });
+    console.log("Setup HTTP for refresh item");
   }
 
   refreshDetailInfo() {

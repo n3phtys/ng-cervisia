@@ -33,7 +33,7 @@ export class MultiItemSelectionComponent implements OnInit {
         backend.updateItemlist(term);
       });
 
-    backend.updateItemlist('');
+     backend.updateItemlist('');
 
     this.selectedCategories.clear();
     this.selectedItems.clear();

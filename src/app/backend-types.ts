@@ -72,6 +72,7 @@ export interface ParametersBills {
 
 
 export interface ParametersOpenFFAFreebies {
+    pagination: ParametersPagination;
 }
 
 
@@ -95,18 +96,24 @@ export interface ParametersPurchaseLogPersonal {
 
 
 export interface ParametersIncomingFreebiesCount {
+    recipient_id: number;
 }
 
 
 export interface ParametersIncomingFreebies {
+    count_pars: ParametersIncomingFreebiesCount;
+    pagination: ParametersPagination;
 }
 
 
 export interface ParametersOutgoingFreebiesCount {
+    donor_id: number;
 }
 
 
 export interface ParametersOutgoingFreebies {
+    count_pars: ParametersOutgoingFreebiesCount;
+    pagination: ParametersPagination;
 }
 
 
@@ -314,6 +321,7 @@ export interface SuccessContent {
 }
 
 
+
 export interface MakeSimplePurchase {
     user_id: number;
     item_id: number;
@@ -370,6 +378,7 @@ export interface KeyValue {
     key: number;
     value: number;
 }
+
 
 
 export interface RefreshedData {
