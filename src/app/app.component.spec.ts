@@ -26,6 +26,8 @@ import { PasswordCheckService } from './password-check.service';
 import { EnumPipePipe } from './enum-pipe.pipe';
 import { SingleUserSelectionComponent } from './single-user-selection/single-user-selection.component';
 import { MultiItemSelectionComponent } from './multi-item-selection/multi-item-selection.component';
+import { FfaListComponent } from './ffa-list/ffa-list.component';
+
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -55,6 +57,7 @@ describe('AppComponent', () => {
         GiveoutComponent,
         PaginatorComponent,
         TimespanFilterComponent,
+        FfaListComponent,
       ],
     }).compileComponents();
   }));

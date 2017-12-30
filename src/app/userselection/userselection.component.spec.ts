@@ -11,6 +11,7 @@ import { UserselectionComponent } from './userselection.component';
 import { ModalModule } from 'ngx-modialog';
 import { BootstrapModalModule } from 'ngx-modialog/plugins/bootstrap';
 import { TabService } from '../tab.service';
+import { FfaListComponent } from '../ffa-list/ffa-list.component';
 
 describe('UserselectionComponent', () => {
   let component: UserselectionComponent;
@@ -27,7 +28,7 @@ describe('UserselectionComponent', () => {
         BootstrapModalModule
       ],
       providers: [BackendService, TabService],
-      declarations: [ UserselectionComponent ]
+      declarations: [ UserselectionComponent, FfaListComponent ]
     })
     .compileComponents();
   }));

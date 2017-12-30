@@ -1,4 +1,9 @@
 
+
+
+<app-ffa-list></app-ffa-list>
+
+
 <form class="navbar-form" role="search">
 <input class="form-control" style="margin:0px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;" placeholder="Search for user by name (case insensitive)" [formControl]="searchControl">
 </form>
@@ -13,8 +18,14 @@
 
 <div>
   <label>Last Purchase:</label>
-  <div *ngIf="backend.content.LastPurchases.total_count > 0">
+  <div *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].SimplePurchase != null">
       #{{backend.content.LastPurchases.results[0].SimplePurchase.unique_id}} on date {{backend.content.LastPurchases.results[0].SimplePurchase.timestamp_epoch_millis | date:'short'}} : {{backend.content.LastPurchases.results[0].SimplePurchase.consumer.username}} bought {{backend.content.LastPurchases.results[0].SimplePurchase.item.name}}
+  </div>
+  <div *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].SpecialPurchase != null">
+      #{{backend.content.LastPurchases.results[0].SpecialPurchase.unique_id}} on date {{backend.content.LastPurchases.results[0].SpecialPurchase.timestamp_epoch_millis | date:'short'}} : {{backend.content.LastPurchases.results[0].SpecialPurchase.consumer.username}} bought {{backend.content.LastPurchases.results[0].SpecialPurchase.special_name}}
+  </div>
+  <div *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].FFAPurchase != null">
+      #{{backend.content.LastPurchases.results[0].FFAPurchase.unique_id}} on date {{backend.content.LastPurchases.results[0].FFAPurchase.timestamp_epoch_millis | date:'short'}} : Someone bought {{backend.content.LastPurchases.results[0].FFAPurchase.item.name}} (FFA Purchase donated by {{backend.content.LastPurchases.results[0].FFAPurchase.donor.username}})
   </div>
 </div>
 

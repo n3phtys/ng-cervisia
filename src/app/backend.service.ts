@@ -8,7 +8,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import { ReferenceAst } from '@angular/compiler';
-import { Item, Freeby, Purchase, Bill, User, UserDetailInfo, ParametersAll, ParametersPurchaseLogGlobal, ServerWriteResult, RefreshedData, ParametersPagination, MakeFFAPurchase, CreateBudgetGiveout, CreateCountGiveout, CreateFreeForAll } from './backend-types';
+import { Item, Freeby, Purchase, Bill, User, UserDetailInfo, ParametersAll, ParametersPurchaseLogGlobal, ServerWriteResult, RefreshedData, ParametersPagination, MakeFFAPurchase, CreateBudgetGiveout, CreateCountGiveout, CreateFreeForAll, EnrichedFFA } from './backend-types';
 
 
 export interface PaginatedResult<T> {
@@ -32,7 +32,7 @@ export interface AllResults {
   LastPurchases: PaginatedResult<Purchase>;
   BillsCount: PaginatedResult<Bill>;
   Bills: PaginatedResult<Bill>;
-  OpenFFAFreebies: PaginatedResult<Freeby>;
+  OpenFFAFreebies: PaginatedResult<EnrichedFFA>;
   TopPersonalDrinks: PaginatedResult<Item>;
   PurchaseLogPersonal: PaginatedResult<Purchase>;
   IncomingFreebies: PaginatedResult<Freeby>;
@@ -109,6 +109,7 @@ const endpoint_personallog = '/api/purchases/personal';
 const endpoint_globallog = '/api/purchases/global';
 const endpoint_userdetails = '/api/users/detail';
 const endpoint_bills = '/api/bills';
+const endpoint_ffas = '/api/giveout/ffa';
 const post_endpoint_simple_purchase = '/api/purchases';
 const post_endpoint_cart_purchase = '/api/purchases/cart';
 const post_endpoint_add_user = '/api/users';
@@ -330,8 +331,8 @@ export class BackendService {
   refreshLastPurchase() {
     const queriy: ParametersPurchaseLogGlobal = {
       count_pars: {
-        millis_start: new Date().getTime() + 1000,
-        millis_end: new Date().getTime() - (1000 * 60 * 60 * 24),
+        millis_end: new Date().getTime() + 1000,
+        millis_start: new Date().getTime() - (1000 * 60 * 60 * 24),
       },
       pagination: {
         start_inclusive: 0,
@@ -339,7 +340,7 @@ export class BackendService {
       },
     };
     const queryjson = (JSON.stringify(queriy));
-    const endp = endpoint_allitems;
+    const endp = endpoint_globallog;
     console.log(queryjson);
     // Make the HTTP request: <PaginatedResult<User>>
     this.http.get<PaginatedResult<Purchase>>(endp, { params: { query: queryjson } }).subscribe(data => {
@@ -790,6 +791,18 @@ export class BackendService {
       }
     }
     );
+  }
+
+  updateOpenFFAs() {
+    const queryjson = (JSON.stringify(this.viewstate.open_ffa_freebies));
+    const endp = endpoint_ffas;
+    console.log(queryjson);
+    // Make the HTTP request: <PaginatedResult<User>>
+    this.http.get(endp, { params: { query: queryjson } }).subscribe(dat => {
+      console.log(dat);
+      const data = dat as PaginatedResult<EnrichedFFA>;
+      this.content.OpenFFAFreebies = data;
+    });
   }
 
 }

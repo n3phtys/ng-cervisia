@@ -122,6 +122,17 @@ export interface ParametersDetailInfoForUser {
 }
 
 
+export interface EnrichedFFA {
+    id: number;
+    items: Array<Item>;
+    total: number;
+    left: number;
+    text_message: string;
+    created_timestamp: number;
+    donor: User;
+}
+
+
 export interface UserDetailInfo {
     consumed: Map<string, number>;
     last_bill_date: number;

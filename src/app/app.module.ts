@@ -27,6 +27,8 @@ import { PasswordCheckService } from './password-check.service';
 import { EnumPipePipe } from './enum-pipe.pipe';
 import { SingleUserSelectionComponent } from './single-user-selection/single-user-selection.component';
 import { MultiItemSelectionComponent } from './multi-item-selection/multi-item-selection.component';
+import { FfaModalComponent } from './ffa-modal/ffa-modal.component';
+import { FfaListComponent } from './ffa-list/ffa-list.component';
 
 
 
@@ -47,7 +49,9 @@ import { MultiItemSelectionComponent } from './multi-item-selection/multi-item-s
     TimespanFilterComponent,
     EnumPipePipe,
     SingleUserSelectionComponent,
-    MultiItemSelectionComponent
+    MultiItemSelectionComponent,
+    FfaModalComponent,
+    FfaListComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +67,6 @@ import { MultiItemSelectionComponent } from './multi-item-selection/multi-item-s
   // IMPORTANT:
   // Since 'AdditionCalculateWindow' is never explicitly used (in a template)
   // we must tell angular about it.
-  entryComponents: [ QuickmenuComponent ]
+  entryComponents: [ QuickmenuComponent, FfaModalComponent ]
 })
 export class AppModule { }

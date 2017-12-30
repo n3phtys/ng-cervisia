@@ -1,0 +1,19 @@
+<div>
+  from: {{context.freeby.donor.username}}
+</div>
+<div>
+  created: {{context.freeby.created_timestamp | date:'short'}}
+</div>
+<div>
+  Message: {{context.freeby.text_message}}
+</div>
+
+<div>
+  <button *ngFor="let item of context.freeby.items" (click)="consume(item)" >{{item.name}}</button>
+</div>
+<hr>
+Units left:  {{context.freeby.left}} / {{context.freeby.total}}
+<hr>
+<div>
+  <button (click)="close()">CLOSE</button>
+</div>

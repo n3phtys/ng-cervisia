@@ -41,6 +41,7 @@ export class UserselectionComponent implements OnInit {
     });
 
     backend.updateMainUserlist('');
+    backend.refreshLastPurchase();
   }
 
 
