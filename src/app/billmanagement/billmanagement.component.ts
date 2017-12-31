@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { TabService } from '../tab.service';
+import { ViewContainerRef } from '@angular/core';
+import { Overlay, overlayConfigFactory } from 'ngx-modialog';
+import { Modal, BSModalContext } from 'ngx-modialog/plugins/bootstrap';
 import { TabActive } from '../tab-active.enum';
 import { BackendService} from '../backend.service';
 import { ParametersPurchaseLogGlobalCount, Bill } from '../backend-types';
+import { BillDetailModalComponent } from '../bill-detail-modal/bill-detail-modal.component';
 
 @Component({
   selector: 'app-billmanagement',
@@ -12,17 +16,19 @@ import { ParametersPurchaseLogGlobalCount, Bill } from '../backend-types';
 export class BillmanagementComponent implements OnInit {
   //TODO: is missing option to select single or multiple specific users when creating a new bill
 
-  dt: Date;
+  dt1: Date;
+  dt2: Date;
   commentField: string;
   filter : ParametersPurchaseLogGlobalCount;
   
   
 
-  constructor(public tabs: TabService, public backend: BackendService) { }
+  constructor(public tabs: TabService, public backend: BackendService, public modal: Modal) { }
   
     ngOnInit() {
       this.backend.updateBills();
-      this.dt = new Date();
+      this.dt2 = new Date();
+      this.dt1 = new Date(this.dt2.getTime() - 3600000);
       this.commentField = "";
     }
   
@@ -49,8 +55,33 @@ export class BillmanagementComponent implements OnInit {
     }
 
     createBill() {
-      if (this.dt != null && !Number.isNaN(this.dt.getTime() )) {
-          this.backend.createBill(this.dt, this.commentField, this.filter.millis_start, this.filter.millis_end);
+      console.log(this.dt1);
+      console.log(this.dt2);
+      console.log(this.dt1.getTime());
+      console.log(this.dt2.getTime());
+      if (this.dt1 != null && !Number.isNaN(this.dt1.getTime() ) && this.dt2 != null && !Number.isNaN(this.dt2.getTime() ) && this.dt1.getTime() < this.dt2.getTime() && confirm("Do you really want to create a new bill with the given timespan?"))  {
+          this.backend.createBill(this.commentField, this.dt1.getTime(), this.dt2.getTime());
+      }
+    }
+
+    openBillModal(bill: Bill) {
+      this.backend.viewstate.bill_detail_infos.timestamp_from = bill.timestamp_from;
+      this.backend.viewstate.bill_detail_infos.timestamp_to = bill.timestamp_to;
+      this.backend.refreshDetailedBill();
+
+      return this.modal.open(BillDetailModalComponent,  overlayConfigFactory({ }, BSModalContext));
+    }
+
+    datify1(event) : void {
+      const d = new Date(event);
+      if (!Number.isNaN(d.getTime())) {
+        this.dt1 = d;
+      }
+    }
+    datify2(event) : void {
+      const d = new Date(event);
+      if (!Number.isNaN(d.getTime())) {
+        this.dt2 = d;
       }
     }
 

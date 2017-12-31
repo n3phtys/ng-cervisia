@@ -157,6 +157,7 @@ export interface DetailedBill {
     bill_state: BillState;
     comment: string;
     users: UserGroup;
+    ready_for_finalization: boolean;
 }
 
 
@@ -190,6 +191,27 @@ export interface Purchase {
 }
 
 
+
+
+export interface CreateBill {
+    timestamp_from: number;
+    timestamp_to: number;
+    comment: string;
+}
+
+
+export interface EditBill {
+    timestamp_from: number;
+    timestamp_to: number;
+    comment: string;
+    exclude_user_ids: Array<number>;
+}
+
+
+export interface DeleteUnfinishedBill {
+    timestamp_from: number;
+    timestamp_to: number;
+}
 
 
 export interface User {
@@ -350,6 +372,25 @@ export interface SuccessContent {
     refreshed_data: RefreshedData;
 }
 
+
+export interface RefreshedData {
+    DetailInfoForUser: any;
+    TopUsers: any;
+    AllUsers: any;
+    AllItems: any;
+    PurchaseLogGlobal: any;
+    LastPurchases: any;
+    BillsCount: any;
+    Bills: any;
+    BillDetails: any;
+    OpenFFAFreebies: any;
+    TopPersonalDrinks: any;
+    PurchaseLogPersonal: any;
+    IncomingFreebies: any;
+    OutgoingFreebies: any;
+}
+
+
 export interface MakeSimplePurchase {
     user_id: number;
     item_id: number;
@@ -405,24 +446,5 @@ export interface SetPriceForSpecial {
 export interface KeyValue {
     key: number;
     value: number;
-}
-
-
-
-export interface RefreshedData {
-    DetailInfoForUser: any;
-    TopUsers: any;
-    AllUsers: any;
-    AllItems: any;
-    PurchaseLogGlobal: any;
-    LastPurchases: any;
-    BillsCount: any;
-    Bills: any;
-    BillDetails: any;
-    OpenFFAFreebies: any;
-    TopPersonalDrinks: any;
-    PurchaseLogPersonal: any;
-    IncomingFreebies: any;
-    OutgoingFreebies: any;
 }
 

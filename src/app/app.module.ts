@@ -29,6 +29,7 @@ import { SingleUserSelectionComponent } from './single-user-selection/single-use
 import { MultiItemSelectionComponent } from './multi-item-selection/multi-item-selection.component';
 import { FfaModalComponent } from './ffa-modal/ffa-modal.component';
 import { FfaListComponent } from './ffa-list/ffa-list.component';
+import { BillDetailModalComponent } from './bill-detail-modal/bill-detail-modal.component';
 
 
 
@@ -51,7 +52,8 @@ import { FfaListComponent } from './ffa-list/ffa-list.component';
     SingleUserSelectionComponent,
     MultiItemSelectionComponent,
     FfaModalComponent,
-    FfaListComponent
+    FfaListComponent,
+    BillDetailModalComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +69,6 @@ import { FfaListComponent } from './ffa-list/ffa-list.component';
   // IMPORTANT:
   // Since 'AdditionCalculateWindow' is never explicitly used (in a template)
   // we must tell angular about it.
-  entryComponents: [ QuickmenuComponent, FfaModalComponent ]
+  entryComponents: [ QuickmenuComponent, FfaModalComponent, BillDetailModalComponent ]
 })
 export class AppModule { }

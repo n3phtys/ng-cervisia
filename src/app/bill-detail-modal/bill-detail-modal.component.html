@@ -1,0 +1,43 @@
+<div *ngIf="backend.content.BillDetails.total_count > 0">
+<p>
+  bill for time between {{ backend.content.BillDetails.results[0].timestamp_from  | date }} and {{ backend.content.BillDetails.results[0].timestamp_to  | date }}
+</p>
+<hr>
+<label>comment:</label>
+<input [disabled]="backend.content.BillDetails.results[0].ready_for_finalization" [(ngModel)]="backend.content.BillDetails.results[0].comment" />
+<button (click)="storeCommentChange()">Store changes to comment</button>
+
+<hr>
+<label>
+  Manually excluded users (press to unexclude):
+</label>
+<div>
+  <button [disabled]="backend.content.BillDetails.results[0].ready_for_finalization" *ngFor="let user of backend.content.BillDetails.results[0].unset_users" (click)="console.log(user)">{{user.username}}</button>
+</div>
+
+<hr>
+<label>
+  Non-excluded users (press to exclude):
+</label>
+<div  >
+    <button [disabled]="backend.content.BillDetails.results[0].ready_for_finalization" *ngFor="let user of backend.content.BillDetails.results[0].set_users" (click)="console.log(user)">{{user.username}}</button>
+</div>
+
+<hr>
+<label>
+  Specials (you have to set a [>= 0] price for every special before you can finalize this bill):
+</label>
+<div  >
+  <button [disabled]="backend.content.BillDetails.results[0].ready_for_finalization" *ngFor="let special of backend.content.BillDetails.results[0].specials" (click)="console.log(special)">{{special.SpecialPurchase.special_name}}</button>
+</div>
+<hr>
+<button [disabled]="!backend.content.BillDetails.results[0].ready_for_finalization">Finalize</button>
+
+<hr>
+</div>
+<div>
+  <button (click)="close()">CLOSE</button>
+</div>
+<hr>
+Full json:  {{backend.content.BillDetails.results[0] | json}}
+<hr>

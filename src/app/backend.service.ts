@@ -8,7 +8,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import { ReferenceAst } from '@angular/compiler';
-import { Item, Freeby, Purchase, Bill, User, UserDetailInfo, ParametersAll, ParametersPurchaseLogGlobal, ServerWriteResult, RefreshedData, ParametersPagination, MakeFFAPurchase, CreateBudgetGiveout, CreateCountGiveout, CreateFreeForAll, EnrichedFFA } from './backend-types';
+import { Item, Freeby, Purchase, Bill, User, UserDetailInfo, ParametersAll, ParametersPurchaseLogGlobal, ServerWriteResult, RefreshedData, ParametersPagination, MakeFFAPurchase, CreateBudgetGiveout, CreateCountGiveout, CreateFreeForAll, EnrichedFFA, CreateBill, ParametersBillDetails, DetailedBill } from './backend-types';
 
 
 export interface PaginatedResult<T> {
@@ -32,6 +32,7 @@ export interface AllResults {
   LastPurchases: PaginatedResult<Purchase>;
   BillsCount: PaginatedResult<Bill>;
   Bills: PaginatedResult<Bill>;
+  BillDetails: PaginatedResult<DetailedBill>;
   OpenFFAFreebies: PaginatedResult<EnrichedFFA>;
   TopPersonalDrinks: PaginatedResult<Item>;
   PurchaseLogPersonal: PaginatedResult<Purchase>;
@@ -110,6 +111,7 @@ const endpoint_globallog = '/api/purchases/global';
 const endpoint_userdetails = '/api/users/detail';
 const endpoint_bills = '/api/bills';
 const endpoint_ffas = '/api/giveout/ffa';
+const endpoint_detailed_bill = '/api/bills/detail';
 const post_endpoint_simple_purchase = '/api/purchases';
 const post_endpoint_cart_purchase = '/api/purchases/cart';
 const post_endpoint_add_user = '/api/users';
@@ -278,6 +280,12 @@ export class BackendService {
       total_count: 0,
       results: [],
     },
+    BillDetails: {
+      from: 0,
+      to: 0,
+      total_count: 0,
+      results: [],
+    },
     OpenFFAFreebies: {
       from: 0,
       to: 0,
@@ -359,6 +367,16 @@ export class BackendService {
     });
   }
 
+  refreshDetailedBill() {
+    const queryjson = (JSON.stringify(this.viewstate.bill_detail_infos));
+    const endp = endpoint_detailed_bill;
+    console.log(queryjson);
+    // Make the HTTP request: <PaginatedResult<User>>
+    this.http.get<PaginatedResult<DetailedBill>>(endp, { params: { query: queryjson } }).subscribe(data => {
+      this.content.BillDetails = data;
+    });
+  }
+
   refreshAllItems() {
     const queryjson = (JSON.stringify(this.viewstate.all_items));
     const endp = endpoint_allitems;
@@ -410,8 +428,20 @@ export class BackendService {
     });
   }
 
-  createBill(date: Date, comment: string, billTimestampFrom: number, billTimestampTo: number) {
-    throw new Error('Not yet implemented');
+  createBill(comment: string, billTimestampFrom: number, billTimestampTo: number) {
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_bill_create;
+    const payload: CreateBill = {
+      timestamp_from: billTimestampFrom,
+      timestamp_to: billTimestampTo,
+      comment: comment,
+    };
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
   }
 
   exportBillToEmail(scopedToUserIdOrNull: User, billTimestampFrom: number, billTimestampTo: number, receiverEmailAddress: string) {
