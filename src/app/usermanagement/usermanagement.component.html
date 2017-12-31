@@ -53,9 +53,17 @@
         <label for="username">Username:</label>
         <input [(ngModel)]="detailUser.username" class="form-control" id="username">
       </div>
+      <div class="form-group">
+        <label for="external_user_id">external_user_id:</label>
+        <input [(ngModel)]="detailUser.external_user_id" class="form-control" id="external_user_id">
+      </div>
       <div class="checkbox">
         <label>
           <input type="checkbox" [checked]="detailUser.is_billed" (change)="detailUser.is_billed = !detailUser.is_billed" /> should be billed</label>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" [checked]="detailUser.highlight_in_ui" (change)="detailUser.highlight_in_ui = !detailUser.highlight_in_ui" /> highlighted in UI</label>
       </div>
     </div>
 

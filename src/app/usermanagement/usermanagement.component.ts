@@ -58,6 +58,9 @@ export class UsermanagementComponent implements OnInit {
 
   editUser(user: User) {
     const det: User = JSON.parse(JSON.stringify(user));
+    if (det.external_user_id == null) {
+      det.external_user_id = '';
+    }
     this.detailUser = det;
   }
 

@@ -472,7 +472,7 @@ export class BackendService {
     const payload: UpdateUser = {
       user_id: user.user_id,
       username: user.username,
-      external_user_id: user.external_user_id,
+      external_user_id: user.external_user_id.trim().length > 0 ? user.external_user_id : null,
       is_billed: user.is_billed,
       highlight_in_ui: user.highlight_in_ui,
     };
