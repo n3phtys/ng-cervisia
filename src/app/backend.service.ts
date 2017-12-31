@@ -124,6 +124,13 @@ const post_endpoint_freeby_create_ffa = '/api/giveout/ffa';
 const post_endpoint_freeby_create_count = '/api/giveout/count';
 const post_endpoint_freeby_create_budget = '/api/giveout/budget';
 const post_endpoint_ffa_purchase = '/api/purchases/ffa';
+const post_endpoint_bill_create = '/api/bill/create';
+const post_endpoint_bill_update = '/api/bill/update';
+const post_endpoint_bill_delete = '/api/bill/delete';
+const post_endpoint_bill_finalize = '/api/bill/finalize';
+const post_endpoint_bill_export = '/api/bill/export';
+const post_endpoint_set_special_price = '/api/purchases/special/setprice';
+
 
 
 const MAX_NUMBER_OF_USERS_SHOWN = 40;
@@ -191,6 +198,10 @@ export class BackendService {
         start_inclusive: 0,
         end_exclusive: 5,
       }
+    },
+    bill_detail_infos: {
+      timestamp_from: null,
+      timestamp_to: null,
     },
     open_ffa_freebies: {
       pagination: {

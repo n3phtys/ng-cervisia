@@ -4,6 +4,7 @@ export interface ParametersAll {
     all_items: ParametersAllItems;
     global_log: ParametersPurchaseLogGlobal;
     bills: ParametersBills;
+    bill_detail_infos: ParametersBillDetails;
     open_ffa_freebies: ParametersOpenFFAFreebies;
     top_personal_drinks: ParametersTopPersonalDrinks;
     personal_log: ParametersPurchaseLogPersonal;
@@ -68,6 +69,12 @@ export interface ParametersBillsCount {
 export interface ParametersBills {
     count_pars: ParametersBillsCount;
     pagination: ParametersPagination;
+}
+
+
+export interface ParametersBillDetails {
+    timestamp_from: number;
+    timestamp_to: number;
 }
 
 
@@ -138,6 +145,18 @@ export interface UserDetailInfo {
     last_bill_date: number;
     last_bill_cost: number;
     currently_cost: number;
+}
+
+
+export interface DetailedBill {
+    timestamp_from: number;
+    timestamp_to: number;
+    specials: Array<Purchase>;
+    set_users: Array<User>;
+    unset_users: Array<User>;
+    bill_state: BillState;
+    comment: string;
+    users: UserGroup;
 }
 
 
@@ -331,8 +350,6 @@ export interface SuccessContent {
     refreshed_data: RefreshedData;
 }
 
-
-
 export interface MakeSimplePurchase {
     user_id: number;
     item_id: number;
@@ -401,6 +418,7 @@ export interface RefreshedData {
     LastPurchases: any;
     BillsCount: any;
     Bills: any;
+    BillDetails: any;
     OpenFFAFreebies: any;
     TopPersonalDrinks: any;
     PurchaseLogPersonal: any;
