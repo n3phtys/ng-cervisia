@@ -14,7 +14,22 @@
 <!--*ngIf="backend.content.PurchaseLogGlobal !== null"-->
   <div *ngFor="let purchase of backend.content.PurchaseLogGlobal.results">
     
-    #{{purchase.SimplePurchase.unique_id}} on date {{purchase.SimplePurchase.timestamp_epoch_millis | date:'short'}} : {{purchase.SimplePurchase.consumer.username}} bought {{purchase.SimplePurchase.item.name}} <a (click)="undoPurchase(purchase.SimplePurchase.unique_id, purchase.SimplePurchase.timestamp_epoch_millis)">Cancel Purchase</a>
+    
+    
+    
+    <div *ngIf="purchase.SimplePurchase != null">
+      #{{purchase.SimplePurchase.unique_id}} on date {{purchase.SimplePurchase.timestamp_epoch_millis | date:'short'}} : {{purchase.SimplePurchase.consumer.username}} bought {{purchase.SimplePurchase.item.name}}
+      <a (click)="undoPurchase(purchase.SimplePurchase.unique_id, purchase.SimplePurchase.timestamp_epoch_millis)">Cancel Purchase</a>
+  </div>
+  <div *ngIf="purchase.SpecialPurchase != null">
+      #{{purchase.SpecialPurchase.unique_id}} on date {{purchase.SpecialPurchase.timestamp_epoch_millis | date:'short'}} : {{purchase.SpecialPurchase.consumer.username}} bought {{purchase.SpecialPurchase.special_name}}
+      <a (click)="undoPurchase(purchase.SpecialPurchase.unique_id, purchase.SpecialPurchase.timestamp_epoch_millis)">Cancel Purchase</a>
+  </div>
+  <div *ngIf="purchase.FFAPurchase != null">
+      #{{purchase.FFAPurchase.unique_id}} on date {{purchase.FFAPurchase.timestamp_epoch_millis | date:'short'}} : Someone bought {{purchase.FFAPurchase.item.name}} (FFA Purchase donated by {{purchase.FFAPurchase.donor.username}})
+      <a (click)="undoPurchase(purchase.FFAPurchase.unique_id, purchase.FFAPurchase.timestamp_epoch_millis)">Cancel Purchase</a>
+  </div>
+    
   </div>
 
 
