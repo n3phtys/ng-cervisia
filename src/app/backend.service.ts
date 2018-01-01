@@ -8,7 +8,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import { ReferenceAst } from '@angular/compiler';
-import { Item, Freeby, Purchase, Bill, User, UserDetailInfo, ParametersAll, ParametersPurchaseLogGlobal, ServerWriteResult, RefreshedData, ParametersPagination, MakeFFAPurchase, CreateBudgetGiveout, CreateCountGiveout, CreateFreeForAll, EnrichedFFA, CreateBill, ParametersBillDetails, DetailedBill } from './backend-types';
+import { Item, Freeby, Purchase, Bill, User, UserDetailInfo, ParametersAll, ParametersPurchaseLogGlobal, ServerWriteResult, RefreshedData, ParametersPagination, MakeFFAPurchase, CreateBudgetGiveout, CreateCountGiveout, CreateFreeForAll, EnrichedFFA, CreateBill, ParametersBillDetails, DetailedBill, EditBill, Finalized, DeleteUnfinishedBill, FinalizeBill, ExportBill } from './backend-types';
 
 
 export interface PaginatedResult<T> {
@@ -444,9 +444,6 @@ export class BackendService {
     );
   }
 
-  exportBillToEmail(scopedToUserIdOrNull: User, billTimestampFrom: number, billTimestampTo: number, receiverEmailAddress: string) {
-    throw new Error('Not yet implemented');
-  }
 
   undoPurchaseByUser(purchase_id: number) {
     const queryjson = (JSON.stringify(this.viewstate));
@@ -844,6 +841,57 @@ export class BackendService {
       const data = dat as PaginatedResult<EnrichedFFA>;
       this.content.OpenFFAFreebies = data;
     });
+  }
+
+  editBill(editBill: EditBill) {
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_bill_update;
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(editBill), { params: { query: queryjson } }).subscribe(data => {
+      console.log("Success of post editBill");
+      console.log(data);
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
+  }
+
+  finalizeBill(finalizeBill: FinalizeBill) {
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_bill_finalize;
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(finalizeBill), { params: { query: queryjson } }).subscribe(data => {
+      console.log("Success of post finalizeBill");
+      console.log(data);
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
+  }
+
+  deleteBill(deleteBill: DeleteUnfinishedBill) {
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_bill_delete;
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(deleteBill), { params: { query: queryjson } }).subscribe(data => {
+      console.log("Success of post deleteBill");
+      console.log(data);
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
+  }
+  exportBillToEmail(exportBill: ExportBill) {
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_bill_export;
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(exportBill), { params: { query: queryjson } }).subscribe(data => {
+      console.log("Success of post exportBill");
+      console.log(data);
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
   }
 
 }

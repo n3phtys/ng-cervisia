@@ -4,8 +4,9 @@
 </p>
 <hr>
 <label>comment:</label>
-<input [disabled]="backend.content.BillDetails.results[0].ready_for_finalization" [(ngModel)]="backend.content.BillDetails.results[0].comment" />
+<input [disabled]="backend.content.BillDetails.results[0].ready_for_finalization" [(ngModel)]="bill_comment" />
 <button (click)="storeCommentChange()">Store changes to comment</button>
+<button (click)="clearCommentChange()">Clear changes </button>
 
 <hr>
 <label>

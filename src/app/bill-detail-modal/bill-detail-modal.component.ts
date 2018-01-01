@@ -3,10 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { DialogRef, ModalComponent, CloseGuard } from 'ngx-modialog';
 import { BSModalContext } from 'ngx-modialog/plugins/bootstrap';
 import { BackendService } from '../backend.service';
-import { User } from '../backend-types';
+import { User, EditBill } from '../backend-types';
 
 export class CustomBillDetailModalContext extends BSModalContext {
-  
+  timestamp_from: number;
+  timestamp_to: number;
+  comment: string;
+  exclude_user_ids: Array<number>;
 }
 
 @Component({
@@ -17,12 +20,13 @@ export class CustomBillDetailModalContext extends BSModalContext {
 export class BillDetailModalComponent implements CloseGuard, ModalComponent<CustomBillDetailModalContext> {
 
   context: CustomBillDetailModalContext;
-
+  bill_comment: string;
 
   constructor(public dialog: DialogRef<CustomBillDetailModalContext>, public backend: BackendService) {
     this.context = dialog.context;
     console.log(this.context);
     dialog.setCloseGuard(this);
+    this.bill_comment = this.context.comment;
    }
 
 
@@ -35,15 +39,24 @@ export class BillDetailModalComponent implements CloseGuard, ModalComponent<Cust
   }
 
   //TODO: setting of special prices
-  
-  //TODO: changes of message
 
   close() {
     this.dialog.close();
   }
+
   storeCommentChange() {
-    this.dialog.close();
-    throw new Error("not yet implemented");
+    const c = <EditBill> {
+      timestamp_from: this.context.timestamp_from,
+      timestamp_to: this.context.timestamp_to,
+      comment: this.bill_comment,
+      exclude_user_ids: this.context.exclude_user_ids,
+    };
+    this.backend.editBill(c);
+    this.close();
+  }
+
+  clearCommentChange() {
+    this.bill_comment = this.context.comment;
   }
 
 

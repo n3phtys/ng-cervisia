@@ -151,13 +151,16 @@ export interface UserDetailInfo {
 export interface DetailedBill {
     timestamp_from: number;
     timestamp_to: number;
-    specials: Array<Purchase>;
-    set_users: Array<User>;
-    unset_users: Array<User>;
     bill_state: BillState;
     comment: string;
     users: UserGroup;
     ready_for_finalization: boolean;
+    all_specials: Array<Purchase>;
+    unset_specials_indices: Array<number>;
+    touched_users: Array<User>;
+    users_excluded_externally_indices: Array<number>;
+    users_undefined_indices: Array<number>;
+    users_excluded_internally_indices: Array<number>;
 }
 
 
@@ -205,6 +208,26 @@ export interface EditBill {
     timestamp_to: number;
     comment: string;
     exclude_user_ids: Array<number>;
+}
+
+
+export interface FinalizeBill {
+    timestamp_from: number;
+    timestamp_to: number;
+}
+
+
+export interface ExportBill {
+    timestamp_from: number;
+    timestamp_to: number;
+    limit_to_user: number;
+    email_address: string;
+}
+
+
+export interface DeleteUnfinishedBill {
+    timestamp_from: number;
+    timestamp_to: number;
 }
 
 

@@ -4,8 +4,8 @@ import { ViewContainerRef } from '@angular/core';
 import { Overlay, overlayConfigFactory } from 'ngx-modialog';
 import { Modal, BSModalContext } from 'ngx-modialog/plugins/bootstrap';
 import { TabActive } from '../tab-active.enum';
-import { BackendService} from '../backend.service';
-import { ParametersPurchaseLogGlobalCount, Bill } from '../backend-types';
+import { BackendService } from '../backend.service';
+import { ParametersPurchaseLogGlobalCount, Bill, ExportBill } from '../backend-types';
 import { BillDetailModalComponent } from '../bill-detail-modal/bill-detail-modal.component';
 
 @Component({
@@ -19,48 +19,54 @@ export class BillmanagementComponent implements OnInit {
   dt1: Date;
   dt2: Date;
   commentField: string;
-  filter : ParametersPurchaseLogGlobalCount;
-  
-  
+  filter: ParametersPurchaseLogGlobalCount;
+
+
 
   constructor(public tabs: TabService, public backend: BackendService, public modal: Modal) { }
-  
-    ngOnInit() {
-      this.backend.updateBills();
-      this.dt2 = new Date();
-      this.dt1 = new Date(this.dt2.getTime() - 3600000);
-      this.commentField = "";
-    }
-  
 
-    pageNavigation(page : number) {
-      console.log("Navigating to page " + page);
-      BackendService.moveToPage(this.backend.viewstate.global_log.pagination, page);
-      this.backend.updateBills();
-  } 
+  ngOnInit() {
+    this.backend.updateBills();
+    this.dt2 = new Date();
+    this.dt1 = new Date(this.dt2.getTime() - 3600000);
+    this.commentField = "";
+  }
 
-  timeFilterChange(filter : ParametersPurchaseLogGlobalCount) {
+
+  pageNavigation(page: number) {
+    console.log("Navigating to page " + page);
+    BackendService.moveToPage(this.backend.viewstate.global_log.pagination, page);
+    this.backend.updateBills();
+  }
+
+  timeFilterChange(filter: ParametersPurchaseLogGlobalCount) {
     console.log("received filter");
     console.log(filter);
     this.backend.viewstate.bills.count_pars.end_exclusive = filter.millis_end;
     this.backend.viewstate.bills.count_pars.start_inclusive = filter.millis_start;
     this.backend.updateBills();
   }
-    
-    exportBill(bill: Bill) {
-      const c = prompt("To which email address should I sent this bill? Leave empty to cancel");
-      if (c != null && c.length > 0) {
-        this.backend.exportBillToEmail(null, bill.timestamp_from, bill.timestamp_to, c);
-      }
+
+  exportBill(bill: Bill) {
+    const c = prompt("To which email address should I sent this bill? Leave empty to cancel");
+    if (c != null && c.length > 0) {
+      this.backend.exportBillToEmail(
+        <ExportBill> {
+          timestamp_from: bill.timestamp_from,
+          timestamp_to: bill.timestamp_to,
+          limit_to_user: null,
+          email_address: c,
+        });
     }
+  }
 
     createBill() {
       console.log(this.dt1);
       console.log(this.dt2);
       console.log(this.dt1.getTime());
       console.log(this.dt2.getTime());
-      if (this.dt1 != null && !Number.isNaN(this.dt1.getTime() ) && this.dt2 != null && !Number.isNaN(this.dt2.getTime() ) && this.dt1.getTime() < this.dt2.getTime() && confirm("Do you really want to create a new bill with the given timespan?"))  {
-          this.backend.createBill(this.commentField, this.dt1.getTime(), this.dt2.getTime());
+      if (this.dt1 != null && !Number.isNaN(this.dt1.getTime()) && this.dt2 != null && !Number.isNaN(this.dt2.getTime()) && this.dt1.getTime() < this.dt2.getTime() && confirm("Do you really want to create a new bill with the given timespan?")) {
+        this.backend.createBill(this.commentField, this.dt1.getTime(), this.dt2.getTime());
       }
     }
 
@@ -69,20 +75,20 @@ export class BillmanagementComponent implements OnInit {
       this.backend.viewstate.bill_detail_infos.timestamp_to = bill.timestamp_to;
       this.backend.refreshDetailedBill();
 
-      return this.modal.open(BillDetailModalComponent,  overlayConfigFactory({ }, BSModalContext));
+      return this.modal.open(BillDetailModalComponent, overlayConfigFactory({ comment: bill.comment, timestamp_from: bill.timestamp_from, timestamp_to: bill.timestamp_to, exclude_user_ids: bill.users_that_will_not_be_billed }, BSModalContext));
     }
 
     datify1(event) : void {
       const d = new Date(event);
-      if (!Number.isNaN(d.getTime())) {
+      if(!Number.isNaN(d.getTime())) {
         this.dt1 = d;
       }
     }
     datify2(event) : void {
       const d = new Date(event);
-      if (!Number.isNaN(d.getTime())) {
+      if(!Number.isNaN(d.getTime())) {
         this.dt2 = d;
       }
     }
 
-}
+  }
