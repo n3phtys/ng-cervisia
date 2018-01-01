@@ -8,7 +8,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import { ReferenceAst } from '@angular/compiler';
-import { Item, Freeby, Purchase, Bill, User, UserDetailInfo, ParametersAll, ParametersPurchaseLogGlobal, ServerWriteResult, RefreshedData, ParametersPagination, MakeFFAPurchase, CreateBudgetGiveout, CreateCountGiveout, CreateFreeForAll, EnrichedFFA, CreateBill, ParametersBillDetails, DetailedBill, EditBill, Finalized, DeleteUnfinishedBill, FinalizeBill, ExportBill } from './backend-types';
+import { Item, Freeby, Purchase, Bill, User, UserDetailInfo, ParametersAll, ParametersPurchaseLogGlobal, ServerWriteResult, RefreshedData, ParametersPagination, MakeFFAPurchase, CreateBudgetGiveout, CreateCountGiveout, CreateFreeForAll, EnrichedFFA, CreateBill, ParametersBillDetails, DetailedBill, EditBill, Finalized, DeleteUnfinishedBill, FinalizeBill, ExportBill, SetPriceForSpecial } from './backend-types';
 
 
 export interface PaginatedResult<T> {
@@ -894,4 +894,18 @@ export class BackendService {
     );
   }
 
+  setPriceForSpecial(setPriceForSpecial: SetPriceForSpecial) {
+    const queryjson = (JSON.stringify(this.viewstate));
+    const endp = post_endpoint_set_special_price;
+    this.http.post<ServerWriteResult>(endp, JSON.stringify(setPriceForSpecial), { params: { query: queryjson } }).subscribe(data => {
+      console.log("Success of post setPriceForSpecial: ");
+      console.log(setPriceForSpecial);
+      console.log(data);
+      console.log("That was set price post result");
+      if (data.is_success) {
+        this.updateContentWithWriteResult(data.content.refreshed_data);
+      }
+    }
+    );
+  }
 }

@@ -161,6 +161,7 @@ export interface DetailedBill {
     users_excluded_externally_indices: Array<number>;
     users_undefined_indices: Array<number>;
     users_excluded_internally_indices: Array<number>;
+    users_excludable_but_not_internally_indices: Array<number>;
 }
 
 

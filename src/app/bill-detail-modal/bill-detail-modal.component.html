@@ -4,41 +4,76 @@
 </p>
 <hr>
 <label>comment:</label>
-<input [disabled]="backend.content.BillDetails.results[0].ready_for_finalization" [(ngModel)]="bill_comment" />
+<input [disabled]="backend.content.BillDetails.results[0].bill_state !== 'Created'" [(ngModel)]="bill_comment" />
 <button (click)="storeCommentChange()">Store changes to comment</button>
 <button (click)="clearCommentChange()">Clear changes </button>
 
 <hr>
 <label>
-  Manually excluded users (press to unexclude):
+  Internally excluded users (press to unexclude):
 </label>
 <div>
-  <button [disabled]="backend.content.BillDetails.results[0].ready_for_finalization" *ngFor="let user of backend.content.BillDetails.results[0].unset_users" (click)="console.log(user)">{{user.username}}</button>
+
+    <button *ngFor="let idx of backend.content.BillDetails.results[0].users_excluded_internally_indices" (click)="include(backend.content.BillDetails.results[0].touched_users[idx])">{{backend.content.BillDetails.results[0].touched_users[idx].username}}</button>
+</div>
+<hr>
+<label>
+  Internally-non-excluded  users (press to exclude):
+</label>
+<div>
+    
+    <button *ngFor="let idx of backend.content.BillDetails.results[0].users_excludable_but_not_internally_indices" (click)="exclude(backend.content.BillDetails.results[0].touched_users[idx])">{{backend.content.BillDetails.results[0].touched_users[idx].username}}</button>
+
 </div>
 
 <hr>
 <label>
-  Non-excluded users (press to exclude):
+  Undefined users (set in usermanagement 'is_billed = false' or give the user an external id to bill to in usermanagement, or exclude manually from this bill. Bill can only be finalized once this list is empty):
+</label>
+<div>
+    <span *ngFor="let idx of backend.content.BillDetails.results[0].users_undefined_indices">{{backend.content.BillDetails.results[0].touched_users[idx].username}} | </span>
+</div>
+<hr>
+
+<label>
+  Externally excluded users:
+</label>
+
+<div  >
+  <span *ngFor="let idx of backend.content.BillDetails.results[0].users_excluded_externally_indices">{{backend.content.BillDetails.results[0].touched_users[idx].username}} | </span>
+</div>
+
+<hr>
+
+<label>
+  All users who fall under this bill:
 </label>
 <div  >
-    <button [disabled]="backend.content.BillDetails.results[0].ready_for_finalization" *ngFor="let user of backend.content.BillDetails.results[0].set_users" (click)="console.log(user)">{{user.username}}</button>
+    <span *ngFor="let user of backend.content.BillDetails.results[0].touched_users">{{user.username}} | </span>
 </div>
 
 <hr>
 <label>
   Specials (you have to set a [>= 0] price for every special before you can finalize this bill):
 </label>
-<div  >
-  <button [disabled]="backend.content.BillDetails.results[0].ready_for_finalization" *ngFor="let special of backend.content.BillDetails.results[0].specials" (click)="console.log(special)">{{special.SpecialPurchase.special_name}}</button>
+<div>
+  <button [disabled]="backend.content.BillDetails.results[0].ready_for_finalization" *ngFor="let special of backend.content.BillDetails.results[0].all_specials" (click)="setSpecialPrice(special.SpecialPurchase)">{{special.SpecialPurchase.special_name}} - <span *ngIf="special.SpecialPurchase.specialcost != null">{{special.SpecialPurchase.specialcost / 100}} €</span>
+    <span *ngIf="special.SpecialPurchase.specialcost == null">No price is set yet</span>
+  </button>
 </div>
 <hr>
-<button [disabled]="!backend.content.BillDetails.results[0].ready_for_finalization">Finalize</button>
+<div>
+<button *ngIf="backend.content.BillDetails.results[0].ready_for_finalization" (click)="finalizateBill()">Finalize</button>
+</div>
+<div>
+<button *ngIf="backend.content.BillDetails.results[0].bill_state === 'Created'" (click)="deleteBill()">Delete (purchases themselves will not be deleted)</button>
+</div>
 
 <hr>
-</div>
 <div>
   <button (click)="close()">CLOSE</button>
 </div>
 <hr>
 Full json:  {{backend.content.BillDetails.results[0] | json}}
 <hr>
+</div>
