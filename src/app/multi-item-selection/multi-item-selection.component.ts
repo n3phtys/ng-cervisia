@@ -20,7 +20,7 @@ export class MultiItemSelectionComponent implements OnInit {
 
   searchControl: FormControl = new FormControl();
 
-  constructor(private backend: BackendService) { }
+  constructor(public backend: BackendService) { }
 
   ngOnInit() {
 

@@ -24,7 +24,7 @@ export class FullPurchaseComponent implements OnInit {
 
   searchControl: FormControl = new FormControl();
 
-  constructor(private backend: BackendService, public tabs: TabService) { }
+  constructor(public backend: BackendService, public tabs: TabService) { }
 
   ngOnInit() {
 

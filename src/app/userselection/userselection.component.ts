@@ -26,7 +26,7 @@ export class UserselectionComponent implements OnInit {
 
 
 
-  constructor(private backend: BackendService, public modal: Modal, public tabs: TabService) {
+  constructor(public backend: BackendService, public modal: Modal, public tabs: TabService) {
   }
 
   ngOnInit() {
