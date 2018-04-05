@@ -8,7 +8,9 @@
     <div class="col-xs-12">
       <div class="jumbotron">
         <ul>
-          <li *ngFor="let item of backend.content.selected_users_top_items" (click)="onClickedItem(item, $event)">
+          <li *ngFor="let item of backend.content.selected_users_top_items; let i = index"
+  [attr.id]="'QuickMenuPurchaseBtn_' + i"
+          (click)="onClickedItem(item, $event)">
             {{item.name}}
           </li>
         </ul>
