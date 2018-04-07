@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import {ReactiveFormsModule, FormsModule, FormControl} from '@angular/forms';
 
@@ -31,7 +31,10 @@ import { FfaModalComponent } from './ffa-modal/ffa-modal.component';
 import { FfaListComponent } from './ffa-list/ffa-list.component';
 import { BillDetailModalComponent } from './bill-detail-modal/bill-detail-modal.component';
 
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
 
+registerLocaleData(localeDe);
 
 @NgModule({
   declarations: [
@@ -63,7 +66,7 @@ import { BillDetailModalComponent } from './bill-detail-modal/bill-detail-modal.
     ModalModule.forRoot(),
     BootstrapModalModule
   ],
-  providers: [BackendService, TabService, PasswordCheckService],
+  providers: [{ provide: LOCALE_ID, useValue: "de-DE" },BackendService, TabService, PasswordCheckService],
   bootstrap: [AppComponent],
 
   // IMPORTANT:
@@ -71,4 +74,6 @@ import { BillDetailModalComponent } from './bill-detail-modal/bill-detail-modal.
   // we must tell angular about it.
   entryComponents: [ QuickmenuComponent, FfaModalComponent, BillDetailModalComponent ]
 })
-export class AppModule { }
+export class AppModule { 
+  
+}

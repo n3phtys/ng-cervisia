@@ -1,8 +1,26 @@
+
+<div class="grid-container">
+    <div class="grid-item">
+  
+      <button (click)="tabs.goToUserSelection()" class="btn btn-default" style="position:relative; top:20%;">
+        <span class="glyphicon glyphicon-chevron-left">
+        </span> Zurück zu Übersicht
+      </button>
+    </div>
+    <div class="grid-item" style="grid-column-start: 2;grid-column-end: 7;">
+      <div class="tabHeaderTitle">
+        Persönliche Statistiken
+      </div>
+    </div>
+    <div class="grid-item" style="grid-column-start: 7;">
+      <div class="tabHeaderUsername">
+        {{this.backend.detailUsername}}
+      </div>
+  
+    </div>
+  </div>
+  
+
 <p>
   TODO: need personal log and freeby list
 </p>
-
-
-<button (click)="tabs.goToUserSelection()">
-  Back to all users
-</button>

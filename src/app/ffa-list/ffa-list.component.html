@@ -1,7 +1,5 @@
 <div *ngIf="backend.content.OpenFFAFreebies.total_count > 0">
-<p>
-  ffa-list works!
-</p>
+  
 <div>
   <button *ngFor="let fb of backend.content.OpenFFAFreebies.results" (click)="openFFAModal(fb)" >{{fb.text_message | slice:0:15}}</button>
 </div>

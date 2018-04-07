@@ -1,12 +1,23 @@
 <div>
-    <div>
-    <button class="btn" (click)="tabs.goToUserSelection()">
-      Back to users
-    </button>
+
+<div class="grid-container">
+    <div class="grid-item">
+  
+      <button (click)="tabs.goToUserSelection()" class="btn btn-default" style="position:relative; top:20%;">
+        <span class="glyphicon glyphicon-chevron-left">
+        </span> Zurück zu Übersicht
+      </button>
     </div>
-<h4>
-  Log of all purchases and all users:
-</h4>
+    <div class="grid-item" style="grid-column-start: 2;grid-column-end: 7;">
+      <div class="tabHeaderTitle">
+        Globales Log aller Einkäufe
+      </div>
+    </div>
+    <div class="grid-item" style="grid-column-start: 7;">
+  
+    </div>
+  </div>
+
 
 
 <app-timespan-filter [timespan]="backend.viewstate.global_log.count_pars" (onTimespanFilterChange)="timeFilterChange($event)"></app-timespan-filter>

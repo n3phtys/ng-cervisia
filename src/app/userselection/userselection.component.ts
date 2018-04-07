@@ -6,6 +6,7 @@ import {CustomModalContext, QuickmenuComponent} from '../quickmenu/quickmenu.com
 import { BackendService } from '../backend.service';
 
 import {ReactiveFormsModule, FormsModule, FormControl} from '@angular/forms';
+import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 import {Observable, Observer} from 'rxjs/Rx';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -24,9 +25,11 @@ import { User } from '../backend-types';
 export class UserselectionComponent implements OnInit {
   searchControl: FormControl = new FormControl();
 
-
+  currentTime = new Date();
 
   constructor(public backend: BackendService, public modal: Modal, public tabs: TabService) {
+    //clock ticks
+    IntervalObservable.create(1000).subscribe(e => this.currentTime = new Date());
   }
 
   ngOnInit() {

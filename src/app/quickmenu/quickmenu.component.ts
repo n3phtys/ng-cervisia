@@ -52,21 +52,21 @@ export class QuickmenuComponent implements CloseGuard, ModalComponent<CustomModa
   showDetail() {
     console.log('showing detail dialog');
     this.dialog.close();
-    this.backend.detailselect(this.context.user.user_id);
+    this.backend.detailselect(this.context.user.user_id, this.context.user.username);
     this.tabService.goToFullpurchase();
   }
 
   showStatistics() {
     console.log('showing statistic dialog');
     this.dialog.close();
-    this.backend.detailselect(this.context.user.user_id);
+    this.backend.detailselect(this.context.user.user_id, this.context.user.username);
     this.tabService.goToPersonalLog();
   }
 
   showGiveoutDialog() {
     console.log('showing giveout dialog');
     this.dialog.close();
-    this.backend.detailselect(this.context.user.user_id);
+    this.backend.detailselect(this.context.user.user_id, this.context.user.username);
     this.tabService.goToGiveout();
   }
 

@@ -9,6 +9,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import { ReferenceAst } from '@angular/compiler';
 import { Item, Freeby, Purchase, Bill, User, UserDetailInfo, ParametersAll, ParametersPurchaseLogGlobal, ServerWriteResult, RefreshedData, ParametersPagination, MakeFFAPurchase, CreateBudgetGiveout, CreateCountGiveout, CreateFreeForAll, EnrichedFFA, CreateBill, ParametersBillDetails, DetailedBill, EditBill, Finalized, DeleteUnfinishedBill, FinalizeBill, ExportBill, SetPriceForSpecial } from './backend-types';
+import { AllUserSelectionPageSize, GlobalLogPageSize } from './constants.layouts';
 
 
 export interface PaginatedResult<T> {
@@ -135,7 +136,6 @@ const post_endpoint_set_special_price = '/api/purchases/special/setprice';
 
 
 
-const MAX_NUMBER_OF_USERS_SHOWN = 40;
 const MAX_NUMBER_OF_TOP_ITEMS_SHOWN = 4;
 const MAX_NUMBER_OF_ALL_ITEMS_SHOWN = 40;
 
@@ -145,12 +145,12 @@ const NAME_OF_NO_CATEGORY = "Misc."
 export class BackendService {
 
   viewstate: ParametersAll = {
-    top_users: { n: MAX_NUMBER_OF_USERS_SHOWN },
+    top_users: { n: AllUserSelectionPageSize },
     all_users: {
       count_pars: { searchterm: '' },
       pagination: {
         start_inclusive: 0,
-        end_exclusive: MAX_NUMBER_OF_USERS_SHOWN,
+        end_exclusive: AllUserSelectionPageSize,
       }
     },
     all_items: {
@@ -169,7 +169,7 @@ export class BackendService {
       },
       pagination: {
         start_inclusive: 0,
-        end_exclusive: 10,
+        end_exclusive: GlobalLogPageSize,
       },
     },
     top_personal_drinks: {
@@ -184,7 +184,7 @@ export class BackendService {
       },
       pagination: {
         start_inclusive: 0,
-        end_exclusive: 10,
+        end_exclusive: GlobalLogPageSize,
       },
     },
     personal_detail_infos: {
@@ -240,14 +240,14 @@ export class BackendService {
     },
     TopUsers: {
       from: 0,
-      to: MAX_NUMBER_OF_USERS_SHOWN,
-      total_count: MAX_NUMBER_OF_USERS_SHOWN,
+      to: AllUserSelectionPageSize,
+      total_count: AllUserSelectionPageSize,
       results: [],
     },
     AllUsers: {
       from: 0,
-      to: MAX_NUMBER_OF_USERS_SHOWN,
-      total_count: MAX_NUMBER_OF_USERS_SHOWN,
+      to: AllUserSelectionPageSize,
+      total_count: AllUserSelectionPageSize,
       results: [],
     },
     AllItems: {
@@ -327,16 +327,21 @@ export class BackendService {
   }
 
 
-  detailselect(user: number) {
+  detailselect(user: number, username: string) {
     this.viewstate.personal_detail_infos.user_id = user;
     this.refreshAllItems();
     this.refreshDetailInfo();
+    this.detailUsername = username;
   }
 
   updateItemlist(searchterm: string) {
     this.viewstate.all_items.count_pars.searchterm = searchterm;
     this.refreshAllItems();
   }
+
+
+  detailUsername: string = '';
+
 
   updateBills() {
     const queryjson = (JSON.stringify(this.viewstate.bills));
@@ -745,7 +750,7 @@ export class BackendService {
     );
   }
 
-  createBudgetFreeby(doner_id: number, recipient_id: number, amountCents: number, message: string) {
+  createBudgetFreeby(doner_id: number, recipient_id: number, amountCents: number, message: string) : Observable<void> {
 
     const queryjson = (JSON.stringify(this.viewstate));
     const endp = post_endpoint_freeby_create_budget;
@@ -756,7 +761,7 @@ export class BackendService {
       recipient: recipient_id,
     };
 
-    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+    return this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).map(data => {
       console.log("Success of create budget");
       console.log(data);
       if (data.is_success) {
@@ -766,8 +771,8 @@ export class BackendService {
     );
   }
 
-  createCountFreeby(doner_id: number, recipient_id: number, allowedItems: Array<number>, selectedCategories: Array<string>, amountUnits: number, message: string) {
-
+  createCountFreeby(doner_id: number, recipient_id: number, allowedItems: Array<number>, selectedCategories: Array<string>, amountUnits: number, message: string) : Observable<void> {
+    console.log("Beginning createCountFreeby");
     const queryjson = (JSON.stringify(this.viewstate));
     const endp = post_endpoint_freeby_create_count;
     const payload: CreateCountGiveout = {
@@ -778,8 +783,11 @@ export class BackendService {
       donor: doner_id,
       recipient: recipient_id,
     };
+    console.log(queryjson);
+    console.log(endp);
+    console.log(payload);
 
-    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+    return this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).map(data => {
       console.log("Success of create count");
       console.log(data);
       if (data.is_success) {
@@ -789,7 +797,7 @@ export class BackendService {
     );
   }
 
-  createFFAFreeby(doner_id: number, allowedItems: Array<number>, selectedCategories: Array<string>, amountUnits: number, message: string) {
+  createFFAFreeby(doner_id: number, allowedItems: Array<number>, selectedCategories: Array<string>, amountUnits: number, message: string) : Observable<void> {
     
     const queryjson = (JSON.stringify(this.viewstate));
     const endp = post_endpoint_freeby_create_ffa;
@@ -801,7 +809,7 @@ export class BackendService {
       donor: doner_id,
     };
 
-    this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).subscribe(data => {
+    return this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).map(data => {
       console.log("Success of create ffa");
       console.log(data);
       if (data.is_success) {

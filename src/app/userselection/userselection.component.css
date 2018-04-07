@@ -15,6 +15,25 @@ li:nth-child(even) {
     background: white;
 }
 
+button {
+    white-space: wrap;
+}
+
+.clockdiv {
+    
+}
+
+.timediv {
+    font-size: 24pt;
+    font-weight: bold;
+}
+
+.datediv {
+    font-size: 12pt;
+}
+
+
+
 ul {
 	display: flex;
     flex-wrap: wrap;

@@ -1,40 +1,79 @@
+<div class="grid-container">
+  <div class="grid-item">
+
+    <button (click)="tabs.goToAdministration()" class="btn btn-default" style="position:relative; top:20%;">
+      Administration
+    </button>
+  </div>
+  <div class="grid-item" style="grid-column-start: 2;grid-column-end: 7;">
+
+    <form class="navbar-form" role="search">
+      <input class="form-control" style="margin:0px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;"
+        id="allUsersSearchBar" placeholder="Suche nach Nutzername (ohne Groß-/Kleinschreibung)" [formControl]="searchControl">
+    </form>
+
+  </div>
+  <div class="grid-item" style="grid-column-start: 7;">
+    <div class="datediv">
+      <div class="timediv">
+        {{ currentTime | date:'mediumTime'}}
+      </div>
+      <div class="datediv">
+        {{ currentTime | date:'mediumDate'}}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
 
 
 
 <app-ffa-list></app-ffa-list>
 
-
-<form class="navbar-form" role="search">
-<input class="form-control" style="margin:0px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;" id="allUsersSearchBar" placeholder="Search for user by name (case insensitive)" [formControl]="searchControl">
-</form>
-
-
 <ul>
-  <li *ngFor="let user of backend.content.computed_users_in_list; let i = index" (click)="pressedUser($event, user)"
-  [attr.id]="'AllUsersUserSelectionBtn_' + i"
-  [ngClass]="{'highlighted-user' : user.highlight_in_ui}">
+  <li *ngFor="let user of backend.content.computed_users_in_list; let i = index" (click)="pressedUser($event, user)" [attr.id]="'AllUsersUserSelectionBtn_' + i"
+    [ngClass]="{'highlighted-user' : user.highlight_in_ui}">
     {{user.username}}
   </li>
 </ul>
 
 
-<div>
-  <label>Last Purchase:</label>
-  <div *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].SimplePurchase != null">
-      #{{backend.content.LastPurchases.results[0].SimplePurchase.unique_id}} on date {{backend.content.LastPurchases.results[0].SimplePurchase.timestamp_epoch_millis | date:'short'}} : {{backend.content.LastPurchases.results[0].SimplePurchase.consumer.username}} bought {{backend.content.LastPurchases.results[0].SimplePurchase.item.name}}
-  </div>
-  <div *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].SpecialPurchase != null">
-      #{{backend.content.LastPurchases.results[0].SpecialPurchase.unique_id}} on date {{backend.content.LastPurchases.results[0].SpecialPurchase.timestamp_epoch_millis | date:'short'}} : {{backend.content.LastPurchases.results[0].SpecialPurchase.consumer.username}} bought {{backend.content.LastPurchases.results[0].SpecialPurchase.special_name}}
-  </div>
-  <div *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].FFAPurchase != null">
-      #{{backend.content.LastPurchases.results[0].FFAPurchase.unique_id}} on date {{backend.content.LastPurchases.results[0].FFAPurchase.timestamp_epoch_millis | date:'short'}} : Someone bought {{backend.content.LastPurchases.results[0].FFAPurchase.item.name}} (FFA Purchase donated by {{backend.content.LastPurchases.results[0].FFAPurchase.donor.username}})
+
+<div style="position: fixed;bottom:10px;width:100%;height: 45px;">
+
+  <div class="grid-container" >
+    <div class="grid-item"  style="grid-column-start: 1;grid-column-end: 2;">
+
+
+      <button (click)="tabs.goToLog()" class="btn btn-info" >
+        Log aller Einkäufe
+      </button>
+
+    </div>
+    <div class="grid-item" style="grid-column-start: 2;grid-column-end: 8;">
+
+
+
+      <div>
+        <div *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].SimplePurchase != null">
+          #{{backend.content.LastPurchases.results[0].SimplePurchase.unique_id}} on date {{backend.content.LastPurchases.results[0].SimplePurchase.timestamp_epoch_millis
+          | date:'short'}} : {{backend.content.LastPurchases.results[0].SimplePurchase.consumer.username}} bought {{backend.content.LastPurchases.results[0].SimplePurchase.item.name}}
+        </div>
+        <div *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].SpecialPurchase != null">
+          #{{backend.content.LastPurchases.results[0].SpecialPurchase.unique_id}} on date {{backend.content.LastPurchases.results[0].SpecialPurchase.timestamp_epoch_millis
+          | date:'short'}} : {{backend.content.LastPurchases.results[0].SpecialPurchase.consumer.username}} bought {{backend.content.LastPurchases.results[0].SpecialPurchase.special_name}}
+        </div>
+        <div *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].FFAPurchase != null">
+          #{{backend.content.LastPurchases.results[0].FFAPurchase.unique_id}} on date {{backend.content.LastPurchases.results[0].FFAPurchase.timestamp_epoch_millis
+          | date:'short'}} : Someone bought {{backend.content.LastPurchases.results[0].FFAPurchase.item.name}} (FFA Purchase
+          donated by {{backend.content.LastPurchases.results[0].FFAPurchase.donor.username}})
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
-
-<button (click)="tabs.goToAdministration()">
-  Administration
-</button>
-
-<button (click)="tabs.goToLog()">
-  Log
-</button>
