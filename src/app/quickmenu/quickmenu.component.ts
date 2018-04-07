@@ -40,7 +40,7 @@ export class QuickmenuComponent implements CloseGuard, ModalComponent<CustomModa
 
   onClickedItem(item: Item, event) {
       console.log('Buying item = ' + item.name);
-      this.backend.makeSimplePurchase(item.item_id, this.context.user.user_id);
+      this.backend.makeSimplePurchase(item.name, this.context.user.username, item.item_id, this.context.user.user_id);
       this.close();
   }
 

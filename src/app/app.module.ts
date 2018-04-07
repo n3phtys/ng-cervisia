@@ -1,13 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID } from '@angular/core';
 
-import {ReactiveFormsModule, FormsModule, FormControl} from '@angular/forms';
+import { ReactiveFormsModule, FormsModule, FormControl } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { BackendService } from './backend.service';
 
 // Import HttpClientModule from @angular/common/http
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { QuickmenuComponent } from './quickmenu/quickmenu.component';
 import { UserselectionComponent } from './userselection/userselection.component';
 import { FullPurchaseComponent } from './full-purchase/full-purchase.component';
@@ -30,9 +30,11 @@ import { MultiItemSelectionComponent } from './multi-item-selection/multi-item-s
 import { FfaModalComponent } from './ffa-modal/ffa-modal.component';
 import { FfaListComponent } from './ffa-list/ffa-list.component';
 import { BillDetailModalComponent } from './bill-detail-modal/bill-detail-modal.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
+import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 registerLocaleData(localeDe);
 
@@ -60,20 +62,22 @@ registerLocaleData(localeDe);
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
     ModalModule.forRoot(),
+    ToastModule.forRoot(),
     BootstrapModalModule
   ],
-  providers: [{ provide: LOCALE_ID, useValue: "de-DE" },BackendService, TabService, PasswordCheckService],
+  providers: [{ provide: LOCALE_ID, useValue: "de-DE" }, BackendService, TabService, PasswordCheckService],
   bootstrap: [AppComponent],
 
   // IMPORTANT:
   // Since 'AdditionCalculateWindow' is never explicitly used (in a template)
   // we must tell angular about it.
-  entryComponents: [ QuickmenuComponent, FfaModalComponent, BillDetailModalComponent ]
+  entryComponents: [QuickmenuComponent, FfaModalComponent, BillDetailModalComponent]
 })
-export class AppModule { 
-  
+export class AppModule {
+
 }

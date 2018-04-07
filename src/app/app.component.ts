@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
 import { TabService } from './tab.service';
 import { TabActive } from './tab-active.enum';
+import { BackendService } from './backend.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,8 @@ export class AppComponent {
   public tab = TabActive;
 
 
-  constructor(public tabservice: TabService) {
+  constructor(public tabservice: TabService, public backendService: BackendService , vcr: ViewContainerRef) {
+    this.backendService.toastr.setRootViewContainerRef(vcr);
       
   }
 }

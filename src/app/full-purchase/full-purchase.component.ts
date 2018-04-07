@@ -93,7 +93,7 @@ export class FullPurchaseComponent implements OnInit {
     this.shoppingCart = [];
     console.log("v = ");
     console.log(v);
-    this.backend.purchaseList(this.backend.viewstate.personal_detail_infos.user_id, v);
+    this.backend.purchaseList(this.backend.detailUsername, this.backend.viewstate.personal_detail_infos.user_id, v);
     this.tabs.goToUserSelection();
   }
 

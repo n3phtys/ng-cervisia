@@ -10,6 +10,7 @@ import 'rxjs/add/operator/map';
 import { ReferenceAst } from '@angular/compiler';
 import { Item, Freeby, Purchase, Bill, User, UserDetailInfo, ParametersAll, ParametersPurchaseLogGlobal, ServerWriteResult, RefreshedData, ParametersPagination, MakeFFAPurchase, CreateBudgetGiveout, CreateCountGiveout, CreateFreeForAll, EnrichedFFA, CreateBill, ParametersBillDetails, DetailedBill, EditBill, Finalized, DeleteUnfinishedBill, FinalizeBill, ExportBill, SetPriceForSpecial } from './backend-types';
 import { AllUserSelectionPageSize, GlobalLogPageSize } from './constants.layouts';
+import { ToastsManager } from 'ng2-toastr';
 
 
 export interface PaginatedResult<T> {
@@ -323,7 +324,7 @@ export class BackendService {
     all_items_per_category: [],
   };
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public toastr: ToastsManager) {
   }
 
 
@@ -689,7 +690,7 @@ export class BackendService {
 
 
 
-  purchaseList(userId: number, purchases: Array<ShoppingCartElement>) {
+  purchaseList(username: string, userId: number, purchases: Array<ShoppingCartElement>) {
     const queryjson = (JSON.stringify(this.viewstate));
     const endp = post_endpoint_cart_purchase;
 
@@ -713,7 +714,13 @@ export class BackendService {
       console.log(data);
       if (data.is_success) {
         this.updateContentWithWriteResult(data.content.refreshed_data);
+        purchases.forEach(ele => this.toastr.success("von " + username, "Abgestrichen: " + ele.count + " * " + ele.item.name), this.TOAST_CONFIG);
+      } else {
+      this.toastr.error("Fehler: " + data.error_message, "Abstreichen misslungen", this.TOAST_CONFIG);
       }
+    }, err => {
+      console.log("error in makeSimplePurchase: " + err);
+      this.toastr.error("Fehler: " + err, "Abstreichen misslungen" , this.TOAST_CONFIG);
     }
     );
   }
@@ -732,7 +739,18 @@ export class BackendService {
 
   }
 
-  makeSimplePurchase(itemId: number, userId: number) {
+  
+  TOAST_CONFIG = {
+    toastLife: 5000,
+    dismiss: 'auto',
+    animate: 'flyRight',
+    showCloseButton: true,
+    positionClass: 'toast-bottom-right',
+    newestOnTop: true,
+    maxShown: 8,
+  };
+
+  makeSimplePurchase(itemname: string, username: string, itemId: number, userId: number) {
     const queryjson = (JSON.stringify(this.viewstate));
     const endp = post_endpoint_simple_purchase;
     const payload: MakeSimplePurchase = {
@@ -745,7 +763,13 @@ export class BackendService {
       console.log(data);
       if (data.is_success) {
         this.updateContentWithWriteResult(data.content.refreshed_data);
+        this.toastr.success("von " + username, "Abgestrichen: " + itemname, this.TOAST_CONFIG);
+      } else {
+      this.toastr.error("Fehler: " + data.error_message, "Abstreichen misslungen", this.TOAST_CONFIG );
       }
+    }, err => {
+      console.log("error in makeSimplePurchase: " + err);
+      this.toastr.error("Fehler: " + err, "Abstreichen misslungen", this.TOAST_CONFIG );
     }
     );
   }
@@ -820,7 +844,7 @@ export class BackendService {
   }
 
 
-  makeFFAPurchase(ffaId: number, itemId: number) {
+  makeFFAPurchase(donorname: string, itemname: string, ffaId: number, itemId: number) {
     
     const queryjson = (JSON.stringify(this.viewstate));
     const endp = post_endpoint_ffa_purchase;
@@ -834,7 +858,13 @@ export class BackendService {
       console.log(data);
       if (data.is_success) {
         this.updateContentWithWriteResult(data.content.refreshed_data);
+        this.toastr.success("Ausgegeben von " + donorname, "FFA abgestrichen: " + itemname, this.TOAST_CONFIG);
+      } else {
+      this.toastr.error("Fehler: " + data.error_message, "FFA Abstreichen misslungen", this.TOAST_CONFIG );
       }
+    }, err => {
+      console.log("error in makeFFAPurchase");
+      this.toastr.error("Fehler: " + err, "FFA Abstreichen misslungen", this.TOAST_CONFIG );
     }
     );
   }

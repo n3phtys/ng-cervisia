@@ -31,7 +31,7 @@ export class FfaModalComponent implements CloseGuard, ModalComponent<CustomFFAMo
   }
 
   consume(item: Item) {
-    this.backend.makeFFAPurchase(this.context.freeby.id, item.item_id);
+    this.backend.makeFFAPurchase(this.context.freeby.donor.username, item.name, this.context.freeby.id, item.item_id);
     this.dialog.close();
   }
 
