@@ -8,6 +8,8 @@ import { ModalModule } from 'ngx-modialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastModule } from 'ng2-toastr';
 
 describe('PersonalstatisticsComponent', () => {
   let component: PersonalstatisticsComponent;
@@ -18,6 +20,8 @@ describe('PersonalstatisticsComponent', () => {
       imports: [
         HttpClientModule,
         BrowserModule,
+        BrowserAnimationsModule,
+        ToastModule.forRoot(),
         ReactiveFormsModule,
         FormsModule,
         ModalModule.forRoot(),

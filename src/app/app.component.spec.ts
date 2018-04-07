@@ -27,16 +27,20 @@ import { EnumPipePipe } from './enum-pipe.pipe';
 import { SingleUserSelectionComponent } from './single-user-selection/single-user-selection.component';
 import { MultiItemSelectionComponent } from './multi-item-selection/multi-item-selection.component';
 import { FfaListComponent } from './ffa-list/ffa-list.component';
+import { ToastModule } from 'ng2-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         HttpClientModule,
         ReactiveFormsModule,
         FormsModule,
         ModalModule.forRoot(),
+        ToastModule.forRoot(),
         BootstrapModalModule
       ],
       providers: [BackendService, TabService, PasswordCheckService],
