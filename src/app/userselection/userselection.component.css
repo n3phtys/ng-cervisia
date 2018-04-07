@@ -1,17 +1,24 @@
-li {
-	flex: 1 0 18%;
+.userSelectionItem {
+	flex: 1 0 13%;
   box-sizing: border-box;
   color: #171e42;
-  padding: 10px;
-  margin: 10px;
-    height: 60px;
+  word-wrap: break-word;
+  margin: 6px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 75px;
+    height: 75px;
+}
+.largerSelectionItem {
+  line-height: 80px;
+  height: 80px;
 }
 
-li:nth-child(odd) {
+.userSelectionItem:nth-child(odd) {
     background: skyblue;
 }
 
-li:nth-child(even) {
+.userSelectionItem:nth-child(even) {
     background: white;
 }
 
@@ -20,7 +27,7 @@ button {
 }
 
 .clockdiv {
-    
+    font-size: 18pt;
 }
 
 .timediv {
@@ -34,15 +41,16 @@ button {
 
 
 
-ul {
+.userSelectionContainer {
+    margin-top: 5px;
+    margin-bottom: 5px;
 	display: flex;
     flex-wrap: wrap;
-    background: grey;
     list-style-type: none;
 }
 
 .highlighted-user {
     border: gold;
     border-style: solid;
-    border-width: 5px;
+    border-width: 3px;
 }

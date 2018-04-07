@@ -1,23 +1,39 @@
-li {
-	flex: 1 0 40%;
-  box-sizing: border-box;
-  color: #171e42;
-  padding: 10px;
-  margin: 10px;
-    height: 60px;
+.qmChild {
+	flex: 1 1 45%;
+    box-sizing: border-box;
     background: white;
+    width: 10%;
+    height: 15%;
+    margin: 2%;
 }
 
-li:first-child {
+.qmButton {
+    text-align: center;
+    vertical-align: center;
+    font-size: 3vh;
+    word-wrap: break-word;
+    font-weight: bold;
+    line-height: 15vh;
+}
+
+.qmChild:first-child {
     background: skyblue;
 }
-li:last-child {
+.qmChild:last-child {
     background: skyblue;
 }
 
-ul {
-	display: flex;
+
+.qmContainer {
+    display: flex;
+    columns: 2;
     flex-wrap: wrap;
-    background: grey;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
     list-style-type: none;
+    width: 100%;
+    min-height: 100%;
 }
+

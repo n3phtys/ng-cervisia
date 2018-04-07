@@ -24,6 +24,7 @@ export class QuickmenuComponent implements CloseGuard, ModalComponent<CustomModa
 
   constructor(public dialog: DialogRef<CustomModalContext>, public backend: BackendService, public tabService : TabService) {
     this.context = dialog.context;
+    this.context.dialogClass = 'modal-dialog modal-lg';
     console.log(this.context);
     dialog.setCloseGuard(this);
   }

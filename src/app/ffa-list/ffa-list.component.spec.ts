@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FfaListComponent } from './ffa-list.component';
+import { FreebyMessagePipe } from '../freeby-message.pipe';
 
 describe('FfaListComponent', () => {
   let component: FfaListComponent;
@@ -8,7 +9,8 @@ describe('FfaListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FfaListComponent ]
+      declarations: [ 
+        FreebyMessagePipe, FfaListComponent ]
     })
     .compileComponents();
   }));

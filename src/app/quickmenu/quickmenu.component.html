@@ -1,28 +1,40 @@
-<div class="container-fluid custom-modal-container">
-  <div class="row custom-modal-header">
-    <div class="col-sm-12">
-      <h1>Quickmenu for {{context.user.username}}</h1>
+<div class="container-fluid custom-modal-container greybackground">
+  <div class="row custom-modal-header" style="padding:15px;">
+
+    <div class="col-sm-2" style="display: flex;align-items: center;justify-content: center;">
+      <button  (click)="showStatistics()" type="button" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-dashboard" style="padding-right: 5px;"></span>Statistiken
+        </button>
+    </div>
+    <div class="col-sm-8 quickmenuHeaderUsername">{{context.user.username}}</div>
+    <div class="col-sm-2">
+      <button (click)="close()" type="button" class="btn btn-danger btn-lg" style="position: absolute; right: 10px;">
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
     </div>
   </div>
   <div class="row" [ngClass]="{'myclass' : shouldUseMyClass}">
     <div class="col-xs-12">
-      <div class="jumbotron">
-        <ul>
-          <li *ngFor="let item of backend.content.selected_users_top_items; let i = index"
-  [attr.id]="'QuickMenuPurchaseBtn_' + i"
-          (click)="onClickedItem(item, $event)">
+      <div>
+        <div class="qmContainer">
+          <div class="qmChild qmButton" *ngFor="let item of backend.content.selected_users_top_items; let i = index" [attr.id]="'QuickMenuPurchaseBtn_' + i"
+            (click)="onClickedItem(item, $event)">
             {{item.name}}
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="row custom-modal-footer">
-    <div class="col-sm-12">
-      <button (click)="showStatistics()">Statistics</button>
-      <button (click)="showGiveoutDialog()">Giveouts</button>
-      <button (click)="showDetail()">More...</button>
-      <button (click)="close()">Close</button>
+  <div class="row custom-modal-footer" style="margin-bottom: 40px;padding: 10px;">
+    <div class="col-sm-6"  >
+        <button (click)="showGiveoutDialog()" type="button" class="btn btn-lg" style="position: absolute; left: 10px;">
+            <span class="glyphicon glyphicon-glass" style="padding-right: 5px;"></span>Ausgeben
+          </button>
+          </div>
+    <div class="col-sm-6">
+          <button (click)="showDetail()" type="button" class="btn btn-primary btn-lg" style="position: absolute; right: 10px;">
+              <span class="glyphicon glyphicon-folder-open" style="padding-right: 5px;"></span> Weitere Getränke
+            </button>
     </div>
   </div>
 </div>

@@ -31,16 +31,16 @@
 
 
 
+<div>
+    <app-ffa-list></app-ffa-list>
+</div>
 
-<app-ffa-list></app-ffa-list>
-
-<ul>
-  <li *ngFor="let user of backend.content.computed_users_in_list; let i = index" (click)="pressedUser($event, user)" [attr.id]="'AllUsersUserSelectionBtn_' + i"
-    [ngClass]="{'highlighted-user' : user.highlight_in_ui}">
+<div class="userSelectionContainer">
+  <div *ngFor="let user of backend.content.computed_users_in_list; let i = index" (click)="pressedUser($event, user)" [attr.id]="'AllUsersUserSelectionBtn_' + i"
+    [ngClass]="{'highlighted-user' : user.highlight_in_ui, 'userSelectionItem' : true, 'largerSelectionItem': backend.content.OpenFFAFreebies.total_count == 0}">
     {{user.username}}
-  </li>
-</ul>
-
+  </div>
+</div>
 
 
 <div style="position: fixed;bottom:10px;width:100%;height: 45px;">
@@ -54,7 +54,7 @@
       </button>
 
     </div>
-    <div class="grid-item" style="grid-column-start: 2;grid-column-end: 8;">
+    <div class="grid-item" style="grid-column-start: 2;grid-column-end: 8; line-height:30px;">
 
 
 

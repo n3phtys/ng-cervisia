@@ -29,6 +29,7 @@ import { MultiItemSelectionComponent } from './multi-item-selection/multi-item-s
 import { FfaListComponent } from './ffa-list/ffa-list.component';
 import { ToastModule } from 'ng2-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FreebyMessagePipe } from './freeby-message.pipe';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -46,6 +47,7 @@ describe('AppComponent', () => {
       providers: [BackendService, TabService, PasswordCheckService],
       declarations: [
         AppComponent,
+        FreebyMessagePipe,
         UserselectionComponent,
         QuickmenuComponent,
         SingleUserSelectionComponent,

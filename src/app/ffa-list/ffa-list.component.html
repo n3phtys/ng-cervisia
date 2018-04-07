@@ -1,7 +1,7 @@
 <div *ngIf="backend.content.OpenFFAFreebies.total_count > 0">
   
 <div>
-  <button *ngFor="let fb of backend.content.OpenFFAFreebies.results" (click)="openFFAModal(fb)" >{{fb.text_message | slice:0:15}}</button>
+  <button *ngFor="let fb of backend.content.OpenFFAFreebies.results" (click)="openFFAModal(fb)"  style="margin-left: 10px;margin-right:10px;" class="btn btn-success">{{fb.text_message | freebyMessage}}</button>
 </div>
 
 </div>

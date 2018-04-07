@@ -30,6 +30,8 @@ export class UserselectionComponent implements OnInit {
   constructor(public backend: BackendService, public modal: Modal, public tabs: TabService) {
     //clock ticks
     IntervalObservable.create(1000).subscribe(e => this.currentTime = new Date());
+
+    
   }
 
   ngOnInit() {

@@ -35,6 +35,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import { FreebyMessagePipe } from './freeby-message.pipe';
 
 registerLocaleData(localeDe);
 
@@ -54,6 +55,7 @@ registerLocaleData(localeDe);
     PaginatorComponent,
     TimespanFilterComponent,
     EnumPipePipe,
+    FreebyMessagePipe,
     SingleUserSelectionComponent,
     MultiItemSelectionComponent,
     FfaModalComponent,
