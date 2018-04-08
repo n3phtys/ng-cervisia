@@ -14,10 +14,17 @@ import { GlobalLogPageSize } from '../constants.layouts';
 export class GlobalstatisticsComponent implements OnInit {
 
   pageSize = GlobalLogPageSize;
-  
+
+  ALLOWED_PASSED_MILLIS = 120 * 1000;
+
+  breakpoint = new Date().getTime() - this.ALLOWED_PASSED_MILLIS;
+
   constructor(public tabs: TabService, public backend: BackendService, public passmanager: PasswordCheckService) { }
   
     ngOnInit() {
+      this.backend.viewstate.global_log.pagination.start_inclusive = 0;
+      this.backend.viewstate.global_log.pagination.end_exclusive = this.pageSize;
+      this.breakpoint = new Date().getTime() - this.ALLOWED_PASSED_MILLIS;
       this.backend.updateGlobalLog();
     }
 
@@ -39,13 +46,21 @@ export class GlobalstatisticsComponent implements OnInit {
 
     undoPurchase(id : number, timestamp : number) {
       console.log("Trying to undo " + id);
-      const breakpoint = timestamp + (30 * 1000);
+      const breakpoint = timestamp + this.ALLOWED_PASSED_MILLIS;
       const now = (new Date()).valueOf();
 
       if (breakpoint > now) {
           this.backend.undoPurchaseByUser(id);
-      } else if (this.passmanager.checkPassword()) {
-        this.backend.undoPurchaseByUser(id);
+      } 
+    }
+    
+    undoPurchaseByAdmin(id : number, timestamp : number) {
+
+      console.log("Trying to undo " + id);
+      const breakpoint = timestamp + this.ALLOWED_PASSED_MILLIS;
+      const now = (new Date()).valueOf();
+      if (this.passmanager.checkPasswordAnyway()) {
+        this.backend.undoPurchaseByAdmin(id);
       }
     }
 }

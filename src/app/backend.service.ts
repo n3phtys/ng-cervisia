@@ -664,7 +664,7 @@ export class BackendService {
   }
 
   updateMainUserlist(term: string): void {
-    this.viewstate.all_users.count_pars.searchterm = term;
+    this.viewstate.all_users.count_pars.searchterm = term.trim();
     const queryjson = (JSON.stringify(term.length > 0 ? this.viewstate.all_users : this.viewstate.top_users));
     const endp = term.length > 0 ? endpoint_allusers : endpoint_topusers;
     console.log(queryjson);
@@ -672,7 +672,7 @@ export class BackendService {
     this.http.get(endp, { params: { query: queryjson } }).subscribe(dat => {
       console.log(dat);
       const data = dat as PaginatedResult<User>;
-      if (term == null || term.length === 0) {
+      if (term == null || term.trim().length == 0) {
         this.content.TopUsers = data;
       } else {
         this.content.AllUsers = data;

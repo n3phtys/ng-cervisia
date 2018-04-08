@@ -56,9 +56,15 @@ get pageSizeOverride(): number {
     console.log("pagesize = " + this._pageSize)
     console.log("computing page size in paginator: "+ myd.toISOString);
     if (this._pageSize == -1) {
-      this._pageSize = this._parameters.to - this._parameters.from;
+      this._pageSize = Math.max(1, this._parameters.to - this._parameters.from);
     }
+    console.log("vals:")
+    console.log(this._parameters.total_count);
+    console.log(this._pageSize);
     this.numberOfPages = Math.ceil(this._parameters.total_count / this._pageSize);
+    if (this.numberOfPages < 0 || Number.isNaN(this.numberOfPages) || !Number.isFinite(this.numberOfPages)) {
+      this.numberOfPages = 1;
+    }
     this.selectedPage = Math.floor(this._parameters.from / this._pageSize);
     const c = Math.min(this.selectedPage, this.numberOfPages - 1);
     const d = c > 0 ? c : 0;

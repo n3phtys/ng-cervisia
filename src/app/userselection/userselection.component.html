@@ -1,7 +1,7 @@
 <div class="grid-container">
   <div class="grid-item">
 
-    <button (click)="tabs.goToAdministration()" class="btn btn-default" style="position:relative; top:20%;">
+    <button (click)="tabs.goToAdministration()" class="btn btn-default" style="position:fixed; top:15px; left: 40px">
       Administration
     </button>
   </div>
@@ -14,7 +14,7 @@
 
   </div>
   <div class="grid-item" style="grid-column-start: 7;">
-    <div class="datediv">
+    <div class="clockdiv">
       <div class="timediv">
         {{ currentTime | date:'mediumTime'}}
       </div>

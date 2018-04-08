@@ -45,19 +45,22 @@ export class PasswordCheckService {
     }
   }
 
-  checkPassword(): boolean {
-    //do not check if password is null
-    if (this.getPasswordOrNull() == null) {
-      return true;
-    } else {
-      const c = prompt("Please enter the administrator password");
+  checkPasswordAnyway() : boolean {
+    const c = prompt("Please enter the administrator password");
       if (this.equalsPassword(c)) {
         return true;
       } else {
         alert("Wrong password entered");
         return false;
       }
+  }
 
+  checkPassword(): boolean {
+    //do not check if password is null
+    if (this.getPasswordOrNull() == null) {
+      return true;
+    } else {
+      return this.checkPasswordAnyway();
     }
   }
 

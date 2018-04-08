@@ -27,6 +27,10 @@ button {
 }
 
 .clockdiv {
+    float: right;
+    margin-right: 20px; 
+    width: 128px;
+    height: 40px;
     font-size: 18pt;
 }
 
