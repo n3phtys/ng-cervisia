@@ -28,6 +28,7 @@ export class BillmanagementComponent implements OnInit {
   constructor(public tabs: TabService, public backend: BackendService, public modal: Modal) { }
 
   ngOnInit() {
+    this.backend.viewstate.bills.count_pars.scope_user_id = null;
     this.backend.updateBills();
     this.dt2 = new Date();
     this.dt1 = new Date(this.dt2.getTime() - 3600000);

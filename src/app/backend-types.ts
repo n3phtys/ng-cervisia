@@ -139,6 +139,19 @@ export interface EnrichedFFA {
     donor: User;
 }
 
+export interface EnrichedCountOrBudgetGiveout {
+    id: number;
+    items: Array<Item>;
+    cents_worth_total: number;
+    cents_worth_used: number;
+    total: number;
+    left: number;
+    text_message: string;
+    created_timestamp: number;
+    donor: User;
+    recipient: User,
+}
+
 
 export interface UserDetailInfo {
     consumed: Map<string, number>;

@@ -21,6 +21,119 @@
   </div>
   
 
-<p>
-  TODO: need personal log and freeby list
-</p>
+
+<div class="clearfix">
+  <div class="col-xs-6">
+     CURRENT PERSONAL LOG (NO ACTION POSSIBLE)
+
+     <app-timespan-filter [timespan]="backend.viewstate.personal_log.count_pars"  (onTimespanFilterChange)="timeFilterChange($event)"></app-timespan-filter>
+
+  
+
+     <div *ngFor="let purchase of backend.content.PurchaseLogPersonal.results" class="purchaseLogLine">
+      <div *ngIf="purchase.SimplePurchase != null">
+        #{{purchase.SimplePurchase.unique_id}} on {{purchase.SimplePurchase.timestamp_epoch_millis | date:'short'}} : {{purchase.SimplePurchase.item.name}}
+    </div>
+    <div *ngIf="purchase.SpecialPurchase != null">
+        #{{purchase.SpecialPurchase.unique_id}} on {{purchase.SpecialPurchase.timestamp_epoch_millis | date:'short'}} : {{purchase.SpecialPurchase.special_name}}
+    </div>
+    <div *ngIf="purchase.FFAPurchase != null">
+        #{{purchase.FFAPurchase.unique_id}} on {{purchase.FFAPurchase.timestamp_epoch_millis | date:'short'}} : FFA-Ausgabe = {{purchase.FFAPurchase.item.name}}
+    </div>
+
+  </div>
+
+    <app-paginator [parameters]="backend.content.PurchaseLogPersonal" [pageSizeOverride]="pageSizePersonalLog" (onPageChange)="pageNavigationForPersonalLog($event)"></app-paginator>
+
+
+  </div>
+  <div class="col-xs-6">
+     INCOMING (OPEN) FREEBIES (NO ACTION POSSIBLE)
+     <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John</td>
+          <td>Doe</td>
+          <td>john@example.com</td>
+        </tr>
+        <tr>
+          <td>Mary</td>
+          <td>Moe</td>
+          <td>mary@example.com</td>
+        </tr>
+        <tr>
+          <td>July</td>
+          <td>Dooley</td>
+          <td>july@example.com</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="clearfix">
+  <div class="col-xs-6">
+     BILLS THIS USER IS PART OF, with Button for Email-Export of each Bill
+     <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John</td>
+          <td>Doe</td>
+          <td>john@example.com</td>
+        </tr>
+        <tr>
+          <td>Mary</td>
+          <td>Moe</td>
+          <td>mary@example.com</td>
+        </tr>
+        <tr>
+          <td>July</td>
+          <td>Dooley</td>
+          <td>july@example.com</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-xs-6">
+     OUTGOING (OPEN) FREEBIES (NO ACTION POSSIBLE)
+     <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John</td>
+          <td>Doe</td>
+          <td>john@example.com</td>
+        </tr>
+        <tr>
+          <td>Mary</td>
+          <td>Moe</td>
+          <td>mary@example.com</td>
+        </tr>
+        <tr>
+          <td>July</td>
+          <td>Dooley</td>
+          <td>july@example.com</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

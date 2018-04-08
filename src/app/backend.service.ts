@@ -8,7 +8,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import { ReferenceAst } from '@angular/compiler';
-import { Item, Freeby, Purchase, Bill, User, UserDetailInfo, ParametersAll, ParametersPurchaseLogGlobal, ServerWriteResult, RefreshedData, ParametersPagination, MakeFFAPurchase, CreateBudgetGiveout, CreateCountGiveout, CreateFreeForAll, EnrichedFFA, CreateBill, ParametersBillDetails, DetailedBill, EditBill, Finalized, DeleteUnfinishedBill, FinalizeBill, ExportBill, SetPriceForSpecial } from './backend-types';
+import { Item, Freeby, Purchase, Bill, User, UserDetailInfo, ParametersAll, ParametersPurchaseLogGlobal, ServerWriteResult, RefreshedData, ParametersPagination, MakeFFAPurchase, CreateBudgetGiveout, CreateCountGiveout, CreateFreeForAll, EnrichedFFA, CreateBill, ParametersBillDetails, DetailedBill, EditBill, Finalized, DeleteUnfinishedBill, FinalizeBill, ExportBill, SetPriceForSpecial, EnrichedCountOrBudgetGiveout } from './backend-types';
 import { AllUserSelectionPageSize, GlobalLogPageSize } from './constants.layouts';
 import { ToastsManager } from 'ng2-toastr';
 
@@ -38,8 +38,8 @@ export interface AllResults {
   OpenFFAFreebies: PaginatedResult<EnrichedFFA>;
   TopPersonalDrinks: PaginatedResult<Item>;
   PurchaseLogPersonal: PaginatedResult<Purchase>;
-  IncomingFreebies: PaginatedResult<Freeby>;
-  OutgoingFreebies: PaginatedResult<Freeby>;
+  IncomingFreebies: PaginatedResult<EnrichedCountOrBudgetGiveout>;
+  OutgoingFreebies: PaginatedResult<EnrichedCountOrBudgetGiveout>;
 
   top_items_cache: Map<number, Item[]>;
   autocomplete_collection: string[];
@@ -113,6 +113,8 @@ const endpoint_globallog = '/api/purchases/global';
 const endpoint_userdetails = '/api/users/detail';
 const endpoint_bills = '/api/bills';
 const endpoint_ffas = '/api/giveout/ffa';
+const endpoint_incoming_freebies = '/api/giveout/incoming';
+const endpoint_outgoing_freebies = '/api/giveout/outgoing';
 const endpoint_detailed_bill = '/api/bills/detail';
 const post_endpoint_simple_purchase = '/api/purchases';
 const post_endpoint_cart_purchase = '/api/purchases/cart';
@@ -145,6 +147,28 @@ const NAME_OF_NO_CATEGORY = "Misc."
 @Injectable()
 export class BackendService {
 
+  updatePersonalBills() {
+    this.viewstate.bills.count_pars.scope_user_id = this.viewstate.personal_log.count_pars.user_id;
+    this.updateBills();
+  }
+  updateIncomingFreebies() {
+
+      const queryjson = (JSON.stringify(this.viewstate.incoming_freebies));
+      const endp = endpoint_incoming_freebies;
+      console.log(queryjson);
+      // Make the HTTP request: <PaginatedResult<User>>
+      this.http.get(endp, { params: { query: queryjson } }).subscribe(dat => {
+        console.log(dat);
+        const data = dat as PaginatedResult<EnrichedFFA>;
+        this.content.OpenFFAFreebies = data;
+      });
+    
+
+    //TODO: implement
+  }
+  updateOutgoingFreebies() {
+    //TODO: implement
+  }
   viewstate: ParametersAll = {
     top_users: { n: AllUserSelectionPageSize },
     all_users: {
@@ -328,8 +352,11 @@ export class BackendService {
   }
 
 
-  detailselect(user: number, username: string) {
-    this.viewstate.personal_detail_infos.user_id = user;
+  detailselect(user_id: number, username: string) {
+    this.viewstate.personal_detail_infos.user_id = user_id;
+    this.viewstate.personal_log.count_pars.user_id = user_id;
+    this.viewstate.outgoing_freebies.count_pars.donor_id = user_id;
+    this.viewstate.incoming_freebies.count_pars.recipient_id = user_id;
     this.refreshAllItems();
     this.refreshDetailInfo();
     this.detailUsername = username;
@@ -625,6 +652,22 @@ export class BackendService {
         x['placeholder'] = 'my name';
       }
       this.content.PurchaseLogGlobal = data;
+    });
+  }
+
+
+  updatePersonalLog() {
+    const queryjson = (JSON.stringify(this.viewstate.personal_log));
+    const endp = endpoint_personallog;
+    console.log(queryjson);
+    // Make the HTTP request: <PaginatedResult<User>>
+    this.http.get<PaginatedResult<Purchase>>(endp, { params: { query: queryjson } }).subscribe(data => {
+      console.log("updating personal log");
+      console.log(data);
+      for (let x of data.results) {
+        x['placeholder'] = 'my name';
+      }
+      this.content.PurchaseLogPersonal = data;
     });
   }
 
