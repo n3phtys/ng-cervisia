@@ -1,10 +1,11 @@
 li {
 	flex: 1 0 18%;
   box-sizing: border-box;
-  color: #171e42;
   padding: 10px;
   margin: 10px;
     height: 60px;
+    line-height: 40px;
+    font-weight: bold;
 }
 
 li:nth-child(odd) {
@@ -18,6 +19,9 @@ li:nth-child(even) {
 ul {
 	display: flex;
     flex-wrap: wrap;
-    background: grey;
     list-style-type: none;
+}
+
+.selectedItem {
+    border: 2px solid gold;
 }

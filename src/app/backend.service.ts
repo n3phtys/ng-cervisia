@@ -806,6 +806,9 @@ export class BackendService {
     console.log("Beginning createCountFreeby");
     const queryjson = (JSON.stringify(this.viewstate));
     const endp = post_endpoint_freeby_create_count;
+
+
+
     const payload: CreateCountGiveout = {
       allowed_categories: selectedCategories,
       allowed_drinks: allowedItems,
@@ -829,9 +832,12 @@ export class BackendService {
   }
 
   createFFAFreeby(doner_id: number, allowedItems: Array<number>, selectedCategories: Array<string>, amountUnits: number, message: string) : Observable<void> {
-    
+    console.log("selectedCategories");
+    console.log(selectedCategories);
     const queryjson = (JSON.stringify(this.viewstate));
     const endp = post_endpoint_freeby_create_ffa;
+
+
     const payload: CreateFreeForAll = {
       allowed_categories: selectedCategories,
       allowed_drinks: allowedItems,
@@ -839,6 +845,10 @@ export class BackendService {
       text_message: message,
       donor: doner_id,
     };
+
+    console.log("json: ")
+    console.log(payload);
+    console.log(JSON.stringify(payload));
 
     return this.http.post<ServerWriteResult>(endp, JSON.stringify(payload), { params: { query: queryjson } }).map(data => {
       console.log("Success of create ffa");

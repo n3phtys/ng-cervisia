@@ -435,7 +435,7 @@ export interface MakeFFAPurchase {
 
 
 export interface CreateFreeForAll {
-    allowed_categories: Array<string>;
+    allowed_categories:  Array<string>;
     allowed_drinks: Array<number>;
     allowed_number_total: number;
     text_message: string;

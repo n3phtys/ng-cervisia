@@ -12,6 +12,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ModalModule } from 'ngx-modialog';
 import { PaginatorComponent } from '../paginator/paginator.component';
+import { ToastModule } from 'ng2-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('GiveoutComponent', () => {
   let component: GiveoutComponent;
@@ -21,10 +23,12 @@ describe('GiveoutComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientModule,
+        BrowserAnimationsModule,
         BrowserModule,
         ReactiveFormsModule,
         FormsModule,
         ModalModule.forRoot(),
+        ToastModule.forRoot()
       ],
       providers: [BackendService, TabService, PasswordCheckService],
       declarations: [ GiveoutComponent, 
@@ -37,12 +41,21 @@ describe('GiveoutComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GiveoutComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    //fixture = TestBed.createComponent(GiveoutComponent);
+    //component = fixture.componentInstance;
+    //fixture.detectChanges();
   });
 
-   //it('should create', () => {
-   //  expect(component).toBeTruthy();
-   //});
+  it('should round correctly 1', () => {
+    expect(GiveoutComponent.calcInputPlusRounded(6, true, 10, 1, 100000 )).toBe(10);
+  });
+  it('should round correctly 2', () => {
+    expect(GiveoutComponent.calcInputPlusRounded(10, true, 10, 1, 100000 )).toBe(20);
+  });
+  it('should round correctly 3', () => {
+    expect(GiveoutComponent.calcInputPlusRounded(6, false, 10, 1, 100000 )).toBe(1);
+  });
+  it('should round correctly 4', () => {
+    expect(GiveoutComponent.calcInputPlusRounded(19, false, 10, 1, 100000 )).toBe(10);
+  });
 });

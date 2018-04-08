@@ -26,11 +26,11 @@ export class GiveoutComponent implements OnInit {
   selectedPersonId: User;
   selectedItems: Array<Item>;
   selectedCategories: Array<string>;
-  amountCents: number;
+  amountEuro: number;
   amountUnits: number;
 
 
-  constructor(public tabs: TabService, public backend: BackendService) { 
+  constructor(public tabs: TabService, public backend: BackendService) {
   }
 
   ngOnInit() {
@@ -43,7 +43,7 @@ export class GiveoutComponent implements OnInit {
     this.selectedPersonId = null;
     this.selectedItems = [];
     this.selectedCategories = [];
-    this.amountCents = 100;
+    this.amountEuro = 1;
     this.amountUnits = 1;
     this.processing = false;
     this.allowed = this.isPossible();
@@ -51,9 +51,9 @@ export class GiveoutComponent implements OnInit {
 
   isPossible(): boolean {
     let x = true;
-    switch (+this.freebytype) { 
+    switch (+this.freebytype) {
       case FreebyEnum.Budget: {
-        x = this.selectedPersonId != null && this.amountCents > 0;
+        x = this.selectedPersonId != null && this.amountEuro > 0;
         break;
       }
       case FreebyEnum.Set: {
@@ -87,14 +87,14 @@ export class GiveoutComponent implements OnInit {
         case FreebyEnum.Budget: {
           console.log("Budget!");
           const recipient_id: number = this.selectedPersonId.user_id;
-          this.backend.createBudgetFreeby(doner_id, recipient_id, this.amountCents, this.message).subscribe(() => {
+          this.backend.createBudgetFreeby(doner_id, recipient_id, this.amountEuro * 100, this.message).subscribe(() => {
             alert(DonationProcessSuccess)
             this.processing = false;
             this.tabs.goToUserSelection();
-            }, err => {
-              alert(DonationProcessFailure);
-              this.processing = false;
-            });
+          }, err => {
+            alert(DonationProcessFailure);
+            this.processing = false;
+          });
           break;
         }
         case FreebyEnum.Set: {
@@ -105,10 +105,10 @@ export class GiveoutComponent implements OnInit {
             alert(DonationProcessSuccess)
             this.processing = false;
             this.tabs.goToUserSelection();
-            }, err => {
-              alert(DonationProcessFailure);
-              this.processing = false;
-            });
+          }, err => {
+            alert(DonationProcessFailure);
+            this.processing = false;
+          });
           break;
         }
         case FreebyEnum.FFA: {
@@ -118,10 +118,10 @@ export class GiveoutComponent implements OnInit {
             alert(DonationProcessSuccess)
             this.processing = false;
             this.tabs.goToUserSelection();
-            }, err => {
-              alert(DonationProcessFailure);
-              this.processing = false;
-            });
+          }, err => {
+            alert(DonationProcessFailure);
+            this.processing = false;
+          });
           break;
         }
       }
@@ -141,5 +141,24 @@ export class GiveoutComponent implements OnInit {
       this.selectedItems = selection.items;
     }
     this.allowed = this.isPossible();
+  }
+
+  static calcInputPlusRounded(oldValue: number, isPositive: boolean, amount: number, min: number, max: number): number {
+    const oldMod = Math.floor(oldValue / amount);
+    const procValue = amount * (oldMod + (isPositive ? (1) : ( oldMod * amount == oldValue ? -1 : 0)));
+
+    console.log("oldValue = " + oldValue + " oldMod = " + oldMod + " leads to procValue = " + procValue);
+
+    const newValue = Math.min(max, Math.max(min, procValue));
+    return newValue;
+  }
+
+  setInputPlusRounded(id: string, isPositive: boolean, amount: number) {
+    //after this operation, value % 0 == true
+    const oldValue: number = document.getElementById(id)['value'];
+    const min: number = document.getElementById(id)['min'] != null ? document.getElementById(id)['min'] : 0; // or set to 0
+    const max: number = document.getElementById(id)['max'] != null ? document.getElementById(id)['max'] : Number.MAX_SAFE_INTEGER; // or set to max number
+
+    document.getElementById(id)['value'] = GiveoutComponent.calcInputPlusRounded(oldValue, isPositive, amount, min, max);
   }
 }

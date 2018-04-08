@@ -3,14 +3,16 @@
 </form>
 
 
-<div>
   <div *ngFor="let category of backend.content.all_items_per_category">
-    <button (click)="onClickedCategory(category, $event)" >Category: {{category.name}} <span *ngIf="selectedCategories.has(category)">is selected</span></button>
+    <button (click)="onClickedCategory(category.name, $event)" 
+    [ngClass]="{'btn' : true, 'btn-default' : !selectedCategories.has(category),  'btn-info' : selectedCategories.has(category) }"
+    >Kategorie: {{category.name}} <span *ngIf="selectedCategories.has(category)"> (ausgewählt)</span></button>
     <ul>
-      <li *ngFor="let item of category.arr" (click)="onClickedItem(item, $event)">
-        {{item.name}} <span *ngIf="selectedItems.has(item)">is selected</span>
+      <li *ngFor="let item of category.arr" (click)="onClickedItem(item, $event)"
+      [ngClass]="{'selectedItem' : selectedItems.has(item) }"
+      >
+        {{item.name}} <span *ngIf="selectedItems.has(item)"> (ausgewählt)</span>
       </li>
     </ul>
   </div>
 
-</div>

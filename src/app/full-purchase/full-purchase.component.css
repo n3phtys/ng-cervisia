@@ -25,16 +25,6 @@ ul {
     list-style-type: none;
 }
 
-.checkoutButton {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    height: 100px;
-    text-align: center;
-    line-height: 82px;
-    font-size: 24pt;
-}
-
 .shoppingCartBtn {
     width: calc(100% - 10px);
     word-wrap: break-word;

@@ -3,6 +3,7 @@ import { Item } from '../backend-types';
 import { BackendService } from '../backend.service';
 import { FormControl } from '@angular/forms';
 
+
 export class MultiItemSelection {
   constructor(public items: Array<Item>, public categories: Array<string>) {}
 }
@@ -41,6 +42,7 @@ export class MultiItemSelectionComponent implements OnInit {
   }
 
   emit() {
+
     this.selectionChanged.emit(new MultiItemSelection(
       Array.from(this.selectedItems),
       Array.from(this.selectedCategories)
@@ -61,7 +63,7 @@ export class MultiItemSelectionComponent implements OnInit {
   }
 
   onClickedCategory(category: string, event) {
-    console.log("Marking:");
+    console.log("Marking: " + category.toString());
     console.log(category);
 
     //check if already in
