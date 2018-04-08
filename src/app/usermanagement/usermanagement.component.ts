@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 import { TabService } from '../tab.service';
 import { BackendService } from '../backend.service';
 import { User } from '../backend-types';
+import { UserManagementPageSize } from '../constants.layouts';
 
 @Component({
   selector: 'app-usermanagement',
@@ -20,11 +21,13 @@ export class UsermanagementComponent implements OnInit {
 
   detailUser: User = null;
 
+  pagesize = UserManagementPageSize; 
 
 
   constructor(public tabs: TabService, public backend: BackendService) { }
 
   ngOnInit() {
+    this.backend.setAllUserPageSize(this.pagesize);
     this.searchControl.valueChanges
       .debounceTime(500)
       .distinctUntilChanged()
@@ -73,7 +76,7 @@ export class UsermanagementComponent implements OnInit {
 
   pageNavigation(page : number) {
     console.log("Navigating to page " + page);
-    BackendService.moveToPage(this.backend.viewstate.all_users.pagination, page);
+    BackendService.moveToPage(this.backend.viewstate.all_users.pagination, page, this.pagesize);
     this.backend.updateAllUserlist(this.term);
 } 
 

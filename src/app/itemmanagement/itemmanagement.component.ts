@@ -8,6 +8,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import { BackendService } from '../backend.service';
 import { Item } from '../backend-types';
+import { ItemManagementPageSize } from '../constants.layouts';
 
 @Component({
   selector: 'app-itemmanagement',
@@ -16,6 +17,7 @@ import { Item } from '../backend-types';
 })
 export class ItemmanagementComponent implements OnInit {
 
+  pagesize = ItemManagementPageSize;
   searchControl: FormControl = new FormControl();
   term = '';
   
@@ -74,7 +76,7 @@ export class ItemmanagementComponent implements OnInit {
 
     pageNavigation(page : number) {
       console.log("Navigating to page " + page);
-      BackendService.moveToPage(this.backend.viewstate.all_items.pagination, page);
+      BackendService.moveToPage(this.backend.viewstate.all_items.pagination, page, this.pagesize);
       this.backend.updateItemlist(this.term);
   } 
 

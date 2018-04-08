@@ -13,6 +13,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import { TabService } from '../tab.service';
 import { User } from '../backend-types';
+import { FFAUserPageSize, AllUserSelectionPageSize } from '../constants.layouts';
 
 
 
@@ -35,6 +36,7 @@ export class UserselectionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.backend.setAllUserPageSize(AllUserSelectionPageSize);
     //this.searchControl.valueChanges.subscribe(e => console.log("Term = " + e));
     const backend = this.backend;
     this.searchControl.valueChanges

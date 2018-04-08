@@ -1,9 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PaginatedResult } from '../backend.service';
 
-export class NavigationEvent {
-
-}
 
 @Component({
   selector: 'app-paginator',
@@ -11,6 +8,19 @@ export class NavigationEvent {
   styleUrls: ['./paginator.component.css']
 })
 export class PaginatorComponent {
+
+
+private _pageSize: number = -1;
+
+@Input() set pageSizeOverride(value: number) {
+  this._pageSize = value;
+  this.inputChanged();
+}
+
+get pageSizeOverride(): number {
+  return this._pageSize;
+}
+
 
   private _parameters: PaginatedResult<any> = {
     from: 0,
@@ -32,7 +42,6 @@ export class PaginatorComponent {
 
   public pages: Array<number> = [];
   public numberOfPages: number = 0;
-  public pageSize: number = 0;
   public selectedPage: number = 0;
   public hasNoNextPage: boolean = false;
   public hasNoPreviousPage: boolean = false;
@@ -43,25 +52,36 @@ export class PaginatorComponent {
   }
 
   private computePageSize() {
-    this.pageSize = this._parameters.to - this._parameters.from;
-    this.numberOfPages = Math.ceil(this._parameters.total_count / this.pageSize);
-    this.selectedPage = Math.floor(this._parameters.from / this.pageSize);
+    const myd = new Date();
+    console.log("pagesize = " + this._pageSize)
+    console.log("computing page size in paginator: "+ myd.toISOString);
+    if (this._pageSize == -1) {
+      this._pageSize = this._parameters.to - this._parameters.from;
+    }
+    this.numberOfPages = Math.ceil(this._parameters.total_count / this._pageSize);
+    this.selectedPage = Math.floor(this._parameters.from / this._pageSize);
     const c = Math.min(this.selectedPage, this.numberOfPages - 1);
     const d = c > 0 ? c : 0;
     this.selectedPage = d;
+    console.log("done with computation in paginator: "+ myd.toISOString);
+    console.log("after computePageSize:");
+    console.log(this);
   }
 
   private computePages() {
+    console.log("Computing pages");
     let a = [];
     for (let i = 0; i < this.numberOfPages; i++) {
+      //console.log("Page " + i);
       if (i >= this.selectedPage - 4 && i <= this.selectedPage + 4) {
         a.push(i);
-      }
+     }
     }
     this.pages = a;
   }
 
   private setButtonVisibility() {
+    console.log("setting button visibility");
     this.hasNoNextPage = this.selectedPage >= (this.pages.length - 1);
     this.hasNoPreviousPage = this.selectedPage <= 0;
 

@@ -7,6 +7,7 @@ import { TabActive } from '../tab-active.enum';
 import { BackendService } from '../backend.service';
 import { ParametersPurchaseLogGlobalCount, Bill, ExportBill } from '../backend-types';
 import { BillDetailModalComponent } from '../bill-detail-modal/bill-detail-modal.component';
+import { BillManagementPageSize } from '../constants.layouts';
 
 @Component({
   selector: 'app-billmanagement',
@@ -22,6 +23,7 @@ export class BillmanagementComponent implements OnInit {
   filter: ParametersPurchaseLogGlobalCount;
 
 
+  pagesize = BillManagementPageSize;
 
   constructor(public tabs: TabService, public backend: BackendService, public modal: Modal) { }
 
@@ -35,7 +37,7 @@ export class BillmanagementComponent implements OnInit {
 
   pageNavigation(page: number) {
     console.log("Navigating to page " + page);
-    BackendService.moveToPage(this.backend.viewstate.global_log.pagination, page);
+    BackendService.moveToPage(this.backend.viewstate.global_log.pagination, page, this.pagesize);
     this.backend.updateBills();
   }
 

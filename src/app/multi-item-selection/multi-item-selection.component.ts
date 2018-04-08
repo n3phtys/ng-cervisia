@@ -15,6 +15,7 @@ export class MultiItemSelection {
 export class MultiItemSelectionComponent implements OnInit {
   @Output() selectionChanged = new EventEmitter<MultiItemSelection>();
 
+
   selectedCategories : Set<string> = new Set();
   selectedItems : Set<Item> = new Set();
 

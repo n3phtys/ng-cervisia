@@ -38,7 +38,7 @@
       </table>
     </div>
 
-    <app-paginator [parameters]="backend.content.Bills" (onPageChange)="pageNavigation($event)"></app-paginator>
+    <app-paginator [parameters]="backend.content.Bills" [pageSizeOverride]="pagesize" (onPageChange)="pageNavigation($event)"></app-paginator>
 
     <div>
       <h4>Create a new bill (unfinalized)</h4>

@@ -4,6 +4,7 @@ import { TabActive } from '../tab-active.enum';
 import { BackendService } from '../backend.service';
 import { ParametersBillsCount, ParametersPurchaseLogGlobalCount } from '../backend-types';
 import { PasswordCheckService } from '../password-check.service';
+import { GlobalLogPageSize } from '../constants.layouts';
 
 @Component({
   selector: 'app-globalstatistics',
@@ -12,7 +13,7 @@ import { PasswordCheckService } from '../password-check.service';
 })
 export class GlobalstatisticsComponent implements OnInit {
 
-
+  pageSize = GlobalLogPageSize;
   
   constructor(public tabs: TabService, public backend: BackendService, public passmanager: PasswordCheckService) { }
   
@@ -25,7 +26,7 @@ export class GlobalstatisticsComponent implements OnInit {
 
     pageNavigation(page : number) {
         console.log("Navigating to page " + page);
-        BackendService.moveToPage(this.backend.viewstate.global_log.pagination, page);
+        BackendService.moveToPage(this.backend.viewstate.global_log.pagination, page, this.pageSize);
         this.backend.updateGlobalLog();
     } 
 

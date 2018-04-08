@@ -639,10 +639,12 @@ export class BackendService {
     });
   }
 
-  static moveToPage(par: ParametersPagination, i: number) {
-    const pageSize = par.end_exclusive - par.start_inclusive;
-    par.start_inclusive = i * pageSize;
-    par.end_exclusive = (i + 1) * pageSize;
+  static moveToPage(par: ParametersPagination, i: number, _pageSize: number) {
+    if (_pageSize == null) {
+      _pageSize = par.end_exclusive - par.start_inclusive;
+    }
+    par.start_inclusive = i * _pageSize;
+    par.end_exclusive = (i + 1) * _pageSize;
   }
 
   computeUsers(): void {
@@ -654,6 +656,11 @@ export class BackendService {
       this.content.computed_users_in_list = this.content.TopUsers.results;
     }
     console.log(this.content);
+  }
+
+  setAllUserPageSize(pageSize: number) {
+    this.viewstate.all_users.pagination.start_inclusive = 0;
+    this.viewstate.all_users.pagination.end_exclusive = pageSize;
   }
 
   updateMainUserlist(term: string): void {

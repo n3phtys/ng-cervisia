@@ -44,7 +44,7 @@
     </div>
 
 
-    <app-paginator [parameters]="backend.content.AllUsers" (onPageChange)="pageNavigation($event)"></app-paginator>
+    <app-paginator [parameters]="backend.content.AllUsers" [pageSizeOverride]="pagesize"  (onPageChange)="pageNavigation($event)"></app-paginator>
 
     <button (click)="createUser()">Create new user</button>
 

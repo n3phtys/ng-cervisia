@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { User } from '../backend-types';
 import { BackendService } from '../backend.service';
 import { FormControl } from '@angular/forms';
+import { FFAUserPageSize } from '../constants.layouts';
 
 @Component({
   selector: 'app-single-user-selection',
@@ -12,6 +13,8 @@ export class SingleUserSelectionComponent implements OnInit {
   searchControl: FormControl = new FormControl();
   term: string = '';
 
+  pagesize = FFAUserPageSize;
+
 
   @Output() selectionChanged = new EventEmitter<User>();
 
@@ -20,6 +23,7 @@ export class SingleUserSelectionComponent implements OnInit {
   constructor(public backend: BackendService) { }
 
   ngOnInit() {
+    this.backend.setAllUserPageSize(this.pagesize);
     this.selected = null;
     this.searchControl.valueChanges
       .debounceTime(500)
@@ -40,7 +44,7 @@ export class SingleUserSelectionComponent implements OnInit {
 
   pageNavigation(page : number) {
     console.log("Navigating to page " + page);
-    BackendService.moveToPage(this.backend.viewstate.all_users.pagination, page);
+    BackendService.moveToPage(this.backend.viewstate.all_users.pagination, page, this.pagesize);
     this.backend.updateAllUserlist(this.term);
 } 
 
