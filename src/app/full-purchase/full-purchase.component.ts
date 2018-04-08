@@ -9,6 +9,7 @@ import 'rxjs/add/operator/map';
 import { TabService } from '../tab.service';
 import { TabActive } from '../tab-active.enum';
 import { Item } from '../backend-types';
+import { PurchaseOtherPrompt } from '../constants.locale';
 
 
 @Component({
@@ -57,8 +58,8 @@ export class FullPurchaseComponent implements OnInit {
   }
 
   onSpecialClicked() {
-    const c = prompt("Enter what else you want to purchase");
-    if (c.length > 0) {
+    const c = prompt(PurchaseOtherPrompt);
+    if (c != null && c.length > 0) {
       const id = this.specialCounter;
       this.specialCounter--;
       this.shoppingCart.push({
@@ -73,8 +74,11 @@ export class FullPurchaseComponent implements OnInit {
     }
   }
 
-  onShoppingCarElementPressed(item: Item, event) {
-    const idx = this.shoppingCart.findIndex(x => x.item.item_id === item.item_id);
+  onShoppingCarElementPressed(item: Item, idx: number, event) {
+    console.log("weniger von:");
+    console.log(item);
+    console.log(idx);
+    console.log(event);
     if (idx >= 0) {
       const oldv = this.shoppingCart[idx].count;
       if (oldv > 1) {
@@ -96,6 +100,7 @@ export class FullPurchaseComponent implements OnInit {
     this.backend.purchaseList(this.backend.detailUsername, this.backend.viewstate.personal_detail_infos.user_id, v);
     this.tabs.goToUserSelection();
   }
+
 
 
 }

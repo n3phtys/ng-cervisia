@@ -21,14 +21,25 @@
 
 
 
-<form class="navbar-form" role="search">
-  <input class="form-control" style="margin:20px;padding:20px;" placeholder="Search for item" [formControl]="searchControl">
-</form>
+
+
+
+
+
+
+
 
 
 <div>
+  <div  class="col-sm-9">
+    
+<div>
+    <form class="navbar-form" role="search">
+        <input class="form-control" style="margin:20px;padding:20px;" placeholder="Suche nach Getränk" [formControl]="searchControl">
+      </form>
+    </div>
   <div *ngFor="let category of backend.content.all_items_per_category">
-    <label>Category: {{category.name}}</label>
+    <label>Kategorie: {{category.name}}</label>
     <ul>
       <li *ngFor="let item of category.arr" (click)="onClickedItem(item, $event)">
         {{item.name}}
@@ -36,28 +47,64 @@
     </ul>
   </div>
 
-  <div>
-    <button class="btn btn-default" (click)="onSpecialClicked()">
-      Something else
+  <div style="margin-top: 15px;">
+    <button class="btn btn-lg" (click)="onSpecialClicked()">
+        <span class="glyphicon glyphicon-plus" style="margin-right:5px;"></span> Etwas, das nicht auf der Liste steht
     </button>
   </div>
-</div>
 
-
-<div>
-  <label>Shopping Cart:</label>
-  <div *ngFor="let item of shoppingCart">
-    {{item.count}} * {{item.item.name}} á {{item.item.cost_cents / 100 | currency}}
   </div>
-  <button *ngIf="shoppingCart.length > 0" (click)="onOkayPressed($event)" class="btn btn-primary">Checkout purchases</button>
-</div>
+  <div  class="col-sm-3">
+    
+    <div>
+        <table class="table table-striped" *ngFor="let detailinfo of backend.content.DetailInfoForUser.results">
+            <!--thead>
+              <tr>
+                <th>Punkt</th>
+                <th>Wert</th>
+              </tr>
+            </thead-->
+            <tbody>
+              <tr>
+                <td>Aktuelle Periode</td>
+                <td>{{detailinfo.currently_cost}}</td>
+              </tr>
+              <tr>
+                <td>Letzte Abrechnung</td>
+                <td>{{detailinfo.last_bill_cost}}</td>
+              </tr>
+              <tr>
+                <td>Abrechnungsdatum</td>
+                <td>{{detailinfo.last_bill_date}}</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+    <div>
+      
+        <div style="border: 1px solid black;">
+            <label style="font-size: 16pt">Warenkorb:</label>
+            <div *ngFor="let item of shoppingCart; let idx = index" class="btn btn-info shoppingCartBtn" (click)="onShoppingCarElementPressed(item, idx, $event)">
+              
+  <div  class="col-xs-1 nowrap">
+      {{item.count}}
+  </div>
+  
+  <div  class="col-xs-6 nowrap">
+      {{item.item.name}}
+  </div>
+  <div  class="col-xs-5 nowrap">
+      á {{item.item.cost_cents / 100 | currency:'EUR'}}
+    </div>
+               
+            </div>
+          </div>
 
 
 
-<div *ngFor="let detailinfo of backend.content.DetailInfoForUser.results">
-  current cost = {{detailinfo.currently_cost}}
-  <br> lastbill cost = {{detailinfo.last_bill_cost}}
-  <br> lastbill date = {{detailinfo.last_bill_date}}
-  <br>
-
+    </div>
+    <div class="btn btn-success checkoutButton" *ngIf="shoppingCart.length > 0" (click)="onOkayPressed($event)">
+      Abstreichen 
+    </div>
+  </div>
 </div>
