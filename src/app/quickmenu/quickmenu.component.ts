@@ -22,11 +22,14 @@ export class QuickmenuComponent implements CloseGuard, ModalComponent<CustomModa
 
   public shouldUseMyClass = true;
 
+  public btnsDisabled = true;
+
   constructor(public dialog: DialogRef<CustomModalContext>, public backend: BackendService, public tabService : TabService) {
     this.context = dialog.context;
     this.context.dialogClass = 'modal-dialog modal-lg';
     console.log(this.context);
     dialog.setCloseGuard(this);
+    this.btnsDisabled = false;
   }
 
 
@@ -40,9 +43,12 @@ export class QuickmenuComponent implements CloseGuard, ModalComponent<CustomModa
   }
 
   onClickedItem(item: Item, event) {
+    if (!this.btnsDisabled) {
+    this.btnsDisabled = true;
       console.log('Buying item = ' + item.name);
       this.backend.makeSimplePurchase(item.name, this.context.user.username, item.item_id, this.context.user.user_id);
       this.close();
+    }
   }
 
   close() {
