@@ -143,7 +143,7 @@ export interface EnrichedCountOrBudgetGiveout {
     id: number;
     items: Array<Item>;
     cents_worth_total: number;
-    cents_worth_used: number;
+    cents_worth_left: number;
     total: number;
     left: number;
     text_message: string;

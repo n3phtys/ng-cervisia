@@ -1,77 +1,75 @@
-
 <div class="grid-container">
-    <div class="grid-item">
-  
-      <button (click)="tabs.goToUserSelection()" class="btn btn-default" style="position:relative; top:20%;">
-        <span class="glyphicon glyphicon-chevron-left">
-        </span> Zurück zu Übersicht
-      </button>
-    </div>
-    <div class="grid-item" style="grid-column-start: 2;grid-column-end: 7;">
-      <div class="tabHeaderTitle">
-        Persönliche Statistiken
-      </div>
-    </div>
-    <div class="grid-item" style="grid-column-start: 7;">
-      <div class="tabHeaderUsername">
-        {{this.backend.detailUsername}}
-      </div>
-  
+  <div class="grid-item">
+
+    <button (click)="tabs.goToUserSelection()" class="btn btn-default" style="position:relative; top:20%;">
+      <span class="glyphicon glyphicon-chevron-left">
+      </span> Zurück zu Übersicht
+    </button>
+  </div>
+  <div class="grid-item" style="grid-column-start: 2;grid-column-end: 7;">
+    <div class="tabHeaderTitle">
+      Persönliche Statistiken
     </div>
   </div>
-  
+  <div class="grid-item" style="grid-column-start: 7;">
+    <div class="tabHeaderUsername">
+      {{this.backend.detailUsername}}
+    </div>
+
+  </div>
+</div>
+
 
 
 <div class="clearfix">
   <div class="col-xs-6">
-     CURRENT PERSONAL LOG (NO ACTION POSSIBLE)
+    CURRENT PERSONAL LOG (NO ACTION POSSIBLE)
 
-     <app-timespan-filter [timespan]="backend.viewstate.personal_log.count_pars"  (onTimespanFilterChange)="timeFilterChange($event)"></app-timespan-filter>
+    <app-timespan-filter [timespan]="backend.viewstate.personal_log.count_pars" (onTimespanFilterChange)="timeFilterChange($event)"></app-timespan-filter>
 
-  
 
-     <div *ngFor="let purchase of backend.content.PurchaseLogPersonal.results" class="purchaseLogLine">
+
+    <div *ngFor="let purchase of backend.content.PurchaseLogPersonal.results" class="purchaseLogLine">
       <div *ngIf="purchase.SimplePurchase != null">
         #{{purchase.SimplePurchase.unique_id}} on {{purchase.SimplePurchase.timestamp_epoch_millis | date:'short'}} : {{purchase.SimplePurchase.item.name}}
-    </div>
-    <div *ngIf="purchase.SpecialPurchase != null">
+      </div>
+      <div *ngIf="purchase.SpecialPurchase != null">
         #{{purchase.SpecialPurchase.unique_id}} on {{purchase.SpecialPurchase.timestamp_epoch_millis | date:'short'}} : {{purchase.SpecialPurchase.special_name}}
-    </div>
-    <div *ngIf="purchase.FFAPurchase != null">
+      </div>
+      <div *ngIf="purchase.FFAPurchase != null">
         #{{purchase.FFAPurchase.unique_id}} on {{purchase.FFAPurchase.timestamp_epoch_millis | date:'short'}} : FFA-Ausgabe = {{purchase.FFAPurchase.item.name}}
-    </div>
+      </div>
 
-  </div>
+    </div>
 
     <app-paginator [parameters]="backend.content.PurchaseLogPersonal" [pageSizeOverride]="pageSizePersonalLog" (onPageChange)="pageNavigationForPersonalLog($event)"></app-paginator>
 
 
   </div>
   <div class="col-xs-6">
-     INCOMING (OPEN) FREEBIES (NO ACTION POSSIBLE)
-     <table class="table table-striped">
+    <label>Eingehende (offene) Spenden</label>
+    <table class="table table-striped">
       <thead>
         <tr>
-          <th>Firstname</th>
-          <th>Lastname</th>
-          <th>Email</th>
+          <th>Id</th>
+          <th>Datum</th>
+          <th>Spender</th>
+          <th>Insgesamt</th>
+          <th>Übrig</th>
+          <th>Nachricht</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>John</td>
-          <td>Doe</td>
-          <td>john@example.com</td>
-        </tr>
-        <tr>
-          <td>Mary</td>
-          <td>Moe</td>
-          <td>mary@example.com</td>
-        </tr>
-        <tr>
-          <td>July</td>
-          <td>Dooley</td>
-          <td>july@example.com</td>
+        <tr *ngFor="let f of backend.content.IncomingFreebies.results">
+          <td>{{f.id}}</td>
+          <td>{{f.created_timestamp | date:'medium'}}</td>
+          <td>{{f.donor.username}}</td>
+          <td  *ngIf="f.total < 1">{{f.cents_worth_total / 100  | currency:'EUR'}}</td>
+          <td  *ngIf="f.total < 1">{{f.cents_worth_left / 100  | currency:'EUR'}}</td>
+          <td  *ngIf="f.total >= 1">{{f.total}}</td>
+          <td  *ngIf="f.total >= 1">{{f.left}}</td>
+          <td>{{f.text_message}}</td>
+
         </tr>
       </tbody>
     </table>
@@ -79,61 +77,65 @@
 </div>
 <div class="clearfix">
   <div class="col-xs-6">
-     BILLS THIS USER IS PART OF, with Button for Email-Export of each Bill
-     <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Firstname</th>
-          <th>Lastname</th>
-          <th>Email</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>John</td>
-          <td>Doe</td>
-          <td>john@example.com</td>
-        </tr>
-        <tr>
-          <td>Mary</td>
-          <td>Moe</td>
-          <td>mary@example.com</td>
-        </tr>
-        <tr>
-          <td>July</td>
-          <td>Dooley</td>
-          <td>july@example.com</td>
-        </tr>
-      </tbody>
-    </table>
+    <div>
+      <table class="table table-striped table-condensed">
+        <thead>
+          <tr>
+            <th style="min-width: 60px;">From</th>
+            <th style="min-width: 60px;">To</th>
+            <th style="min-width: 80px;">Comment</th>
+            <th style="width:50px;"> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let bill of backend.content.Bills.results">
+            <td>{{ bill.timestamp_from | date }}</td>
+            <td>{{ bill.timestamp_to | date }}</td>
+            <td>{{ bill.comment }}</td>
+            <td>
+              <div>
+                <a (click)="exportBill(bill)" class="btn btn-small btn-primary">export per mail</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <app-paginator [parameters]="backend.content.Bills" [pageSizeOverride]="pagesize" (onPageChange)="pageNavigationBills($event)"></app-paginator>
+    </div>
+
+
+
   </div>
   <div class="col-xs-6">
-     OUTGOING (OPEN) FREEBIES (NO ACTION POSSIBLE)
-     <table class="table table-striped">
+    
+    <label>Ausgehende (offene) Spenden</label>
+    <table class="table table-striped">
       <thead>
         <tr>
-          <th>Firstname</th>
-          <th>Lastname</th>
-          <th>Email</th>
+          <th>Id</th>
+          <th>Datum</th>
+          <th>Empfänger</th>
+          <th>Insgesamt</th>
+          <th>Übrig</th>
+          <th>Nachricht</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>John</td>
-          <td>Doe</td>
-          <td>john@example.com</td>
-        </tr>
-        <tr>
-          <td>Mary</td>
-          <td>Moe</td>
-          <td>mary@example.com</td>
-        </tr>
-        <tr>
-          <td>July</td>
-          <td>Dooley</td>
-          <td>july@example.com</td>
+        <tr *ngFor="let f of backend.content.OutgoingFreebies.results">
+          <td>{{f.id}}</td>
+          <td>{{f.created_timestamp | date:'medium'}}</td>
+          <td>{{f.recipient.username}}</td>
+          <td  *ngIf="f.total < 1">{{f.cents_worth_total / 100  | currency:'EUR'}}</td>
+          <td  *ngIf="f.total < 1">{{f.cents_worth_left / 100  | currency:'EUR'}}</td>
+          <td  *ngIf="f.total >= 1">{{f.total}}</td>
+          <td  *ngIf="f.total >= 1">{{f.left}}</td>
+          <td>{{f.text_message}}</td>
+
         </tr>
       </tbody>
     </table>
+
   </div>
 </div>

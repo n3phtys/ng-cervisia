@@ -9,7 +9,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
 import { ReferenceAst } from '@angular/compiler';
 import { Item, Freeby, Purchase, Bill, User, UserDetailInfo, ParametersAll, ParametersPurchaseLogGlobal, ServerWriteResult, RefreshedData, ParametersPagination, MakeFFAPurchase, CreateBudgetGiveout, CreateCountGiveout, CreateFreeForAll, EnrichedFFA, CreateBill, ParametersBillDetails, DetailedBill, EditBill, Finalized, DeleteUnfinishedBill, FinalizeBill, ExportBill, SetPriceForSpecial, EnrichedCountOrBudgetGiveout } from './backend-types';
-import { AllUserSelectionPageSize, GlobalLogPageSize } from './constants.layouts';
+import { AllUserSelectionPageSize, GlobalLogPageSize, FFAFreebyPageSize, IncomingFreebyPageSize, OutgoingFreebyPageSize } from './constants.layouts';
 import { ToastsManager } from 'ng2-toastr';
 
 
@@ -156,19 +156,25 @@ export class BackendService {
       const queryjson = (JSON.stringify(this.viewstate.incoming_freebies));
       const endp = endpoint_incoming_freebies;
       console.log(queryjson);
-      // Make the HTTP request: <PaginatedResult<User>>
       this.http.get(endp, { params: { query: queryjson } }).subscribe(dat => {
         console.log(dat);
-        const data = dat as PaginatedResult<EnrichedFFA>;
-        this.content.OpenFFAFreebies = data;
+        const data = dat as PaginatedResult<EnrichedCountOrBudgetGiveout>;
+        this.content.IncomingFreebies = data;
       });
-    
 
-    //TODO: implement
   }
   updateOutgoingFreebies() {
-    //TODO: implement
+    const queryjson = (JSON.stringify(this.viewstate.outgoing_freebies));
+    const endp = endpoint_outgoing_freebies;
+    console.log(queryjson);
+    this.http.get(endp, { params: { query: queryjson } }).subscribe(dat => {
+      console.log(dat);
+      const data = dat as PaginatedResult<EnrichedCountOrBudgetGiveout>;
+      this.content.OutgoingFreebies = data;
+    });
+
   }
+
   viewstate: ParametersAll = {
     top_users: { n: AllUserSelectionPageSize },
     all_users: {
@@ -233,7 +239,7 @@ export class BackendService {
     open_ffa_freebies: {
       pagination: {
         start_inclusive: 0,
-        end_exclusive: 5,
+        end_exclusive: FFAFreebyPageSize,
       }
     },
     incoming_freebies: {
@@ -242,7 +248,7 @@ export class BackendService {
       },
       pagination: {
         start_inclusive: 0,
-        end_exclusive: 5,
+        end_exclusive: IncomingFreebyPageSize,
       }
     },
     outgoing_freebies: {
@@ -251,7 +257,7 @@ export class BackendService {
       },
       pagination: {
         start_inclusive: 0,
-        end_exclusive: 5,
+        end_exclusive: OutgoingFreebyPageSize,
       }
     },
   };

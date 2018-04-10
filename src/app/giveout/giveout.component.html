@@ -45,14 +45,14 @@
       <label for="countAmount">Anzahl:</label>
 
       
-      <input [(ngModel)]="amountUnits" type="number" min="1" max="1000" class="form-control" id="countAmount">
+      <input [(ngModel)]="amountUnits" name="freebyUnitInput" type="number" min="1" max="1000" class="form-control" id="countAmount">
 
 
-      <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('countAmount', false, 10)">-10</button>
-      <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('countAmount', false, 1)">-1</button>
+      <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('countAmount', 'amountUnits', false, 10)">-10</button>
+      <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('countAmount', 'amountUnits', false, 1)">-1</button>
       
-      <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('countAmount', true, 1)">+1</button>
-      <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('countAmount', true, 10)">+10</button>
+      <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('countAmount', 'amountUnits', true, 1)">+1</button>
+      <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('countAmount', 'amountUnits', true, 10)">+10</button>
 
     </div>
 
@@ -63,13 +63,13 @@
 
       <label for="budgetAmount">Budget in Euro:</label>
       
-      <input [(ngModel)]="amountEuro" type="number" min="0.01" max="1000" step="0.05" class="form-control" id="budgetAmount">
+      <input [(ngModel)]="amountEuro" name="freebyBudgetInput" type="number" min="0.01" max="1000" step="0.05" class="form-control" id="budgetAmount">
 
-      <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('budgetAmount', false, 1)">-1€</button>
-      <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('budgetAmount', false, 0.05)">-5ct</button>
+      <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('budgetAmount', 'amountEuro', false, 1)">-1€</button>
+      <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('budgetAmount', 'amountEuro', false, 0.05)">-5ct</button>
 
-      <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('budgetAmount', true, 0.05)">+5ct</button>
-      <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('budgetAmount', true, 1)">+1€</button>
+      <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('budgetAmount', 'amountEuro', true, 0.05)">+5ct</button>
+      <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('budgetAmount', 'amountEuro', true, 1)">+1€</button>
     </div>
   </div>
   <div class="col-xs-5">

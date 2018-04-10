@@ -77,6 +77,8 @@ export class GiveoutComponent implements OnInit {
   }
 
   finalize() {
+    
+
     this.allowed = this.isPossible();
     const doner_id: number = this.backend.viewstate.personal_detail_infos.user_id;
     if ((this.freebytype == FreebyEnum.FFA || this.selectedUser != null) && this.isPossible() && confirm(DonationConfirm)) {
@@ -115,11 +117,11 @@ export class GiveoutComponent implements OnInit {
           console.log("FFA!");
           const allowedItems: Array<number> = this.selectedItems.map((it, idx) => it.item_id);
           this.backend.createFFAFreeby(doner_id, allowedItems, this.selectedCategories, this.amountUnits, this.message).subscribe(() => {
-            alert(DonationProcessSuccess)
+            this.backend.toastr.success(DonationProcessSuccess);
             this.processing = false;
             this.tabs.goToUserSelection();
           }, err => {
-            alert(DonationProcessFailure);
+            this.backend.toastr.success(DonationProcessFailure);
             this.processing = false;
           });
           break;
@@ -153,12 +155,15 @@ export class GiveoutComponent implements OnInit {
     return newValue;
   }
 
-  setInputPlusRounded(id: string, isPositive: boolean, amount: number) {
+  setInputPlusRounded(id: string, val: string, isPositive: boolean, amount: number) {
     //after this operation, value % 0 == true
-    const oldValue: number = document.getElementById(id)['value'];
+    const oldValue: number = this[val];
     const min: number = document.getElementById(id)['min'] != null ? document.getElementById(id)['min'] : 0; // or set to 0
     const max: number = document.getElementById(id)['max'] != null ? document.getElementById(id)['max'] : Number.MAX_SAFE_INTEGER; // or set to max number
 
-    document.getElementById(id)['value'] = GiveoutComponent.calcInputPlusRounded(oldValue, isPositive, amount, min, max);
+    this[val] = GiveoutComponent.calcInputPlusRounded(oldValue, isPositive, amount, min, max);
+
+
+    //todo: do not set input, do set local variable
   }
 }
