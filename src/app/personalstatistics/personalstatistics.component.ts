@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TabActive } from '../tab-active.enum';
 import { TabService } from '../tab.service';
 import { BackendService } from '../backend.service';
-import { PersonalLogPageSize } from '../constants.layouts';
+import { PersonalLogPageSize, PersonalLogBillPageSize } from '../constants.layouts';
 import { ParametersPurchaseLogGlobalCount, Bill, ExportBill } from '../backend-types';
 
 @Component({
@@ -13,6 +13,7 @@ import { ParametersPurchaseLogGlobalCount, Bill, ExportBill } from '../backend-t
 export class PersonalstatisticsComponent implements OnInit {
 
   pageSizePersonalLog = PersonalLogPageSize;
+  pageSizePersonalBill = PersonalLogBillPageSize;
 
   constructor(public tabs: TabService, public backend: BackendService) { }
 

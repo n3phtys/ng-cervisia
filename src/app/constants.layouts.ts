@@ -8,5 +8,6 @@ export const IncomingFreebyPageSize: number = 1000000;
 export const OutgoingFreebyPageSize: number = 1000000;
 export const GlobalLogPageSize: number = 10;
 export const PersonalLogPageSize: number = 10;
+export const PersonalLogBillPageSize: number = 5;
 export const QuickmenuWidth: number = 640;
 export const QuickmenuHeight: number = 480;
