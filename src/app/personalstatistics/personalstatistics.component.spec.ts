@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastModule } from 'ng2-toastr';
+import { TimespanFilterComponent } from '../timespan-filter/timespan-filter.component';
+import { PaginatorComponent } from '../paginator/paginator.component';
 
 describe('PersonalstatisticsComponent', () => {
   let component: PersonalstatisticsComponent;
@@ -27,7 +29,7 @@ describe('PersonalstatisticsComponent', () => {
         ModalModule.forRoot(),
       ],
       providers: [BackendService, TabService, PasswordCheckService],
-      declarations: [ PersonalstatisticsComponent ]
+      declarations: [ PersonalstatisticsComponent, TimespanFilterComponent, PaginatorComponent ]
     })
     .compileComponents();
   }));
@@ -38,7 +40,5 @@ describe('PersonalstatisticsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  
 });

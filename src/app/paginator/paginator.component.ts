@@ -96,10 +96,13 @@ get pageSizeOverride(): number {
   }
 
   private inputChanged() {
+
+    if (this._pageSize >= 1 || this._parameters.to - this._parameters.from > 0) {
     console.log("inputChanged was called");
     this.computePageSize();
     this.computePages();
     this.setButtonVisibility();
+    }
   }
 
   goToNextPage() {
