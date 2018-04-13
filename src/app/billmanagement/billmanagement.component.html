@@ -1,7 +1,25 @@
-<button class="btn" (click)="tabs.goToAdministration()">
-    Back to administration
-  </button>
-  <h3>All Bills</h3>
+<div class="grid-container">
+  <div class="grid-item">
+
+    <button (click)="tabs.goToUserSelection()" class="btn btn-default" style="position:relative; top:20%;">
+      <span class="glyphicon glyphicon-chevron-left">
+      </span> Zurück zu Übersicht
+    </button>
+  </div>
+  <div class="grid-item" style="grid-column-start: 2;grid-column-end: 7;">
+    <div class="tabHeaderTitle">
+      Administration der Abrechnungen
+    </div>
+  </div>
+  <div class="grid-item" style="grid-column-start: 7;">
+    <button class="btn btn-default" style="position:relative; top:20%;" (click)="tabs.goToAdministration()">
+      Zurück zu Hauptadministration
+    </button>
+  </div>
+</div>
+
+
+
 
 <app-timespan-filter [timespan]="backend.viewstate.bills.count_pars" (onTimespanFilterChange)="timeFilterChange($event)"></app-timespan-filter>
       

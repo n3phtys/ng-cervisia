@@ -46,11 +46,11 @@ export class PasswordCheckService {
   }
 
   checkPasswordAnyway() : boolean {
-    const c = prompt("Please enter the administrator password");
+    const c = prompt("Bitte gib das Administrationspasswort ein um fortzufahren.");
       if (this.equalsPassword(c)) {
         return true;
       } else {
-        alert("Wrong password entered");
+        alert("Falsches Passwort!");
         return false;
       }
   }
@@ -66,8 +66,15 @@ export class PasswordCheckService {
 
   changePassword() {
     if (this.checkPassword()) {
-      const c = prompt("Enter a new password");
+      const c = prompt("Gib ein neues Passwort ein.");
+      const d = prompt("Bitte gib das Passwort zur Bestätigung erneut ein.");
+      if (c === d) {
+        
       this.storePassword(c);
+
+    } else {
+      alert("Die eingegebenen Passwörter waren nicht identisch, breche Vorgang ohne Änderungen des Passworts ab.")
+    }
     }
   }
 }

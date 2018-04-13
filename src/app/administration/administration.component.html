@@ -1,20 +1,40 @@
+<div class="grid-container">
+  <div class="grid-item">
 
-<div>
-    <div>
-    <button class="btn" (click)="tabs.goToUserSelection()">
-      Back to users
+    <button (click)="tabs.goToUserSelection()" class="btn btn-default" style="position:relative; top:20%;">
+      <span class="glyphicon glyphicon-chevron-left">
+      </span> Zurück zu Übersicht
     </button>
+  </div>
+  <div class="grid-item" style="grid-column-start: 2;grid-column-end: 7;">
+    <div class="tabHeaderTitle">
+      Cervisia Administration
     </div>
-<h4>
-  Admin subsites:
-</h4>
-<div>
-<button (click)="tabs.goToItemManagement()">Manage Items</button>
-<button (click)="tabs.goToUserManagement()">Manage Users</button>
-<button (click)="tabs.goToBillManagement()">Manage Bills</button>
+  </div>
+  <div class="grid-item" style="grid-column-start: 7;">
+
+  </div>
 </div>
 
-<div>
-  <button (click)="passmanager.changePassword()">Change password</button>
-</div>
+
+<div class="container" style="margin-top: 30px;">
+  <div class="list-group">
+    <a (click)="tabs.goToUserManagement()" class="list-group-item">
+      <h4 class="list-group-item-heading">Benutzer pflegen</h4>
+      <p class="list-group-item-text">Klicke hier um eine Übersicht über alle Benutzer im System aufzurufen und diese zu editieren. Du kannst hier auch neue Benutzer anlegen. Du solltest auch für neue Mitglieder die zugehörige SEWOBE-Mitgliedsnummer mit einpflegen, da diese spätestens bei der nächsten Abrechnung benötigt wird.</p>
+    </a>
+    <a (click)="tabs.goToItemManagement()" class="list-group-item">
+      <h4 class="list-group-item-heading">Getränke pflegen</h4>
+      <p class="list-group-item-text">Klicke hier um die Getränke zu verwalten, oder neue anzulegen. Getränke sind in Kategorien strukturiert, die du ebenfalls anlegen kannst.</p>
+    </a>
+    <a (click)="tabs.goToBillManagement()" class="list-group-item">
+      <h4 class="list-group-item-heading">Abrechnungen anlegen</h4>
+      <p class="list-group-item-text">Unter diesem Punkt findest du die Möglichkeit, eine neue Abrechnung zu erstellen. Abrechnungen haben drei Schritte: </p><ol><li>Anlegen der Abrechnung mit dem Datumsintervall und einem Kommentar</li><li>Finalisieren der Abrechnung - hierbei benötigst du die SEWOBE-Mitgliedsnummern aller Beteiligten und musst ggf. Spezialkäufe mit einem Preis versehen</li><li>Export per Email-Versand direkt aus Cervisia</li></ol><p class="list-group-item-text">Die fertige Abrechnung muss dann in SEWOBE importiert werden.</p>
+    </a>
+    <a (click)="passmanager.changePassword()" class="list-group-item">
+      <h4 class="list-group-item-heading">Passwort ändern</h4>
+      <p class="list-group-item-text">Drücke auf diesen Punkt um ein Passwort für den Administrationsbereich zu setzen. Du wirst zunächst nach dem bestehenden Passwort gefragt, wenn dieses nicht leer ist.</p>
+    </a>
+
+  </div>
 </div>

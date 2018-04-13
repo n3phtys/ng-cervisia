@@ -1,9 +1,28 @@
+<div class="grid-container">
+  <div class="grid-item">
+
+    <button (click)="tabs.goToUserSelection()" class="btn btn-default" style="position:relative; top:20%;">
+      <span class="glyphicon glyphicon-chevron-left">
+      </span> Zurück zu Übersicht
+    </button>
+  </div>
+  <div class="grid-item" style="grid-column-start: 2;grid-column-end: 7;">
+    <div class="tabHeaderTitle">
+      Benutzer-Administration
+    </div>
+  </div>
+  <div class="grid-item" style="grid-column-start: 7;">
+    <button class="btn btn-default" style="position:relative; top:20%;" (click)="tabs.goToAdministration()">
+      Zurück zu Hauptadministration
+    </button>
+  </div>
+</div>
+
+
+
+
 <div>
 
-
-    <button class="btn" (click)="tabs.goToAdministration()">
-        Back to administration
-      </button>
 
   <div *ngIf="detailUser == null">
     <form class="navbar-form" role="search">
