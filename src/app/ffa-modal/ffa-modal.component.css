@@ -1,0 +1,55 @@
+.subtitle {
+    font-style: italic;
+    font-size: 12pt;
+    color: lightgray;
+}
+
+.pinnedRightTop{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.rightTotalNotification {
+    
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    border: 2px solid red;
+    border-radius: 5px;
+    background: whitesmoke;
+    font-weight: bold;
+
+}
+
+
+
+
+.itementry {
+	flex: 1 0 13%;
+  box-sizing: border-box;
+  color: #171e42;
+  word-wrap: break-word;
+  margin: 6px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 75px;
+    height: 75px;
+}
+
+
+.itemcontainer {
+    margin-top: 5px;
+    margin-bottom: 5px;
+	display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+}
+
+.itementry:nth-child(odd) {
+    background: skyblue;
+}
+
+.itementry:nth-child(even) {
+    background: white;
+}

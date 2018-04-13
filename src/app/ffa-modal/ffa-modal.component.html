@@ -1,19 +1,22 @@
-<div>
-  from: {{context.freeby.donor.username}}
-</div>
-<div>
-  created: {{context.freeby.created_timestamp | date:'short'}}
-</div>
-<div>
-  Message: {{context.freeby.text_message}}
-</div>
+<div class="panel panel-primary">
+  <button type="button" (click)="close()" class="btn btn-danger btn-lg pinnedRightTop">
+    Schließen
+    <span style="padding-left: 5px;" class="glyphicon glyphicon-remove"> </span>
+  </button>
 
-<div>
-  <button *ngFor="let item of context.freeby.items" (click)="consume(item)" >{{item.name}}</button>
-</div>
-<hr>
-Units left:  {{context.freeby.left}} / {{context.freeby.total}}
-<hr>
-<div>
-  <button (click)="close()">CLOSE</button>
+  <div class="panel-heading">
+    <h2 class="panel-title">Ausgegeben von {{context.freeby.donor.username}}</h2>
+    <div class="subtitle">{{context.freeby.created_timestamp | date:'medium'}}</div>
+  </div>
+  <div class="panel-body">
+    {{context.freeby.text_message}}
+    <div class="rightTotalNotification">
+      {{context.freeby.left}} / {{context.freeby.total}}
+    </div>
+  </div>
+  <div class="panel-footer">
+    <div class="itemcontainer">
+      <div *ngFor="let item of context.freeby.items" (click)="consume(item)" class="itementry">{{item.name}}</div>
+    </div>
+  </div>
 </div>
