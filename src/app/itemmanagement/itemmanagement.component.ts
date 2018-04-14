@@ -28,6 +28,7 @@ export class ItemmanagementComponent implements OnInit {
     constructor(public tabs: TabService, public backend: BackendService) { }
   
     ngOnInit() {
+      BackendService.moveToPage(this.backend.viewstate.all_items.pagination, 0, this.pagesize);
       this.cancelDetail();
       this.searchControl.valueChanges
         .debounceTime(500)

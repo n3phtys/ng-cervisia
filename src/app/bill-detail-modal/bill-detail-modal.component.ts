@@ -22,15 +22,20 @@ export class BillDetailModalComponent implements CloseGuard, ModalComponent<Cust
   context: CustomBillDetailModalContext;
   bill_comment: string;
 
+  public listAllUsersIsCollapsed = true;
+  public listExcludeUsersIsCollapsed = true;
+
+
   constructor(public dialog: DialogRef<CustomBillDetailModalContext>, public backend: BackendService) {
     this.context = dialog.context;
+    this.context.dialogClass = 'modal-dialog modal-lg';
     console.log(this.context);
     dialog.setCloseGuard(this);
     this.bill_comment = this.context.comment;
   }
 
   finalizateBill() {
-    if (confirm("Do you really want to finalize this bill? No changes will be possible afterwards")) {
+    if (confirm("Willst du diese Abrechnung wirklich finalisieren? Danach sind keine inhaltlichen Änderungen mehr möglich.")) {
     this.backend.finalizeBill({timestamp_from: this.context.timestamp_from,
       timestamp_to: this.context.timestamp_to,});
       this.close();
@@ -38,7 +43,7 @@ export class BillDetailModalComponent implements CloseGuard, ModalComponent<Cust
   }
 
   deleteBill() {
-    if (confirm("Do you really want to delete this bill?")) {
+    if (confirm("Willst du diese Abrechnung wirklich permanent löschen? Alle Käufe bleiben erhalten und werden ggf. der nächsten Abrechnung dieses Zeitraums zugeordnet.")) {
     this.backend.deleteBill({timestamp_from: this.context.timestamp_from,
       timestamp_to: this.context.timestamp_to,});
       this.close();
@@ -93,7 +98,7 @@ export class BillDetailModalComponent implements CloseGuard, ModalComponent<Cust
 
   setSpecialPrice(special: SpecialPurchase) {
     console.log(special);
-    const c = prompt("Please enter the price in cents for: " + special.special_name);
+    const c = prompt("Bitte gib den Preis in Cents ein für Spezialkauf: " + special.special_name);
     if (c != null) {
       const ct = Number.parseInt(c);
       if (ct != null && !Number.isNaN(ct) && (ct > 0 || c.trim() == '0')) {

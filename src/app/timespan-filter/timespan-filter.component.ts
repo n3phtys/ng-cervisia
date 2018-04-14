@@ -25,7 +25,7 @@ export class TimespanFilterComponent implements OnInit {
 
   ngOnInit() {
     const now = new Date().getTime();
-    this.startDate = new Date(now - ONE_MONTH);
+    this.startDate = new Date(0);
     this.endDate = new Date(now);
     console.log("Initialized timespan filter:");
     console.log(this);

@@ -67,7 +67,7 @@
         </div>
     
     
-        <app-paginator [parameters]="backend.content.AllItems" (onPageChange)="pageNavigation($event)"></app-paginator>
+        <app-paginator [parameters]="backend.content.AllItems" [pageSizeOverride]="pagesize" (onPageChange)="pageNavigation($event)"></app-paginator>
     
       </div>
     

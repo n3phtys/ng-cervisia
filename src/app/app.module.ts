@@ -24,6 +24,7 @@ import { TabService } from './tab.service';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { TimespanFilterComponent } from './timespan-filter/timespan-filter.component';
 import { PasswordCheckService } from './password-check.service';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { EnumPipePipe } from './enum-pipe.pipe';
 import { SingleUserSelectionComponent } from './single-user-selection/single-user-selection.component';
 import { MultiItemSelectionComponent } from './multi-item-selection/multi-item-selection.component';
@@ -63,6 +64,7 @@ registerLocaleData(localeDe);
     BillDetailModalComponent
   ],
   imports: [
+    NgbModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

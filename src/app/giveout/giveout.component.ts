@@ -6,6 +6,7 @@ import { User, Item } from '../backend-types';
 import { BackendService } from '../backend.service';
 import { MultiItemSelection } from '../multi-item-selection/multi-item-selection.component';
 import { DonationProcessSuccess, DonationConfirm, DonationProcessFailure, DonationInputIncorrect, DonationSubmitButtonLabel } from '../constants.locale';
+import { GiveoutUserPageSize, GiveoutItemPageSize } from '../constants.layouts';
 
 @Component({
   selector: 'app-giveout',
@@ -15,6 +16,9 @@ import { DonationProcessSuccess, DonationConfirm, DonationProcessFailure, Donati
 })
 export class GiveoutComponent implements OnInit {
   submitBtnText = DonationSubmitButtonLabel;
+
+  itemPagesize = GiveoutItemPageSize;
+  userPagesize = GiveoutUserPageSize;
 
   freebytypes = FreebyEnum;
 
@@ -34,6 +38,10 @@ export class GiveoutComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    BackendService.moveToPage(this.backend.viewstate.all_items.pagination, 0, this.itemPagesize);
+    BackendService.moveToPage(this.backend.viewstate.all_users.pagination, 0, this.userPagesize);
+
     this.clear();
   }
 

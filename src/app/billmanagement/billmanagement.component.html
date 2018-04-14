@@ -22,61 +22,70 @@
 
 
 <app-timespan-filter [timespan]="backend.viewstate.bills.count_pars" (onTimespanFilterChange)="timeFilterChange($event)"></app-timespan-filter>
-      
-  <div>
-      <table class="table table-striped table-condensed">
-        <thead>
-          <tr>
-            <th style="min-width: 60px;">Von</th>
-            <th style="min-width: 60px;">Bis</th>
-            <th style="min-width: 80px;">Kommentar</th>
-            <th style="min-width: 20px;">Personen</th>
-            <th style="min-width: 20px;">Status</th>
-            <th style="width:50px;"> </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let bill of backend.content.Bills.results">
-            <td>{{ bill.timestamp_from  | date }}</td>
-            <td>{{ bill.timestamp_to  | date }}</td>
-            <td>{{ bill.comment }}</td>
-            <td>{{ bill.users | json }}</td>
-            <td>{{ bill.bill_state | json }}</td>
-            <td>
-              <div *ngIf="bill.bill_state === 'Created'">
-                <a (click)="openBillModal(bill)" class="btn btn-small btn-success">Finalisieren</a>
-              </div>
-              <div *ngIf="bill.bill_state !== 'Created'">
-                <a (click)="exportBill(bill)" class="btn btn-small btn-primary">Export per Email</a>
-              </div>
-              
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+<div class="container">
+  <table class="table table-striped table-condensed">
+    <thead>
+      <tr>
+        <th style="width: 45px;text-align:center;">Von</th>
+        <th style="width: 45px;text-align:center;">Bis</th>
+        <th style="min-width: 80px;text-align:center;">Kommentar</th>
+        <th style="width: 120px;text-align:center;">Personen</th>
+        <th style="width: 40px;text-align:center;">Status</th>
+        <th style="width:50px;"> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bill of backend.content.Bills.results">
+        <td>{{ bill.timestamp_from | date }}</td>
+        <td>{{ bill.timestamp_to | date }}</td>
+        <td>{{ bill.comment }}</td>
+        <td>{{ bill.users | json }}</td>
+        <td>{{ bill.bill_state | json }}</td>
+        <td>
+          <div *ngIf="bill.bill_state === 'Created'">
+            <a (click)="openBillModal(bill)" class="btn btn-small btn-success">Finalisieren</a>
+          </div>
+          <div *ngIf="bill.bill_state !== 'Created'">
+            <a (click)="exportBill(bill)" class="btn btn-small btn-primary">Export per Email</a>
+          </div>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<app-paginator [parameters]="backend.content.Bills" [pageSizeOverride]="pagesize" (onPageChange)="pageNavigation($event)"></app-paginator>
+
+<div class="container">
+
+  <h4>Erstellen einer neuen Abrechnung</h4>
+
+  <div class="container">
+    <div class="form-inline">
+      <div class="form-group">
+        <label>Datum von (ältester Kauf):</label>
+        <input type="datetime-local" class="form-control" [ngModel]="dt1 | date:'yyyy-MM-ddTHH:mm'"
+          (ngModelChange)="datify1($event)">
+
+      </div>
+      <div class="form-group" style="margin-left: 20px;">
+        <label>Datum bis (neuester Kauf):</label>
+
+        <input type="datetime-local" [ngModel]="dt2 | date:'yyyy-MM-ddTHH:mm'" class="form-control" (ngModelChange)="datify2($event)">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="comment">Kommentar zu Abrechnung:</label>
+      <textarea class="form-control" ref-textarea [(ngModel)]="commentField" rows="3" id="comment"></textarea>
+      <button (click)="createBill()" style="margin: 15px;" class="btn btn-success" [disabled]="this.commentField.trim().length == 0">Erstelle neue Abrechnung</button>
     </div>
 
-    <app-paginator [parameters]="backend.content.Bills" [pageSizeOverride]="pagesize" (onPageChange)="pageNavigation($event)"></app-paginator>
 
-    <div class="container">
-      <h4>Erstellen einer neuen Abrechnung</h4>
-      <div>
-      <label>Datum von (ältester Kauf)</label>
-        <input type="datetime-local" [ngModel] ="dt1 | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="datify1($event)">
-      </div>
-      <div>
-      <label>Datum bis (neuester Kauf)</label>
-        <input type="datetime-local" [ngModel] ="dt2 | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="datify2($event)">
-      </div>
-      <div>
-        <label>Kommentar zu Abrechnung</label>
-        
-        <textarea ref-textarea [(ngModel)]="commentField" rows="3"></textarea>
-
-        
-      </div>
-    <button (click)="createBill()" [disabled]="this.commentField.trim().length == 0" >Erstelle neue Abrechnung</button>
     <p>
       Die Finalisierung der Abrechnung geschieht später über die Liste oben.
     </p>
   </div>
+
+</div>

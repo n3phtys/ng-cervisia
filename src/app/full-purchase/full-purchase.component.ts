@@ -10,6 +10,7 @@ import { TabService } from '../tab.service';
 import { TabActive } from '../tab-active.enum';
 import { Item } from '../backend-types';
 import { PurchaseOtherPrompt } from '../constants.locale';
+import { FullPurchaseItemPageSize } from '../constants.layouts';
 
 
 @Component({
@@ -21,6 +22,8 @@ export class FullPurchaseComponent implements OnInit {
 
   shoppingCart: Array<ShoppingCartElement> = [];
 
+  pagesize = FullPurchaseItemPageSize;
+
   specialCounter = -1;
 
   searchControl: FormControl = new FormControl();
@@ -28,6 +31,7 @@ export class FullPurchaseComponent implements OnInit {
   constructor(public backend: BackendService, public tabs: TabService) { }
 
   ngOnInit() {
+    BackendService.moveToPage(this.backend.viewstate.all_items.pagination, 0, this.pagesize);
 
     const backend = this.backend;
     this.searchControl.valueChanges

@@ -1,79 +1,199 @@
-<div *ngIf="backend.content.BillDetails.total_count > 0">
-<p>
-  bill for time between {{ backend.content.BillDetails.results[0].timestamp_from  | date }} and {{ backend.content.BillDetails.results[0].timestamp_to  | date }}
-</p>
-<hr>
-<label>comment:</label>
-<input [disabled]="backend.content.BillDetails.results[0].bill_state !== 'Created'" [(ngModel)]="bill_comment" />
-<button (click)="storeCommentChange()">Store changes to comment</button>
-<button (click)="clearCommentChange()">Clear changes </button>
-
-<hr>
-<label>
-  Internally excluded users (press to unexclude):
-</label>
-<div>
-
-    <button *ngFor="let idx of backend.content.BillDetails.results[0].users_excluded_internally_indices" (click)="include(backend.content.BillDetails.results[0].touched_users[idx])">{{backend.content.BillDetails.results[0].touched_users[idx].username}}</button>
-</div>
-<hr>
-<label>
-  Internally-non-excluded  users (press to exclude):
-</label>
-<div>
-    
-    <button *ngFor="let idx of backend.content.BillDetails.results[0].users_excludable_but_not_internally_indices" (click)="exclude(backend.content.BillDetails.results[0].touched_users[idx])">{{backend.content.BillDetails.results[0].touched_users[idx].username}}</button>
-
-</div>
-
-<hr>
-<label>
-  Undefined users (set in usermanagement 'is_billed = false' or give the user an external id to bill to in usermanagement, or exclude manually from this bill. Bill can only be finalized once this list is empty):
-</label>
-<div>
-    <span *ngFor="let idx of backend.content.BillDetails.results[0].users_undefined_indices">{{backend.content.BillDetails.results[0].touched_users[idx].username}} | </span>
-</div>
-<hr>
-
-<label>
-  Externally excluded users:
-</label>
-
-<div  >
-  <span *ngFor="let idx of backend.content.BillDetails.results[0].users_excluded_externally_indices">{{backend.content.BillDetails.results[0].touched_users[idx].username}} | </span>
-</div>
-
-<hr>
-
-<label>
-  All users who fall under this bill:
-</label>
-<div  >
-    <span *ngFor="let user of backend.content.BillDetails.results[0].touched_users">{{user.username}} | </span>
-</div>
-
-<hr>
-<label>
-  Specials (you have to set a [>= 0] price for every special before you can finalize this bill):
-</label>
-<div>
-  <button [disabled]="backend.content.BillDetails.results[0].ready_for_finalization" *ngFor="let special of backend.content.BillDetails.results[0].all_specials" (click)="setSpecialPrice(special.SpecialPurchase)">{{special.SpecialPurchase.special_name}} - <span *ngIf="special.SpecialPurchase.specialcost != null">{{special.SpecialPurchase.specialcost / 100}} €</span>
-    <span *ngIf="special.SpecialPurchase.specialcost == null">No price is set yet</span>
+<div class="panel panel-primary" *ngIf="backend.content.BillDetails.total_count > 0">
+  <button type="button" (click)="close()" class="btn btn-danger btn-lg pinnedRightTop">
+    Schließen
+    <span style="padding-left: 5px;" class="glyphicon glyphicon-remove"> </span>
   </button>
-</div>
-<hr>
-<div>
-<button *ngIf="backend.content.BillDetails.results[0].ready_for_finalization" (click)="finalizateBill()">Finalize</button>
-</div>
-<div>
-<button *ngIf="backend.content.BillDetails.results[0].bill_state === 'Created'" (click)="deleteBill()">Delete (purchases themselves will not be deleted)</button>
-</div>
 
-<hr>
-<div>
-  <button (click)="close()">CLOSE</button>
+  <button type="button" (click)="deleteBill()" class="btn btn-danger btn-lg pinnedLeftBottom" *ngIf="backend.content.BillDetails.results[0].bill_state === 'Created'">
+    <span style="padding-left: 5px;" class="glyphicon glyphicon-remove"> Löschen der Abrechnung (Käufe bleiben erhalten)</span>
+  </button>
+
+
+
+  <div class="panel-heading">
+    <h2 class="panel-title">Abrechnung von {{ backend.content.BillDetails.results[0].timestamp_from | date }} bis {{ backend.content.BillDetails.results[0].timestamp_to
+      | date }}</h2>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="panel-body">
+
+    <div class="well">
+      <div class="form-inline">
+        <div class="form-group">
+          <label for="comment">Kommentar:</label>
+
+          <textarea row="3" class="form-control" id="comment" [disabled]="backend.content.BillDetails.results[0].bill_state !== 'Created'"
+            [(ngModel)]="bill_comment"> </textarea>
+
+        </div>
+
+        <button (click)="storeCommentChange()" class="btn btn-success">Änderungen speichern</button>
+        <button (click)="clearCommentChange()" class="btn btn-danger">verwerfen</button>
+      </div>
+    </div>
+          
+  
+
+  <div class="well">
+      <label>
+        Spezialkäufe (alle solchen Spezialkäufe müssen nun vom Kantinier mit einem Preis versehen werden, bevor die Abrechnung finalisiert werden kann)
+        </label>
+        <div>
+          <button  *ngFor="let special of backend.content.BillDetails.results[0].all_specials" (click)="setSpecialPrice(special.SpecialPurchase)" class="btn btn-warning">{{special.SpecialPurchase.special_name}} := <span *ngIf="special.SpecialPurchase.specialcost != null">{{special.SpecialPurchase.specialcost / 100  | currency:'EUR'}}</span>
+            <span *ngIf="special.SpecialPurchase.specialcost == null">bisher kein Preis gesetzt</span>
+          </button>
+        </div>
+      </div>
+  
+
+
+
+      <div>
+
+          <p>
+              <button type="button" class="btn btn-outline-primary" (click)="listExcludeUsersIsCollapsed = !listExcludeUsersIsCollapsed"
+                      [attr.aria-expanded]="!listExcludeUsersIsCollapsed" aria-controls="collapseExample">
+                      Einzelne Benutzer ausnehmen
+              </button>
+            </p>
+            <div id="collapseExample" [ngbCollapse]="listExcludeUsersIsCollapsed">
+              <div class="card">
+                <div class="card-body">
+                    <div class="col-sm-6">
+                        <h4>Betroffen von Abrechnung</h4>
+                        <p>Drücke auf eine Person um sie von der Abrechnung auszunehmen.</p>
+                        <div>
+        
+                            <button *ngFor="let idx of backend.content.BillDetails.results[0].users_excludable_but_not_internally_indices" (click)="exclude(backend.content.BillDetails.results[0].touched_users[idx])" class="btn" style="margin: 5px;">{{backend.content.BillDetails.results[0].touched_users[idx].username}}</button>
+                        
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <h4>Ausgenommen von Abrechnung</h4>
+                        <p>Drücke auf eine Person um sie der Abrechnung wieder zu zu ordnen.</p>
+                        <div>
+        
+                            <button *ngFor="let idx of backend.content.BillDetails.results[0].users_excluded_internally_indices" class="btn" style="margin: 5px;" (click)="include(backend.content.BillDetails.results[0].touched_users[idx])">{{backend.content.BillDetails.results[0].touched_users[idx].username}}</button>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+
+      </div>
+
+
+
+
+
+
+  
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="panel-footer">
+      <div class="row">
+          <div class="col-sm-4">
+            <div class="panel" style="background: orangered;" *ngIf="backend.content.BillDetails.results[0].users_undefined_indices.length > 0">
+            <h4>Undefinierte Benutzer</h4>
+              <p>
+                Die folgenden Benutzer sind von der Abrechnung betroffen, haben jedoch keine SEWOBE-Identifikation, daher kann die Abrechnung nicht finalisiert werden. Du kannst die Benutzer entweder oben von der Abrechnung ausnehmen, in ihrem Profil eine SEWOBE-Identifikation zuweisen, oder in ihrem Profil die Abrechnung für sie deaktivieren (sie werden damit intern 'abgerechnet', aber erhalten keine Rechnung).
+              </p>
+
+
+              <ul>
+                  <li *ngFor="let idx of backend.content.BillDetails.results[0].users_undefined_indices">{{backend.content.BillDetails.results[0].touched_users[idx].username}} </li>
+              </ul>
+
+            </div>
+
+            <div class="panel" style="background: green;" *ngIf="backend.content.BillDetails.results[0].users_undefined_indices.length < 1">
+                <p>
+                  Diese Abrechnung hat keine betroffenen Benutzer ohne SEWOBE-Identifikation und kann finalisiert werden.
+                </p>
+              </div>
+          </div>
+          <div class="col-sm-4">
+            
+              <h4>Extern ausgenommene Benutzer</h4>
+              <p>Die folgenden Benutzer haben in der Abrechnungsperiode Käufe getätigt, erhalten aber gemäß ihrer Einstellungen keine Rechnungen:</p>
+              <ol>
+                  <li *ngFor="let idx of backend.content.BillDetails.results[0].users_excluded_externally_indices">{{backend.content.BillDetails.results[0].touched_users[idx].username}}</li>
+                </ol>
+
+          </div>
+          <div class="col-sm-4">
+              <h4>Alle betroffene Benutzer</h4>
+
+              <p>
+                  <button type="button" class="btn btn-outline-primary" (click)="listAllUsersIsCollapsed = !listAllUsersIsCollapsed"
+                          [attr.aria-expanded]="!listAllUsersIsCollapsed" aria-controls="collapseAllTouchedUsers">
+                          Liste anzeigen                  </button>
+                </p>
+                <div id="collapseAllTouchedUsers" [ngbCollapse]="listAllUsersIsCollapsed">
+                  <div class="card">
+                    <div class="card-body">
+                        <ol  >
+                            <li *ngFor="let user of backend.content.BillDetails.results[0].touched_users">{{user.username}}</li>
+                        </ol>
+                    </div>
+                  </div>
+                </div>
+
+
+
+              
+            </div>
+      
+
+
+
+    
+            <div class="col-sm-12">
+<pre>{{backend.content.BillDetails.results[0] | json}}
+</pre>
 </div>
-<hr>
-Full json:  {{backend.content.BillDetails.results[0] | json}}
-<hr>
+</div>
+    <div>
+
+    <button *ngIf="backend.content.BillDetails.results[0].ready_for_finalization" class="btn btn-success createButton" (click)="finalizateBill()">Finalisieren</button>
+  </div>
 </div>
