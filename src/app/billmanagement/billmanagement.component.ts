@@ -51,7 +51,7 @@ export class BillmanagementComponent implements OnInit {
   }
 
   exportBill(bill: Bill) {
-    const c = prompt("To which email address should I sent this bill? Leave empty to cancel");
+    const c = prompt("An welche Email-Adresse soll die Abrechnung geschickt werden? Lasse das Feld frei um den Vorgang abzubrechen");
     if (c != null && c.length > 0) {
       this.backend.exportBillToEmail(
         <ExportBill> {
@@ -68,8 +68,9 @@ export class BillmanagementComponent implements OnInit {
       console.log(this.dt2);
       console.log(this.dt1.getTime());
       console.log(this.dt2.getTime());
-      if (this.dt1 != null && !Number.isNaN(this.dt1.getTime()) && this.dt2 != null && !Number.isNaN(this.dt2.getTime()) && this.dt1.getTime() < this.dt2.getTime() && confirm("Do you really want to create a new bill with the given timespan?")) {
+      if (this.dt1 != null && !Number.isNaN(this.dt1.getTime()) && this.dt2 != null && !Number.isNaN(this.dt2.getTime()) && this.dt1.getTime() < this.dt2.getTime() && confirm("Willst du wirklich eine neue Abrechnung erstellen?")) {
         this.backend.createBill(this.commentField, this.dt1.getTime(), this.dt2.getTime());
+        this.ngOnInit();
       }
     }
 
