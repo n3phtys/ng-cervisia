@@ -53,7 +53,7 @@ export class UsermanagementComponent implements OnInit {
   }
 
   createUser() {
-    const c = prompt("Enter the name of the new user or leave empty to cancel");
+    const c = prompt("Gib den Namen des neuen Benutzers ein, oder lasse das Feld leer um den Vorgang abzubrechen. Neue Benutzer werden ohne SEWOBE Id und mit Grundeinstellungen erstellt. Der Name kann später noch geändert werden.");
     if (c != null && c.length > 0) {
       this.backend.createUser(c);
     }
@@ -68,7 +68,7 @@ export class UsermanagementComponent implements OnInit {
   }
 
   deleteUser(user_id: number) {
-    if (confirm('Do you really want to delete the user with id = ' + user_id + ' ?')) {
+    if (confirm('Willst du wirklich den Benutzer mit der Id ' + user_id + ' endgültig löschen? Dieser Vorgang kann nicht rückgängig gemacht werden.')) {
       this.backend.deleteUser(user_id);
     }
   }

@@ -28,6 +28,7 @@ export class ItemmanagementComponent implements OnInit {
     constructor(public tabs: TabService, public backend: BackendService) { }
   
     ngOnInit() {
+      this.cancelDetail();
       this.searchControl.valueChanges
         .debounceTime(500)
         .distinctUntilChanged()
@@ -56,7 +57,7 @@ export class ItemmanagementComponent implements OnInit {
     }
   
     createItem() {
-      const c = prompt("Enter the name of the new item or leave empty to cancel");
+      const c = prompt("Gib den Namen des neuen Getränks ein, oder lasse das Feld leer um abzubrechen. Du kannst den Namen später noch ändern. Das Getränk wird mit 1€ Preis und ohne Kategorie angelegt.");
       if (c != null && c.length > 0) {
         this.backend.createItem(c, 100, null);
       }
@@ -68,7 +69,7 @@ export class ItemmanagementComponent implements OnInit {
     }
   
     deleteItem(item_id: number) {
-      if (confirm('Do you really want to delete the item with id = ' + item_id + ' ?')) {
+      if (confirm('Willst du das Getränk mit der Id ' + item_id + ' wirklich endgültig löschen? Dieser Vorgang kann nicht rückgängig gemacht werden!')) {
         this.backend.deleteItem(item_id);
       }
     }

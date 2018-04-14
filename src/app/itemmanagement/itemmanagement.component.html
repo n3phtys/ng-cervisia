@@ -22,12 +22,18 @@
 
 
 <div>
+
+  
+    <div class="btn btn-info createButton" (click)="createItem()" *ngIf="detailItem == null">
+        <span class="glyphicon glyphicon-plus" style="margin-right: 5px;" >
+          </span>Neues Getränk 
+      </div>
     
     
       <div *ngIf="detailItem == null">
         <form class="navbar-form" role="search">
           <input class="form-control" style="margin:20px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;"
-            placeholder="Search for item" [formControl]="searchControl">
+            placeholder="Suche nach Getränk" [formControl]="searchControl">
         </form>
     
     
@@ -35,25 +41,25 @@
           <table class="table table-striped table-condensed">
             <thead>
               <tr>
-                <th style="min-width: 20px;">ID</th>
-                <th style="min-width: 80px;">Name</th>
-                <th style="min-width: 20px;">Price</th>
-                <th style="min-width: 20px;">Category</th>
-                <th style="width:20px;"> </th>
-                <th style="width:20px;"> </th>
+                <th style="width: 50px;text-align:center;">Id</th>
+                <th style="min-width: 80px;text-align:center;">Getränkename</th>
+                <th style="width: 220px;text-align:center;">Kategorie</th>
+                <th style="width: 70px;text-align:center;">Preis</th>
+                <th style="width:20px;text-align:center;"> </th>
+                <th style="width:20px;text-align:center;"> </th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let item of backend.content.AllItems.results">
                 <td>{{ item.item_id }}</td>
                 <td>{{ item.name }}</td>
-                <td>{{ item.cost_cents }}</td>
                 <td>{{ item.category }}</td>
+                <td>{{ item.cost_cents / 100 | currency:'EUR' }}</td>
                 <td>
-                  <a (click)="editItem(item)" class="btn btn-small btn-primary">edit</a>
+                  <a (click)="editItem(item)" class="btn btn-small btn-primary">Ändern</a>
                 </td>
                 <td>
-                  <a (click)="deleteItem(item.item_id)" class="btn btn-small btn-danger">delete</a>
+                  <a (click)="deleteItem(item.item_id)" class="btn btn-small btn-danger">Löschen</a>
                 </td>
               </tr>
             </tbody>
@@ -63,32 +69,30 @@
     
         <app-paginator [parameters]="backend.content.AllItems" (onPageChange)="pageNavigation($event)"></app-paginator>
     
-        <button (click)="createItem()">Create new item</button>
-    
       </div>
     
-      <div *ngIf="detailItem != null">
-        <h3>Detail Page for ItemId {{detailItem.item_id}}</h3>
+      <div *ngIf="detailItem != null" class="container">
+        <h3>Detailansicht für Getränk #{{detailItem.item_id}}</h3>
 
 
 
-        <div>
+        <div class="container">
             <div class="form-group">
-              <label for="itemname">Itemname:</label>
+              <label for="itemname">Name des Getränks:</label>
               <input [(ngModel)]="detailItem.name" class="form-control" id="itemname">
             </div>
             <div class="form-group">
-              <label for="cost">Cost in Cents:</label>
+              <label for="cost">Preis (in Cents):</label>
               <input [(ngModel)]="detailItem.cost_cents" type="number" min="0" max="100000" class="form-control" id="cost">
             </div>
             <div class="form-group">
-              <label for="category">Category:</label>
+              <label for="category">Kategorie:</label>
               <input [(ngModel)]="detailItem.category" class="form-control" id="category">
             </div>
         </div>
     
-        <button (click)="cancelDetail()" class="btn btn-warning">Cancel</button>
-        <button (click)="saveDetail()" class="btn btn-success">Save</button>
+        <button (click)="cancelDetail()" style="margin: 15px;" class="btn btn-warning">Abbrechen</button>
+        <button (click)="saveDetail()" style="margin: 15px;" class="btn btn-success">Neues Getränk Speichern</button>
       </div>
     
     </div>

@@ -23,7 +23,7 @@
 
 <div class="clearfix">
   <div class="col-xs-6">
-    CURRENT PERSONAL LOG (NO ACTION POSSIBLE)
+    <label>Persönliche Einkäufe seit letzter Abrechnung</label>
 
     <app-timespan-filter [timespan]="backend.viewstate.personal_log.count_pars" (onTimespanFilterChange)="timeFilterChange($event)"></app-timespan-filter>
 
@@ -77,13 +77,14 @@
 </div>
 <div class="clearfix">
   <div class="col-xs-6">
+    <label>Vergangene Abrechnungen</label>
     <div>
       <table class="table table-striped table-condensed">
         <thead>
           <tr>
-            <th style="min-width: 60px;">From</th>
-            <th style="min-width: 60px;">To</th>
-            <th style="min-width: 80px;">Comment</th>
+            <th style="min-width: 60px;">Von</th>
+            <th style="min-width: 60px;">Bis</th>
+            <th style="min-width: 80px;">Kommentar des Kantinier</th>
             <th style="width:50px;"> </th>
           </tr>
         </thead>
@@ -94,7 +95,7 @@
             <td>{{ bill.comment }}</td>
             <td>
               <div>
-                <a (click)="exportBill(bill)" class="btn btn-small btn-primary">export per mail</a>
+                <a (click)="exportBill(bill)" class="btn btn-small btn-primary">Export per Email</a>
               </div>
             </td>
           </tr>
