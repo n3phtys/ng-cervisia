@@ -433,7 +433,7 @@ export class BackendService {
 
       for (let i = 0; i < data.results.length; i++) {
         const it: Item = data.results[i];
-        let idx = v.findIndex(a => (it.category != null && a.name === it.category) || (it.category == null && NAME_OF_NO_CATEGORY === it.category));
+        let idx = v.findIndex(a => (a.name === it.category));
         if (idx >= 0) {
           //add to existing list
           v[idx].arr.push(it);
@@ -444,13 +444,25 @@ export class BackendService {
               this.content.autocomplete_collection.push(it.category);
             }
           }
-
+          if(it.category == null) {
+            console.log("it.category == null");
+            console.log(it);
+            console.log(idx);
+            console.log(v);
+          }
           v.push({
-            name: it.category != null ? it.category : NAME_OF_NO_CATEGORY,
+            name: it.category,
             arr: [it]
           });
         }
       }
+
+
+      v.forEach(na => {
+        if (na.name == null) {
+          na.name = NAME_OF_NO_CATEGORY;
+        }
+      });
 
       this.content.all_items_per_category = v;
     });
