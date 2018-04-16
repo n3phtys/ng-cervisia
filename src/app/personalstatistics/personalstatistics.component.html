@@ -93,10 +93,13 @@
             <td>{{ bill.timestamp_from | date }}</td>
             <td>{{ bill.timestamp_to | date }}</td>
             <td>{{ bill.comment }}</td>
-            <td>
+            <td  *ngIf="bill.bill_state !== 'Created'">
               <div>
                 <a (click)="exportBill(bill)" class="btn btn-small btn-primary">Export per Email</a>
               </div>
+            </td>
+            <td  *ngIf="bill.bill_state === 'Created'">
+              Nicht finalisiert
             </td>
           </tr>
         </tbody>
