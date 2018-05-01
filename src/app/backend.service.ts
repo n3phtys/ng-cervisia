@@ -476,6 +476,8 @@ export class BackendService {
     // Make the HTTP request: <PaginatedResult<User>>
     this.http.get<PaginatedResult<UserDetailInfo>>(endp, { params: { query: queryjson } }).subscribe(data => {
       this.content.DetailInfoForUser = data;
+      console.log("received detail info:");
+      console.log(data);
     });
   }
 
