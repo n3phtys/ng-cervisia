@@ -59,8 +59,12 @@ export class GlobalstatisticsComponent implements OnInit {
       console.log("Trying to undo " + id);
       const breakpoint = timestamp + this.ALLOWED_PASSED_MILLIS;
       const now = (new Date()).valueOf();
-      if (this.passmanager.checkPasswordAnyway()) {
-        this.backend.undoPurchaseByAdmin(id);
-      }
+      this.passmanager.checkPasswordAnyway().subscribe(t => {
+        if (t) {
+          this.backend.undoPurchaseByAdmin(id);
+        } else {
+          this.passmanager.toastr.error('Wrong password entered');
+        }
+      });
     }
 }

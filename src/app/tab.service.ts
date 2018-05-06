@@ -42,14 +42,21 @@ export class TabService {
     // console.log("Changed openTab to " + this.openTab);
     this.resetFlags(TabActive.GlobalStatisticsPage);
   }
-  public goToAdministration() {
-    if (this.passmanager.checkPassword()) {
+  
+  public goToAdministrationWithoutPassword() {
+    this.resetFlags(TabActive.AdministrationPage);
+  }
+  
+    public goToAdministration() {
+    this.passmanager.checkPassword().subscribe(t => {if (t) {
     // console.log("Changed openTab from " + this.openTab);
     // console.log(TabActive.AdministrationPage);
     // this.openTab = TabActive.AdministrationPage;
     // console.log("Changed openTab to " + this.openTab);
     this.resetFlags(TabActive.AdministrationPage);
-    }
+    } else {
+      this.passmanager.toastr.error('Wrong password entered');
+    }});
   }
 
   public goToItemManagement() {

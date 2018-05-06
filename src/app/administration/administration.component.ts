@@ -10,11 +10,11 @@ import { PasswordCheckService } from '../password-check.service';
 })
 export class AdministrationComponent implements OnInit {
 
- 
+
   constructor(public tabs: TabService, public passmanager: PasswordCheckService) { }
-  
-    ngOnInit() {
-    }
-  
+
+  ngOnInit() {
+  }
+
 
 }

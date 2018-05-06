@@ -137,6 +137,7 @@ const post_endpoint_bill_finalize = 'api/bill/finalize';
 const post_endpoint_bill_export = 'api/bill/export';
 const post_endpoint_set_special_price = 'api/purchases/special/setprice';
 
+const post_endpoint_check_password = 'api/admin/checkpassword';
 
 
 const MAX_NUMBER_OF_TOP_ITEMS_SHOWN = 4;
@@ -173,6 +174,11 @@ export class BackendService {
       this.content.OutgoingFreebies = data;
     });
 
+  }
+
+
+  checkPasswordAgainstServer(password: string): Observable<boolean> {
+    return this.http.post<boolean>(post_endpoint_check_password, password);
   }
 
   viewstate: ParametersAll = {

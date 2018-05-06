@@ -60,17 +60,16 @@
 
       <div>
         <div *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].SimplePurchase != null">
-          #{{backend.content.LastPurchases.results[0].SimplePurchase.unique_id}} on date {{backend.content.LastPurchases.results[0].SimplePurchase.timestamp_epoch_millis
-          | date:'short'}} : {{backend.content.LastPurchases.results[0].SimplePurchase.consumer.username}} bought {{backend.content.LastPurchases.results[0].SimplePurchase.item.name}}
+          #{{backend.content.LastPurchases.results[0].SimplePurchase.unique_id}} - {{backend.content.LastPurchases.results[0].SimplePurchase.timestamp_epoch_millis
+          | date:'short'}} : {{backend.content.LastPurchases.results[0].SimplePurchase.consumer.username}} kaufte {{backend.content.LastPurchases.results[0].SimplePurchase.item.name}}
         </div>
         <div *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].SpecialPurchase != null">
-          #{{backend.content.LastPurchases.results[0].SpecialPurchase.unique_id}} on date {{backend.content.LastPurchases.results[0].SpecialPurchase.timestamp_epoch_millis
-          | date:'short'}} : {{backend.content.LastPurchases.results[0].SpecialPurchase.consumer.username}} bought {{backend.content.LastPurchases.results[0].SpecialPurchase.special_name}}
+          #{{backend.content.LastPurchases.results[0].SpecialPurchase.unique_id}} - {{backend.content.LastPurchases.results[0].SpecialPurchase.timestamp_epoch_millis
+          | date:'short'}} : {{backend.content.LastPurchases.results[0].SpecialPurchase.consumer.username}} kaufte {{backend.content.LastPurchases.results[0].SpecialPurchase.special_name}}
         </div>
         <div *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].FFAPurchase != null">
-          #{{backend.content.LastPurchases.results[0].FFAPurchase.unique_id}} on date {{backend.content.LastPurchases.results[0].FFAPurchase.timestamp_epoch_millis
-          | date:'short'}} : Someone bought {{backend.content.LastPurchases.results[0].FFAPurchase.item.name}} (FFA Purchase
-          donated by {{backend.content.LastPurchases.results[0].FFAPurchase.donor.username}})
+          #{{backend.content.LastPurchases.results[0].FFAPurchase.unique_id}} - {{backend.content.LastPurchases.results[0].FFAPurchase.timestamp_epoch_millis
+          | date:'short'}} : Jemand kaufte {{backend.content.LastPurchases.results[0].FFAPurchase.item.name}} (FFA Ausgabe, gespendet von {{backend.content.LastPurchases.results[0].FFAPurchase.donor.username}})
         </div>
       </div>
 
