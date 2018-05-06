@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BackendService } from './backend.service';
 import { Observable } from 'rxjs/Observable';
 import { ToastsManager } from 'ng2-toastr';
+import 'rxjs/add/observable/of';
 
 
 @Injectable()
