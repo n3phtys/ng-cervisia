@@ -37,7 +37,7 @@ export class UserselectionComponent implements OnInit {
 
   ngOnInit() {
     this.backend.setAllUserPageSize(AllUserSelectionPageSize);
-    //this.searchControl.valueChanges.subscribe(e => console.log("Term = " + e));
+    this.searchControl.setValue('');
     const backend = this.backend;
     this.searchControl.valueChanges
     .debounceTime(450)
@@ -46,6 +46,10 @@ export class UserselectionComponent implements OnInit {
       console.log('Triggered with term = ' + term);
       backend.updateMainUserlist(term);
     });
+
+    this.backend.purchaseDone.subscribe(t => {if (t) {
+      this.searchControl.setValue('');
+    }});
 
     backend.updateMainUserlist('');
     backend.refreshLastPurchase();

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 // Import HttpClient from @angular/common/http
 import { HttpClient } from '@angular/common/http';
@@ -826,6 +826,8 @@ export class BackendService {
     maxShown: 8,
   };
 
+  public purchaseDone = new EventEmitter<boolean>();
+
   makeSimplePurchase(itemname: string, username: string, itemId: number, userId: number) {
     const queryjson = (JSON.stringify(this.viewstate));
     const endp = post_endpoint_simple_purchase;
@@ -840,12 +842,15 @@ export class BackendService {
       if (data.is_success) {
         this.updateContentWithWriteResult(data.content.refreshed_data);
         this.toastr.success("von " + username, "Abgestrichen: " + itemname, this.TOAST_CONFIG);
+        this.purchaseDone.emit(true);
       } else {
       this.toastr.error("Fehler: " + data.error_message, "Abstreichen misslungen", this.TOAST_CONFIG );
+      this.purchaseDone.emit(false);
       }
     }, err => {
       console.log("error in makeSimplePurchase: " + err);
       this.toastr.error("Fehler: " + err, "Abstreichen misslungen", this.TOAST_CONFIG );
+      this.purchaseDone.emit(false);
     }
     );
   }
