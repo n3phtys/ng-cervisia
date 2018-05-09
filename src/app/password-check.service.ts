@@ -8,17 +8,19 @@ import 'rxjs/add/observable/of';
 @Injectable()
 export class PasswordCheckService {
 
-  private isEmpty = false
+
+  private isEmpty: boolean;
 
   constructor(private backend: BackendService, public toastr: ToastsManager) {
-    backend.checkPasswordAgainstServer('').subscribe(t => this.isEmpty = t);
+    
   }
 
 
   checkPasswordAnyway(): Observable<boolean> {
     const c = prompt("Bitte gib das Administrationspasswort ein um fortzufahren.");
     if (c != null) {
-      return this.backend.checkPasswordAgainstServer(c);
+      const b = this.backend.checkPasswordAgainstServer(c);
+      b.map(t => {if (t && c === '') {this.isEmpty = true}})
     } else {
       return Observable.of(false);
     }
