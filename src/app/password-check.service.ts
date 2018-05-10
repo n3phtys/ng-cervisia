@@ -12,7 +12,7 @@ export class PasswordCheckService {
   private isEmpty: boolean;
 
   constructor(private backend: BackendService, public toastr: ToastsManager) {
-    
+      this.isEmpty = false;
   }
 
 
@@ -20,7 +20,13 @@ export class PasswordCheckService {
     const c = prompt("Bitte gib das Administrationspasswort ein um fortzufahren.");
     if (c != null) {
       const b = this.backend.checkPasswordAgainstServer(c);
-      b.map(t => {if (t && c === '') {this.isEmpty = true}})
+      return b.map(t => {
+        if (t && c === '') {
+          this.isEmpty = true;
+        }
+        return t;
+      }
+    );
     } else {
       return Observable.of(false);
     }
