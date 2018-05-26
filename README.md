@@ -1,20 +1,20 @@
-# NgCervisia
+# NgCervisia (Cervisia 6 Frontend)
 
 ## Docker Container und AVH Deployment
 
-Client und Server werden nach jedem CI-Push als Docker-Container gebaut und auf Dockerhub gepushed: 
+Client and Server will be build as a fresh Docker container on every CI-Push. The result is available on docker-hub: 
 
 https://hub.docker.com/r/n3phtys/cervisia-container/
 
 
-Das Deployment wird über ein Compose-File geregelt, siehe:
+The actual deployment is using its own compose-setup which combines that container with given environment variables and preloaded values:
 
 https://github.com/n3phtys/cervisia-compose
 
 
 
 
-## How to get starting 
+## How to get started 
 
 ### Prerequisites
 * Operating system with a user that has a home directory, called ${HOME}
