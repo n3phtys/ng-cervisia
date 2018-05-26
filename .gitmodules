@@ -1,0 +1,3 @@
+[submodule "cervisia-server"]
+	path = cervisia-server
+	url = https://github.com/n3phtys/cervisia-server
