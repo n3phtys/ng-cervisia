@@ -62,3 +62,10 @@ body {
     line-height: 68px;
     font-size: 24pt;
 }
+
+div {
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
