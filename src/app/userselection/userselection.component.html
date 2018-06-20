@@ -8,7 +8,7 @@
   <div class="grid-item" style="grid-column-start: 2;grid-column-end: 7;">
 
     <form class="navbar-form" role="search">
-      <input class="form-control" style="margin:0px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;"
+      <input [matKeyboard]="'Azərbaycanca'" class="form-control" style="margin:0px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;"
         id="allUsersSearchBar" placeholder="Suche nach Nutzername (ohne Groß-/Kleinschreibung)" [formControl]="searchControl">
     </form>
 
@@ -32,7 +32,7 @@
 
 
 <div style="margin: 0px;">
-    <app-ffa-list></app-ffa-list>
+  <app-ffa-list></app-ffa-list>
 </div>
 
 <div class="userSelectionContainer">
@@ -45,11 +45,11 @@
 
 <div style="position: fixed;bottom:15px;width:100%;height: 30px;">
 
-  <div class="grid-container" >
-    <div class="grid-item"  style="grid-column-start: 1;grid-column-end: 2;">
+  <div class="grid-container">
+    <div class="grid-item" style="grid-column-start: 1;grid-column-end: 2;">
 
 
-      <button (click)="tabs.goToLog()" class="btn btn-info" >
+      <button (click)="tabs.goToLog()" class="btn btn-info">
         Log aller Einkäufe
       </button>
 
@@ -69,7 +69,8 @@
         </div>
         <div *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].FFAPurchase != null">
           #{{backend.content.LastPurchases.results[0].FFAPurchase.unique_id}} - {{backend.content.LastPurchases.results[0].FFAPurchase.timestamp_epoch_millis
-          | date:'short'}} : Jemand kaufte {{backend.content.LastPurchases.results[0].FFAPurchase.item.name}} (FFA Ausgabe, gespendet von {{backend.content.LastPurchases.results[0].FFAPurchase.donor.username}})
+          | date:'short'}} : Jemand kaufte {{backend.content.LastPurchases.results[0].FFAPurchase.item.name}} (FFA Ausgabe,
+          gespendet von {{backend.content.LastPurchases.results[0].FFAPurchase.donor.username}})
         </div>
       </div>
 

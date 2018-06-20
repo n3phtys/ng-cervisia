@@ -24,7 +24,7 @@ import { TabService } from './tab.service';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { TimespanFilterComponent } from './timespan-filter/timespan-filter.component';
 import { PasswordCheckService } from './password-check.service';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EnumPipePipe } from './enum-pipe.pipe';
 import { SingleUserSelectionComponent } from './single-user-selection/single-user-selection.component';
 import { MultiItemSelectionComponent } from './multi-item-selection/multi-item-selection.component';
@@ -32,6 +32,19 @@ import { FfaModalComponent } from './ffa-modal/ffa-modal.component';
 import { FfaListComponent } from './ffa-list/ffa-list.component';
 import { BillDetailModalComponent } from './bill-detail-modal/bill-detail-modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+
+
+import { IKeyboardLayouts, keyboardLayouts, MAT_KEYBOARD_LAYOUTS, MatKeyboardModule } from '@ngx-material-keyboard/core';
 
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
@@ -70,6 +83,16 @@ registerLocaleData(localeDe);
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    // Material modules
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatTabsModule,
+
+    MatKeyboardModule,
+
     ModalModule.forRoot(),
     ToastModule.forRoot(),
     BootstrapModalModule
