@@ -50,6 +50,7 @@ import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { FreebyMessagePipe } from './freeby-message.pipe';
+import { PrompterComponent } from './prompter/prompter.component';
 
 registerLocaleData(localeDe);
 
@@ -74,6 +75,7 @@ registerLocaleData(localeDe);
     ItemmanagementComponent,
     BillmanagementComponent,
     AdministrationComponent,
+    PrompterComponent,
     PaginatorComponent,
     TimespanFilterComponent,
     EnumPipePipe,
@@ -112,7 +114,7 @@ registerLocaleData(localeDe);
   // IMPORTANT:
   // Since 'AdditionCalculateWindow' is never explicitly used (in a template)
   // we must tell angular about it.
-  entryComponents: [QuickmenuComponent, FfaModalComponent, BillDetailModalComponent]
+  entryComponents: [QuickmenuComponent, PrompterComponent, FfaModalComponent, BillDetailModalComponent]
 })
 export class AppModule {
 

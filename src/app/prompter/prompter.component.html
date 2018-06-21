@@ -1,0 +1,32 @@
+<div class="container-fluid custom-modal-container">
+  <div class="row custom-modal-header" style="padding:15px;">
+
+    {{context.title}}
+
+
+  </div>
+  <div class="row" style="margin: 10px;">
+
+    {{context.msg}}
+
+
+  </div>
+  <div class="row" style="margin: 10px;">
+
+
+
+    <form class="navbar-form" role="search">
+      <input class="form-control" [(ngModel)]="inputContent" [ngModelOptions]="{standalone: true}" style="margin:0px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;"
+        [matKeyboard]="'de'" placeholder="Ihre Eingabe">
+    </form>
+
+  </div>
+  <div class="row custom-modal-footer" style="margin-bottom: 10px;">
+    <button (click)="onCancel()" type="button" class="btn btn-default btn-lg">
+      Abbrechen
+    </button>
+    <button (click)="onOkay()" type="button" class="btn btn-primary btn-lg">
+      Okay
+    </button>
+  </div>
+</div>

@@ -154,14 +154,14 @@ export class BackendService {
   }
   updateIncomingFreebies() {
 
-      const queryjson = (JSON.stringify(this.viewstate.incoming_freebies));
-      const endp = endpoint_incoming_freebies;
-      console.log(queryjson);
-      this.http.get(endp, { params: { query: queryjson } }).subscribe(dat => {
-        console.log(dat);
-        const data = dat as PaginatedResult<EnrichedCountOrBudgetGiveout>;
-        this.content.IncomingFreebies = data;
-      });
+    const queryjson = (JSON.stringify(this.viewstate.incoming_freebies));
+    const endp = endpoint_incoming_freebies;
+    console.log(queryjson);
+    this.http.get(endp, { params: { query: queryjson } }).subscribe(dat => {
+      console.log(dat);
+      const data = dat as PaginatedResult<EnrichedCountOrBudgetGiveout>;
+      this.content.IncomingFreebies = data;
+    });
 
   }
   updateOutgoingFreebies() {
@@ -427,10 +427,10 @@ export class BackendService {
     const endp = endpoint_allitems;
     console.log(queryjson);
     // Make the HTTP request: <PaginatedResult<User>>
-      console.log("refreshing all items");
+    console.log("refreshing all items");
     this.http.get(endp, { params: { query: queryjson } }).subscribe(dat => {
       console.log("received all items");
-    
+
       const data = dat as PaginatedResult<Item>;
 
       this.content.AllItems = data;
@@ -450,7 +450,7 @@ export class BackendService {
               this.content.autocomplete_collection.push(it.category);
             }
           }
-          if(it.category == null) {
+          if (it.category == null) {
             console.log("it.category == null");
             console.log(it);
             console.log(idx);
@@ -563,7 +563,7 @@ export class BackendService {
   }
 
   updateUser(user: User) {
-    
+
     const queryjson = (JSON.stringify(this.viewstate));
     const endp = post_endpoint_update_user;
     const payload: UpdateUser = {
@@ -733,7 +733,7 @@ export class BackendService {
   }
 
   updateMainUserlist(term: string): void {
-    this.viewstate.all_users.count_pars.searchterm = term.trim();
+    this.viewstate.all_users.count_pars.searchterm = (term != null) ? term.trim() : '';
     const queryjson = (JSON.stringify(term.length > 0 ? this.viewstate.all_users : this.viewstate.top_users));
     const endp = term.length > 0 ? endpoint_allusers : endpoint_topusers;
     console.log(queryjson);
@@ -792,11 +792,11 @@ export class BackendService {
         this.updateContentWithWriteResult(data.content.refreshed_data);
         purchases.forEach(ele => this.toastr.success("von " + username, "Abgestrichen: " + ele.count + " * " + ele.item.name), this.TOAST_CONFIG);
       } else {
-      this.toastr.error("Fehler: " + data.error_message, "Abstreichen misslungen", this.TOAST_CONFIG);
+        this.toastr.error("Fehler: " + data.error_message, "Abstreichen misslungen", this.TOAST_CONFIG);
       }
     }, err => {
       console.log("error in makeSimplePurchase: " + err);
-      this.toastr.error("Fehler: " + err, "Abstreichen misslungen" , this.TOAST_CONFIG);
+      this.toastr.error("Fehler: " + err, "Abstreichen misslungen", this.TOAST_CONFIG);
     }
     );
   }
@@ -815,7 +815,7 @@ export class BackendService {
 
   }
 
-  
+
   TOAST_CONFIG = {
     toastLife: 5000,
     dismiss: 'auto',
@@ -844,18 +844,18 @@ export class BackendService {
         this.toastr.success("von " + username, "Abgestrichen: " + itemname, this.TOAST_CONFIG);
         this.purchaseDone.emit(true);
       } else {
-      this.toastr.error("Fehler: " + data.error_message, "Abstreichen misslungen", this.TOAST_CONFIG );
-      this.purchaseDone.emit(false);
+        this.toastr.error("Fehler: " + data.error_message, "Abstreichen misslungen", this.TOAST_CONFIG);
+        this.purchaseDone.emit(false);
       }
     }, err => {
       console.log("error in makeSimplePurchase: " + err);
-      this.toastr.error("Fehler: " + err, "Abstreichen misslungen", this.TOAST_CONFIG );
+      this.toastr.error("Fehler: " + err, "Abstreichen misslungen", this.TOAST_CONFIG);
       this.purchaseDone.emit(false);
     }
     );
   }
 
-  createBudgetFreeby(doner_id: number, recipient_id: number, amountCents: number, message: string) : Observable<void> {
+  createBudgetFreeby(doner_id: number, recipient_id: number, amountCents: number, message: string): Observable<void> {
 
     const queryjson = (JSON.stringify(this.viewstate));
     const endp = post_endpoint_freeby_create_budget;
@@ -876,7 +876,7 @@ export class BackendService {
     );
   }
 
-  createCountFreeby(doner_id: number, recipient_id: number, allowedItems: Array<number>, selectedCategories: Array<string>, amountUnits: number, message: string) : Observable<void> {
+  createCountFreeby(doner_id: number, recipient_id: number, allowedItems: Array<number>, selectedCategories: Array<string>, amountUnits: number, message: string): Observable<void> {
     console.log("Beginning createCountFreeby");
     const queryjson = (JSON.stringify(this.viewstate));
     const endp = post_endpoint_freeby_create_count;
@@ -905,7 +905,7 @@ export class BackendService {
     );
   }
 
-  createFFAFreeby(doner_id: number, allowedItems: Array<number>, selectedCategories: Array<string>, amountUnits: number, message: string) : Observable<void> {
+  createFFAFreeby(doner_id: number, allowedItems: Array<number>, selectedCategories: Array<string>, amountUnits: number, message: string): Observable<void> {
     console.log("selectedCategories");
     console.log(selectedCategories);
     const queryjson = (JSON.stringify(this.viewstate));
@@ -936,7 +936,7 @@ export class BackendService {
 
 
   makeFFAPurchase(donorname: string, itemname: string, ffaId: number, itemId: number) {
-    
+
     const queryjson = (JSON.stringify(this.viewstate));
     const endp = post_endpoint_ffa_purchase;
     const payload: MakeFFAPurchase = {
@@ -951,11 +951,11 @@ export class BackendService {
         this.updateContentWithWriteResult(data.content.refreshed_data);
         this.toastr.success("Ausgegeben von " + donorname, "FFA abgestrichen: " + itemname, this.TOAST_CONFIG);
       } else {
-      this.toastr.error("Fehler: " + data.error_message, "FFA Abstreichen misslungen", this.TOAST_CONFIG );
+        this.toastr.error("Fehler: " + data.error_message, "FFA Abstreichen misslungen", this.TOAST_CONFIG);
       }
     }, err => {
       console.log("error in makeFFAPurchase");
-      this.toastr.error("Fehler: " + err, "FFA Abstreichen misslungen", this.TOAST_CONFIG );
+      this.toastr.error("Fehler: " + err, "FFA Abstreichen misslungen", this.TOAST_CONFIG);
     }
     );
   }
