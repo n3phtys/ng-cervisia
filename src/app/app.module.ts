@@ -52,6 +52,7 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { FreebyMessagePipe } from './freeby-message.pipe';
 import { PrompterComponent } from './prompter/prompter.component';
 
+
 registerLocaleData(localeDe);
 
 
