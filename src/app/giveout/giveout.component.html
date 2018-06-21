@@ -44,13 +44,13 @@
     <div class="form-group">
       <label for="countAmount">Anzahl:</label>
 
-      
+
       <input [(ngModel)]="amountUnits" name="freebyUnitInput" type="number" min="1" max="1000" class="form-control" id="countAmount">
 
 
       <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('countAmount', 'amountUnits', false, 10)">-10</button>
       <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('countAmount', 'amountUnits', false, 1)">-1</button>
-      
+
       <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('countAmount', 'amountUnits', true, 1)">+1</button>
       <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('countAmount', 'amountUnits', true, 10)">+10</button>
 
@@ -62,8 +62,9 @@
     <div class="form-group">
 
       <label for="budgetAmount">Budget in Euro:</label>
-      
-      <input [(ngModel)]="amountEuro" name="freebyBudgetInput" type="number" min="0.01" max="1000" step="0.05" class="form-control" id="budgetAmount">
+
+      <input [(ngModel)]="amountEuro" name="freebyBudgetInput" type="number" min="0.01" max="1000" step="0.05" class="form-control"
+        id="budgetAmount">
 
       <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('budgetAmount', 'amountEuro', false, 1)">-1€</button>
       <button class="btn btn-primary btn-md" (click)="setInputPlusRounded('budgetAmount', 'amountEuro', false, 0.05)">-5ct</button>
@@ -76,20 +77,19 @@
 
     <div class="form-group">
       <label for="comment">Nachricht:</label>
-      <input type="textarea" style="height:100px;" class="form-control" rows="5" id="comment" [(ngModel)]="message" placeholder="Eine Nachricht für den Begünstigten. Gibt es einen Anlass fürs Ausgeben?"
-
-      />
+      <input type="textarea" [matKeyboard]="'de'" style="height:100px;" class="form-control" rows="5" id="comment" [(ngModel)]="message"
+        placeholder="Eine Nachricht für den Begünstigten. Gibt es einen Anlass fürs Ausgeben?" />
     </div>
 
   </div>
 </div>
 <div>
-    <div class="col-xs-6" *ngIf="freebytype!=freebytypes.Budget">
-      <div class="form-group">
-        <app-multi-item-selection (selectionChanged)="selectedItemsAndCategories($event)"></app-multi-item-selection>
-      </div>
-  
+  <div class="col-xs-6" *ngIf="freebytype!=freebytypes.Budget">
+    <div class="form-group">
+      <app-multi-item-selection (selectionChanged)="selectedItemsAndCategories($event)"></app-multi-item-selection>
     </div>
+
+  </div>
   <div class="col-xs-6" *ngIf="freebytype!=freebytypes.FFA">
     <div class="form-group">
 

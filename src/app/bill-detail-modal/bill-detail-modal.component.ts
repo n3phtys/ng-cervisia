@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { DialogRef, ModalComponent, CloseGuard } from 'ngx-modialog';
-import { BSModalContext } from 'ngx-modialog/plugins/bootstrap';
+import { BSModalContext, Modal } from 'ngx-modialog/plugins/bootstrap';
 import { BackendService } from '../backend.service';
 import { User, EditBill, SpecialPurchase, SetPriceForSpecial } from '../backend-types';
+import { promptModal } from '../password-check.service';
 
 export class CustomBillDetailModalContext extends BSModalContext {
   timestamp_from: number;
@@ -26,7 +27,7 @@ export class BillDetailModalComponent implements CloseGuard, ModalComponent<Cust
   public listExcludeUsersIsCollapsed = true;
 
 
-  constructor(public dialog: DialogRef<CustomBillDetailModalContext>, public backend: BackendService) {
+  constructor(public dialog: DialogRef<CustomBillDetailModalContext>, public backend: BackendService, public modal: Modal) {
     this.context = dialog.context;
     this.context.dialogClass = 'modal-dialog modal-lg';
     console.log(this.context);
@@ -36,19 +37,23 @@ export class BillDetailModalComponent implements CloseGuard, ModalComponent<Cust
 
   finalizateBill() {
     if (confirm("Willst du diese Abrechnung wirklich finalisieren? Danach sind keine inhaltlichen Änderungen mehr möglich.")) {
-    this.backend.finalizeBill({timestamp_from: this.context.timestamp_from,
-      timestamp_to: this.context.timestamp_to,});
+      this.backend.finalizeBill({
+        timestamp_from: this.context.timestamp_from,
+        timestamp_to: this.context.timestamp_to,
+      });
       this.close();
     }
   }
 
   deleteBill() {
     if (confirm("Willst du diese Abrechnung wirklich permanent löschen? Alle Käufe bleiben erhalten und werden ggf. der nächsten Abrechnung dieses Zeitraums zugeordnet.")) {
-    this.backend.deleteBill({timestamp_from: this.context.timestamp_from,
-      timestamp_to: this.context.timestamp_to,});
+      this.backend.deleteBill({
+        timestamp_from: this.context.timestamp_from,
+        timestamp_to: this.context.timestamp_to,
+      });
       this.close();
+    }
   }
-}
 
   include(user: User) {
     let contained = false;
@@ -98,16 +103,17 @@ export class BillDetailModalComponent implements CloseGuard, ModalComponent<Cust
 
   setSpecialPrice(special: SpecialPurchase) {
     console.log(special);
-    const c = prompt("Bitte gib den Preis in Cents ein für Spezialkauf: " + special.special_name);
-    if (c != null) {
-      const ct = Number.parseInt(c);
-      if (ct != null && !Number.isNaN(ct) && (ct > 0 || c.trim() == '0')) {
-        this.backend.setPriceForSpecial({
-          unique_id: special.unique_id,
-          price: ct,
-        });
+    promptModal("Bitte gib den Preis in Cents ein für Spezialkauf: " + special.special_name, this.modal).forEach(c => {
+      if (c != null) {
+        const ct = Number.parseInt(c);
+        if (ct != null && !Number.isNaN(ct) && (ct > 0 || c.trim() == '0')) {
+          this.backend.setPriceForSpecial({
+            unique_id: special.unique_id,
+            price: ct,
+          });
+        }
       }
-    }
+    });
   }
 
   close() {

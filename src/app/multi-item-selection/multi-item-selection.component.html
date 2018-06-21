@@ -1,18 +1,16 @@
 <form class="navbar-form" role="search">
-  <input class="form-control" style="margin:20px;padding:20px;" placeholder="Suche nach Getränk" [formControl]="searchControl">
+  <input class="form-control" style="margin:20px;padding:20px;" placeholder="Suche nach Getränk" [matKeyboard]="'de'" [formControl]="searchControl">
 </form>
 
 
-  <div *ngFor="let category of backend.content.all_items_per_category">
-    <button (click)="onClickedCategory(category.name, $event)" 
-    [ngClass]="{'btn' : true, 'btn-default' : !selectedCategories.has(category),  'btn-info' : selectedCategories.has(category) }"
-    >Kategorie: {{category.name}} <span *ngIf="selectedCategories.has(category)"> (ausgewählt)</span></button>
-    <ul>
-      <li *ngFor="let item of category.arr" (click)="onClickedItem(item, $event)"
-      [ngClass]="{'selectedItem' : selectedItems.has(item) }"
-      >
-        {{item.name}} <span *ngIf="selectedItems.has(item)"> (ausgewählt)</span>
-      </li>
-    </ul>
-  </div>
-
+<div *ngFor="let category of backend.content.all_items_per_category">
+  <button (click)="onClickedCategory(category.name, $event)" [ngClass]="{'btn' : true, 'btn-default' : !selectedCategories.has(category),  'btn-info' : selectedCategories.has(category) }">Kategorie: {{category.name}}
+    <span *ngIf="selectedCategories.has(category)"> (ausgewählt)</span>
+  </button>
+  <ul>
+    <li *ngFor="let item of category.arr" (click)="onClickedItem(item, $event)" [ngClass]="{'selectedItem' : selectedItems.has(item) }">
+      {{item.name}}
+      <span *ngIf="selectedItems.has(item)"> (ausgewählt)</span>
+    </li>
+  </ul>
+</div>

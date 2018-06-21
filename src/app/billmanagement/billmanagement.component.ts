@@ -8,6 +8,7 @@ import { BackendService } from '../backend.service';
 import { ParametersPurchaseLogGlobalCount, Bill, ExportBill } from '../backend-types';
 import { BillDetailModalComponent } from '../bill-detail-modal/bill-detail-modal.component';
 import { BillManagementPageSize } from '../constants.layouts';
+import { promptModal } from '../password-check.service';
 
 @Component({
   selector: 'app-billmanagement',
@@ -54,48 +55,49 @@ export class BillmanagementComponent implements OnInit {
   }
 
   exportBill(bill: Bill) {
-    const c = prompt("An welche Email-Adresse soll die Abrechnung geschickt werden? Lasse das Feld frei um den Vorgang abzubrechen");
-    if (c != null && c.length > 0) {
-      this.backend.exportBillToEmail(
-        <ExportBill> {
-          timestamp_from: bill.timestamp_from,
-          timestamp_to: bill.timestamp_to,
-          limit_to_user: null,
-          email_address: c,
-        });
+    promptModal("An welche Email-Adresse soll die Abrechnung geschickt werden? Lasse das Feld frei um den Vorgang abzubrechen", this.modal).forEach(c => {
+      if (c != null && c.length > 0) {
+        this.backend.exportBillToEmail(
+          <ExportBill>{
+            timestamp_from: bill.timestamp_from,
+            timestamp_to: bill.timestamp_to,
+            limit_to_user: null,
+            email_address: c,
+          });
+      }
+    });
+  }
+
+  createBill() {
+    console.log(this.dt1);
+    console.log(this.dt2);
+    console.log(this.dt1.getTime());
+    console.log(this.dt2.getTime());
+    if (this.dt1 != null && !Number.isNaN(this.dt1.getTime()) && this.dt2 != null && !Number.isNaN(this.dt2.getTime()) && this.dt1.getTime() < this.dt2.getTime() && confirm("Willst du wirklich eine neue Abrechnung erstellen?")) {
+      this.backend.createBill(this.commentField, this.dt1.getTime(), this.dt2.getTime());
+      this.ngOnInit();
     }
   }
 
-    createBill() {
-      console.log(this.dt1);
-      console.log(this.dt2);
-      console.log(this.dt1.getTime());
-      console.log(this.dt2.getTime());
-      if (this.dt1 != null && !Number.isNaN(this.dt1.getTime()) && this.dt2 != null && !Number.isNaN(this.dt2.getTime()) && this.dt1.getTime() < this.dt2.getTime() && confirm("Willst du wirklich eine neue Abrechnung erstellen?")) {
-        this.backend.createBill(this.commentField, this.dt1.getTime(), this.dt2.getTime());
-        this.ngOnInit();
-      }
-    }
+  openBillModal(bill: Bill) {
+    this.backend.viewstate.bill_detail_infos.timestamp_from = bill.timestamp_from;
+    this.backend.viewstate.bill_detail_infos.timestamp_to = bill.timestamp_to;
+    this.backend.refreshDetailedBill();
 
-    openBillModal(bill: Bill) {
-      this.backend.viewstate.bill_detail_infos.timestamp_from = bill.timestamp_from;
-      this.backend.viewstate.bill_detail_infos.timestamp_to = bill.timestamp_to;
-      this.backend.refreshDetailedBill();
-
-      return this.modal.open(BillDetailModalComponent, overlayConfigFactory({ comment: bill.comment, timestamp_from: bill.timestamp_from, timestamp_to: bill.timestamp_to, exclude_user_ids: bill.users_that_will_not_be_billed }, BSModalContext));
-    }
-
-    datify1(event) : void {
-      const d = new Date(event);
-      if(!Number.isNaN(d.getTime())) {
-        this.dt1 = d;
-      }
-    }
-    datify2(event) : void {
-      const d = new Date(event);
-      if(!Number.isNaN(d.getTime())) {
-        this.dt2 = d;
-      }
-    }
-
+    return this.modal.open(BillDetailModalComponent, overlayConfigFactory({ comment: bill.comment, timestamp_from: bill.timestamp_from, timestamp_to: bill.timestamp_to, exclude_user_ids: bill.users_that_will_not_be_billed }, BSModalContext));
   }
+
+  datify1(event): void {
+    const d = new Date(event);
+    if (!Number.isNaN(d.getTime())) {
+      this.dt1 = d;
+    }
+  }
+  datify2(event): void {
+    const d = new Date(event);
+    if (!Number.isNaN(d.getTime())) {
+      this.dt2 = d;
+    }
+  }
+
+}

@@ -53,6 +53,14 @@ import { FreebyMessagePipe } from './freeby-message.pipe';
 
 registerLocaleData(localeDe);
 
+
+
+
+
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,7 +105,8 @@ registerLocaleData(localeDe);
     ToastModule.forRoot(),
     BootstrapModalModule
   ],
-  providers: [{ provide: LOCALE_ID, useValue: "de-DE" }, BackendService, TabService, PasswordCheckService],
+  providers: [{ provide: LOCALE_ID, useValue: "de-DE" },
+    BackendService, TabService, PasswordCheckService],
   bootstrap: [AppComponent],
 
   // IMPORTANT:

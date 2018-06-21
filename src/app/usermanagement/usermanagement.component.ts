@@ -9,6 +9,8 @@ import { TabService } from '../tab.service';
 import { BackendService } from '../backend.service';
 import { User } from '../backend-types';
 import { UserManagementPageSize } from '../constants.layouts';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
+import { promptModal } from '../password-check.service';
 
 @Component({
   selector: 'app-usermanagement',
@@ -21,10 +23,10 @@ export class UsermanagementComponent implements OnInit {
 
   detailUser: User = null;
 
-  pagesize = UserManagementPageSize; 
+  pagesize = UserManagementPageSize;
 
 
-  constructor(public tabs: TabService, public backend: BackendService) { }
+  constructor(public tabs: TabService, public backend: BackendService, public modal: Modal) { }
 
   ngOnInit() {
     this.backend.setAllUserPageSize(this.pagesize);
@@ -53,10 +55,11 @@ export class UsermanagementComponent implements OnInit {
   }
 
   createUser() {
-    const c = prompt("Gib den Namen des neuen Benutzers ein, oder lasse das Feld leer um den Vorgang abzubrechen. Neue Benutzer werden ohne SEWOBE Id und mit Grundeinstellungen erstellt. Der Name kann später noch geändert werden.");
-    if (c != null && c.length > 0) {
-      this.backend.createUser(c);
-    }
+    promptModal("Gib den Namen des neuen Benutzers ein, oder lasse das Feld leer um den Vorgang abzubrechen. Neue Benutzer werden ohne SEWOBE Id und mit Grundeinstellungen erstellt. Der Name kann später noch geändert werden.", this.modal).forEach(c => {
+      if (c != null && c.length > 0) {
+        this.backend.createUser(c);
+      }
+    });
   }
 
   editUser(user: User) {
@@ -74,10 +77,10 @@ export class UsermanagementComponent implements OnInit {
   }
 
 
-  pageNavigation(page : number) {
+  pageNavigation(page: number) {
     console.log("Navigating to page " + page);
     BackendService.moveToPage(this.backend.viewstate.all_users.pagination, page, this.pagesize);
     this.backend.updateAllUserlist(this.term);
-} 
+  }
 
 }

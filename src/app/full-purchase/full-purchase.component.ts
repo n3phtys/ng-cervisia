@@ -11,6 +11,8 @@ import { TabActive } from '../tab-active.enum';
 import { Item } from '../backend-types';
 import { PurchaseOtherPrompt } from '../constants.locale';
 import { FullPurchaseItemPageSize } from '../constants.layouts';
+import { promptModal } from '../password-check.service';
+import { Modal } from 'ngx-modialog/plugins/bootstrap';
 
 
 @Component({
@@ -28,7 +30,7 @@ export class FullPurchaseComponent implements OnInit {
 
   searchControl: FormControl = new FormControl();
 
-  constructor(public backend: BackendService, public tabs: TabService) { }
+  constructor(public backend: BackendService, public modal: Modal, public tabs: TabService) { }
 
   ngOnInit() {
     BackendService.moveToPage(this.backend.viewstate.all_items.pagination, 0, this.pagesize);
@@ -62,20 +64,21 @@ export class FullPurchaseComponent implements OnInit {
   }
 
   onSpecialClicked() {
-    const c = prompt(PurchaseOtherPrompt);
-    if (c != null && c.length > 0) {
-      const id = this.specialCounter;
-      this.specialCounter--;
-      this.shoppingCart.push({
-        count: 1, item: {
-          name: c,
-          item_id: id,
-          category: null,
-          cost_cents: 0.00,
-          deleted: false,
-        }
-      })
-    }
+    promptModal(PurchaseOtherPrompt, this.modal).forEach(c => {
+      if (c != null && c.length > 0) {
+        const id = this.specialCounter;
+        this.specialCounter--;
+        this.shoppingCart.push({
+          count: 1, item: {
+            name: c,
+            item_id: id,
+            category: null,
+            cost_cents: 0.00,
+            deleted: false,
+          }
+        })
+      }
+    });
   }
 
   onShoppingCarElementPressed(item: Item, idx: number, event) {
@@ -94,7 +97,7 @@ export class FullPurchaseComponent implements OnInit {
   }
 
   onOkayPressed(event) {
-    const v : ShoppingCartElement[] = [];
+    const v: ShoppingCartElement[] = [];
     for (let i = 0; i < this.shoppingCart.length; i++) {
       v.push(this.shoppingCart[i]);
     }
