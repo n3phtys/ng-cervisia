@@ -13,6 +13,18 @@ import { ToastModule } from 'ng2-toastr';
 import { TimespanFilterComponent } from '../timespan-filter/timespan-filter.component';
 import { PaginatorComponent } from '../paginator/paginator.component';
 
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+
+
+import { IKeyboardLayouts, keyboardLayouts, MAT_KEYBOARD_LAYOUTS, MatKeyboardModule } from '@ngx-material-keyboard/core';
+
 describe('PersonalstatisticsComponent', () => {
   let component: PersonalstatisticsComponent;
   let fixture: ComponentFixture<PersonalstatisticsComponent>;
@@ -23,15 +35,23 @@ describe('PersonalstatisticsComponent', () => {
         HttpClientModule,
         BrowserModule,
         BrowserAnimationsModule,
+        MatButtonModule,
+        MatIconModule,
+        MatInputModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatTabsModule,
+
+        MatKeyboardModule,
         ToastModule.forRoot(),
         ReactiveFormsModule,
         FormsModule,
         ModalModule.forRoot(),
       ],
       providers: [BackendService, TabService, PasswordCheckService],
-      declarations: [ PersonalstatisticsComponent, TimespanFilterComponent, PaginatorComponent ]
+      declarations: [PersonalstatisticsComponent, TimespanFilterComponent, PaginatorComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -40,5 +60,5 @@ describe('PersonalstatisticsComponent', () => {
     fixture.detectChanges();
   });
 
-  
+
 });

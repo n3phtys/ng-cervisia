@@ -10,6 +10,18 @@ import { TabService } from '../tab.service';
 import { GlobalstatisticsComponent } from '../globalstatistics/globalstatistics.component';
 import { PaginatorComponent } from '../paginator/paginator.component';
 
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTabsModule } from '@angular/material/tabs';
+
+
+import { IKeyboardLayouts, keyboardLayouts, MAT_KEYBOARD_LAYOUTS, MatKeyboardModule } from '@ngx-material-keyboard/core';
+
 describe('TimespanFilterComponent', () => {
   let component: TimespanFilterComponent;
   let fixture: ComponentFixture<TimespanFilterComponent>;
@@ -19,14 +31,22 @@ describe('TimespanFilterComponent', () => {
       imports: [
         BrowserModule,
         HttpClientModule,
+        MatButtonModule,
+        MatIconModule,
+        MatInputModule,
+        MatSelectModule,
+        MatSlideToggleModule,
+        MatTabsModule,
+
+        MatKeyboardModule,
         ReactiveFormsModule,
         FormsModule,
         ModalModule.forRoot(),
       ],
       providers: [BackendService, TabService],
-      declarations: [GlobalstatisticsComponent, PaginatorComponent, TimespanFilterComponent ]
+      declarations: [GlobalstatisticsComponent, PaginatorComponent, TimespanFilterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
