@@ -1,5 +1,17 @@
 # NgCervisia (Cervisia 6 Frontend)
 
+## How to develop
+
+    cd localdev
+    docker-compose up -d
+    cd ..
+    ng build --watch
+
+
+And start editing the code
+
+
+
 ## Docker Container und AVH Deployment
 
 Client and Server will be build as a fresh Docker container on every CI-Push. The result is available on docker-hub: 

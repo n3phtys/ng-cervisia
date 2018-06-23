@@ -1,0 +1,16 @@
+version: '3'
+services:
+  cervisia:
+    image: n3phtys/cervisia-container:latest
+    restart: always
+    env_file: ./local.env
+    ports:
+     - "8080:8080"
+    volumes:
+     - db_volume:/db
+     - ./users.json:/usr/cervisia/users.json
+     - ./items.json:/usr/cervisia/items.json
+     - ../:/usr/cervisia/app
+    command: /usr/cervisia/backend/cervisia-server
+volumes:
+  db_volume:

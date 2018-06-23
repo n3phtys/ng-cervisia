@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Pils",
+        "category": "Bier",
+        "price": 95
+    },
+    {
+        "name": "Kräussen",
+        "category": "Bier",
+        "price": 95
+    },
+    {
+        "name": "Alkoholfrei",
+        "category": "Bier",
+        "price": 95
+    },
+    {
+        "name": "Cola",
+        "category": "Antialkoholisches",
+        "price": 95
+    },
+    {
+        "name": "Cola-Mix",
+        "category": "Antialkoholisches",
+        "price": 75
+    },
+    {
+        "name": "Sprudel",
+        "category": "Antialkoholisches",
+        "price": 35
+    },
+    {
+        "name": "Mate",
+        "category": "Antialkoholisches",
+        "price": 100
+    },
+    {
+        "name": "Fanta",
+        "category": "Antialkoholisches",
+        "price": 95
+    },
+    {
+        "name": "Grape",
+        "category": "Kein Bier",
+        "price": 95
+    },
+    {
+        "name": "Hefe",
+        "category": "Bier",
+        "price": 95
+    },
+    {
+        "name": "Kristallweizen",
+        "category": "Bier",
+        "price": 95
+    },
+    {
+        "name": "Schirker 0,7L",
+        "category": "Hochprozentiges",
+        "price": 1000
+    }
+]
