@@ -24,18 +24,18 @@
 <div>
 
 
-  
-    <div class="btn btn-info createButton" (click)="createUser()" *ngIf="detailUser == null">
-        <span class="glyphicon glyphicon-plus" style="margin-right: 5px;" >
-          </span>Neuer Benutzer 
-      </div>
-    
+
+  <div class="btn btn-info createButton" (click)="createUser()" *ngIf="detailUser == null">
+    <span class="glyphicon glyphicon-plus" style="margin-right: 5px;">
+    </span>Neuer Benutzer
+  </div>
+
 
 
 
   <div *ngIf="detailUser == null">
     <form class="navbar-form" role="search">
-      <input class="form-control" style="margin:20px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;"
+      <input [matKeyboard]="'de'" class="form-control" style="margin:20px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;"
         placeholder="Suche nach Benutzer" [formControl]="searchControl">
     </form>
 
@@ -44,13 +44,13 @@
         <thead>
           <tr>
 
-              <th style="width: 50px;text-align:center;">Id</th>
-              <th style="min-width: 80px;text-align:center;">Benutzername</th>
-              <th style="width: 220px;text-align:center;">SEWOBE Identifikator</th>
-              <th style="width: 70px;text-align:center;">Abrechenbar</th>
-              <th style="width: 40px;text-align:center;">Angepinnt</th>
-              <th style="width:20px;text-align:center;"> </th>
-              <th style="width:20px;text-align:center;"> </th>
+            <th style="width: 50px;text-align:center;">Id</th>
+            <th style="min-width: 80px;text-align:center;">Benutzername</th>
+            <th style="width: 220px;text-align:center;">SEWOBE Identifikator</th>
+            <th style="width: 70px;text-align:center;">Abrechenbar</th>
+            <th style="width: 40px;text-align:center;">Angepinnt</th>
+            <th style="width:20px;text-align:center;"> </th>
+            <th style="width:20px;text-align:center;"> </th>
 
           </tr>
         </thead>
@@ -60,7 +60,7 @@
             <td>{{ user.username }}</td>
             <td>{{ user.external_user_id }}</td>
             <td>{{ user.is_billed ? 'wahr' : 'falsch' }}</td>
-            <td>{{ user.highlight_in_ui ? 'wahr' : 'falsch'  }}</td>
+            <td>{{ user.highlight_in_ui ? 'wahr' : 'falsch' }}</td>
             <td>
               <a (click)="editUser(user)" class="btn btn-small btn-primary">Ändern</a>
             </td>
@@ -73,7 +73,7 @@
     </div>
 
 
-    <app-paginator [parameters]="backend.content.AllUsers" [pageSizeOverride]="pagesize"  (onPageChange)="pageNavigation($event)"></app-paginator>
+    <app-paginator [parameters]="backend.content.AllUsers" [pageSizeOverride]="pagesize" (onPageChange)="pageNavigation($event)"></app-paginator>
 
 
   </div>
@@ -83,11 +83,11 @@
     <div class="container">
       <div class="form-group">
         <label for="username">Benutzername:</label>
-        <input [(ngModel)]="detailUser.username" class="form-control" id="username">
+        <input [matKeyboard]="'de'" [(ngModel)]="detailUser.username" class="form-control" id="username">
       </div>
       <div class="form-group">
         <label for="external_user_id">SEWOBE Identifikationsnummer:</label>
-        <input [(ngModel)]="detailUser.external_user_id" class="form-control" id="external_user_id">
+        <input [matKeyboard]="'de'" [(ngModel)]="detailUser.external_user_id" class="form-control" id="external_user_id">
       </div>
       <div class="checkbox">
         <label>
@@ -95,7 +95,8 @@
       </div>
       <div class="checkbox">
         <label>
-          <input type="checkbox" [checked]="detailUser.highlight_in_ui" (change)="detailUser.highlight_in_ui = !detailUser.highlight_in_ui" /> in der Benutzerliste anpinnen und herausstellen</label>
+          <input type="checkbox" [checked]="detailUser.highlight_in_ui" (change)="detailUser.highlight_in_ui = !detailUser.highlight_in_ui"
+          /> in der Benutzerliste anpinnen und herausstellen</label>
       </div>
     </div>
 

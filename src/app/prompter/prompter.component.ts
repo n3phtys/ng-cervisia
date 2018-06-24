@@ -32,6 +32,7 @@ export class PrompterComponent implements CloseGuard, ModalComponent<CustomPromp
     this.inputContent = '';
     console.log("four");
     dialog.setCloseGuard(this);
+    this.context.isBlocking = true;
     console.log("five");
   }
 

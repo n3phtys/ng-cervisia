@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ViewContainerRef } from '@angular/core';
 import { Overlay, overlayConfigFactory } from 'ngx-modialog';
 import { Modal, BSModalContext } from 'ngx-modialog/plugins/bootstrap';
-import {CustomModalContext, QuickmenuComponent} from '../quickmenu/quickmenu.component';
+import { CustomModalContext, QuickmenuComponent } from '../quickmenu/quickmenu.component';
 import { BackendService } from '../backend.service';
 
-import {ReactiveFormsModule, FormsModule, FormControl} from '@angular/forms';
+import { ReactiveFormsModule, FormsModule, FormControl } from '@angular/forms';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
-import {Observable, Observer} from 'rxjs/Rx';
+import { Observable, Observer } from 'rxjs/Rx';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
@@ -32,7 +32,7 @@ export class UserselectionComponent implements OnInit {
     //clock ticks
     IntervalObservable.create(1000).subscribe(e => this.currentTime = new Date());
 
-    
+
   }
 
   ngOnInit() {
@@ -40,16 +40,18 @@ export class UserselectionComponent implements OnInit {
     this.searchControl.setValue('');
     const backend = this.backend;
     this.searchControl.valueChanges
-    .debounceTime(450)
-    .distinctUntilChanged()
-    .subscribe((term: string) => {
-      console.log('Triggered with term = ' + term);
-      backend.updateMainUserlist(term);
-    });
+      .debounceTime(250)
+      .distinctUntilChanged()
+      .subscribe((term: string) => {
+        console.log('Triggered with term = ' + term);
+        backend.updateMainUserlist(term);
+      });
 
-    this.backend.purchaseDone.subscribe(t => {if (t) {
-      this.searchControl.setValue('');
-    }});
+    this.backend.purchaseDone.subscribe(t => {
+      if (t) {
+        this.searchControl.setValue('');
+      }
+    });
 
     backend.updateMainUserlist('');
     backend.refreshLastPurchase();
@@ -78,12 +80,12 @@ export class UserselectionComponent implements OnInit {
     <app-quickmenu></app-quickmenu>`)
     .open();*/
 
-//dialogRef.result
+    //dialogRef.result
     //.then( result => alert(`The result is: ${result}`) )
     //;
   }
 
   openQuickmenu(u: User) {
-    return this.modal.open(QuickmenuComponent,  overlayConfigFactory({ user: u }, BSModalContext));
+    return this.modal.open(QuickmenuComponent, overlayConfigFactory({ user: u }, BSModalContext));
   }
 }

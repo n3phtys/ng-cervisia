@@ -3,6 +3,11 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+    z-index: 99999 !important;
+}
+
+
 .grid-container {
     display: grid;
     grid-template-columns: auto auto auto;
