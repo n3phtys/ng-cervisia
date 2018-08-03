@@ -29,7 +29,7 @@ button {
 
 .clockdiv {
     float: right;
-    margin-right: 20px; 
+    margin-right: 40px; 
     width: 128px;
     height: 52px;
     font-size: 18pt;
@@ -42,6 +42,8 @@ button {
 }
 
 .datediv {
+    margin: 2px;
+    padding: 2px;
     font-size: 14pt;
     color: AliceBlue;
 }
