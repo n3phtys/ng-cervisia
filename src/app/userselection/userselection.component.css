@@ -5,9 +5,10 @@
   word-wrap: break-word;
   margin: 6px;
   font-weight: bold;
+  font-size: 16pt;
   text-align: center;
-  line-height: 75px;
-    height: 75px;
+  line-height: 90px;
+    height: 90px;
 }
 .largerSelectionItem {
   line-height: 80px;
@@ -35,12 +36,14 @@ button {
 }
 
 .timediv {
-    font-size: 24pt;
+    font-size: 30pt;
     font-weight: bold;
+    color: AliceBlue;
 }
 
 .datediv {
-    font-size: 12pt;
+    font-size: 14pt;
+    color: AliceBlue;
 }
 
 
@@ -65,4 +68,10 @@ button {
     bottom: 10px;
     color: darkslategray;
     font-size: 10px;
+    color: AliceBlue;
+}
+
+.previouslybought {
+    color: AliceBlue;
+    font-size: 14px;
 }
