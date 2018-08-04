@@ -36,15 +36,17 @@ button {
 }
 
 .timediv {
-    font-size: 30pt;
+    font-size: 28pt;
+    margin: 0px;
+    padding: 0px;
     font-weight: bold;
     color: AliceBlue;
 }
 
 .datediv {
-    margin: 2px;
-    padding: 2px;
-    font-size: 14pt;
+    margin: 0px;
+    padding: 0px;
+    font-size: 9pt;
     color: AliceBlue;
 }
 
