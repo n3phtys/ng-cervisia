@@ -15,24 +15,26 @@ export class TabService {
   public showItemmanagement = false;
   public showUsermanagement = false;
   public showBillmanagement = false;
+  public showPartyMode = false;
 
 
-  resetFlags(flag : TabActive) {
+  resetFlags(flag: TabActive) {
     this.showUserselection = flag == TabActive.UserSelectionPage;
     this.showAdministration = flag == TabActive.AdministrationPage;
-    this.showLog = flag == TabActive.GlobalStatisticsPage;    
-    this.showPrivateStatistics = flag == TabActive.UserStatisticsPage;    
-    this.showGiveout = flag == TabActive.UserGiveoutPage;    
-    this.showFullPurchase = flag == TabActive.UserDetailPage;    
-    this.showItemmanagement = flag == TabActive.ItemmanagementPage;    
-    this.showUsermanagement = flag == TabActive.UsermanagementPage;    
-    this.showBillmanagement = flag == TabActive.BillmanagementPage;    
+    this.showLog = flag == TabActive.GlobalStatisticsPage;
+    this.showPrivateStatistics = flag == TabActive.UserStatisticsPage;
+    this.showGiveout = flag == TabActive.UserGiveoutPage;
+    this.showFullPurchase = flag == TabActive.UserDetailPage;
+    this.showItemmanagement = flag == TabActive.ItemmanagementPage;
+    this.showUsermanagement = flag == TabActive.UsermanagementPage;
+    this.showBillmanagement = flag == TabActive.BillmanagementPage;
+    this.showPartyMode = flag == TabActive.PartyModePage;
   }
 
 
   constructor(public passmanager: PasswordCheckService) {
     this.resetFlags(TabActive.UserSelectionPage);
-   }
+  }
 
 
   public goToLog() {
@@ -42,21 +44,23 @@ export class TabService {
     // console.log("Changed openTab to " + this.openTab);
     this.resetFlags(TabActive.GlobalStatisticsPage);
   }
-  
+
   public goToAdministrationWithoutPassword() {
     this.resetFlags(TabActive.AdministrationPage);
   }
-  
-    public goToAdministration() {
-    this.passmanager.checkPassword().subscribe(t => {if (t) {
-    // console.log("Changed openTab from " + this.openTab);
-    // console.log(TabActive.AdministrationPage);
-    // this.openTab = TabActive.AdministrationPage;
-    // console.log("Changed openTab to " + this.openTab);
-    this.resetFlags(TabActive.AdministrationPage);
-    } else {
-      this.passmanager.toastr.error('Wrong password entered');
-    }});
+
+  public goToAdministration() {
+    this.passmanager.checkPassword().subscribe(t => {
+      if (t) {
+        // console.log("Changed openTab from " + this.openTab);
+        // console.log(TabActive.AdministrationPage);
+        // this.openTab = TabActive.AdministrationPage;
+        // console.log("Changed openTab to " + this.openTab);
+        this.resetFlags(TabActive.AdministrationPage);
+      } else {
+        this.passmanager.toastr.error('Wrong password entered');
+      }
+    });
   }
 
   public goToItemManagement() {
@@ -65,6 +69,10 @@ export class TabService {
     // this.openTab = TabActive.ItemmanagementPage;
     // console.log("Changed openTab to " + this.openTab);
     this.resetFlags(TabActive.ItemmanagementPage);
+  }
+
+  public goToPartyMode() {
+    this.resetFlags(TabActive.PartyModePage);
   }
 
   public goToUserManagement() {

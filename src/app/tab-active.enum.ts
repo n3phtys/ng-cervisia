@@ -7,5 +7,6 @@ export enum TabActive {
     UserGiveoutPage,
     UserSelectionPage,
     UserStatisticsPage,
-    GlobalStatisticsPage
+    GlobalStatisticsPage,
+    PartyModePage
 }

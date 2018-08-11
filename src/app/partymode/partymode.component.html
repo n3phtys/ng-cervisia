@@ -1,0 +1,28 @@
+<div class="grid-container">
+  <div class="grid-item">
+
+    <button (click)="tabs.goToAdministration()" class="btn btn-default" style="position:fixed; top:15px; left: 40px">
+      Administration
+    </button>
+  </div>
+  <div class="grid-item" style="grid-column-start: 2;grid-column-end: 7;">
+
+    <h2 class="title">Party Modus ist aktiv! Abstreichen nicht möglich</h2>
+  </div>
+  <div class="grid-item" style="grid-column-start: 7;">
+    <div class="clockdiv">
+      <div class="timediv">
+        {{ currentTime | date:'mediumTime'}}
+      </div>
+      <div class="datediv">
+        {{ currentTime | date:'mediumDate'}}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="poweredby" style="grid-column-start: 7;grid-column-end: 9; line-height:9px;">
+  Cervisia is FOSS: https://github.com/n3phtys/ng-cervisia
+</div>

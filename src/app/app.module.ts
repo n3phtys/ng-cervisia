@@ -51,6 +51,7 @@ import localeDe from '@angular/common/locales/de';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { FreebyMessagePipe } from './freeby-message.pipe';
 import { PrompterComponent } from './prompter/prompter.component';
+import { PartymodeComponent } from './partymode/partymode.component';
 
 
 registerLocaleData(localeDe);
@@ -76,6 +77,7 @@ registerLocaleData(localeDe);
     ItemmanagementComponent,
     BillmanagementComponent,
     AdministrationComponent,
+    PartymodeComponent,
     PrompterComponent,
     PaginatorComponent,
     TimespanFilterComponent,

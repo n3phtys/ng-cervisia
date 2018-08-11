@@ -2,16 +2,18 @@
 <div style="text-align:center">
 
   <app-userselection *ngIf="tabservice.showUserselection"></app-userselection>
-  
+
   <app-personalstatistics *ngIf="tabservice.showPrivateStatistics"></app-personalstatistics>
   <app-giveout *ngIf="tabservice.showGiveout"></app-giveout>
   <app-full-purchase *ngIf="tabservice.showFullPurchase"></app-full-purchase>
-  
+
   <app-globalstatistics *ngIf="tabservice.showLog"></app-globalstatistics>
 
   <app-usermanagement *ngIf="tabservice.showUsermanagement"></app-usermanagement>
   <app-itemmanagement *ngIf="tabservice.showItemmanagement"></app-itemmanagement>
   <app-billmanagement *ngIf="tabservice.showBillmanagement"></app-billmanagement>
   <app-administration *ngIf="tabservice.showAdministration"></app-administration>
+
+  <app-partymode *ngIf="tabservice.showPartyMode"></app-partymode>
 
 </div>

@@ -50,6 +50,8 @@ button {
     color: AliceBlue;
 }
 
+
+
 .userSelectionContainer {
     margin-top: 5px;
     margin-bottom: 5px;
@@ -76,4 +78,12 @@ button {
 .previouslybought {
     color: AliceBlue;
     font-size: 14px;
+}
+
+
+.title {
+    font-size: 32pt;
+    font-weight: bold;
+    color: AliceBlue;
+
 }
