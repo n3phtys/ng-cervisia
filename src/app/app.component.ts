@@ -17,18 +17,26 @@ export class AppComponent {
   constructor(public tabservice: TabService, public backendService: BackendService, vcr: ViewContainerRef) {
     this.backendService.toastr.setRootViewContainerRef(vcr);
 
-    this.reloadAfterRandomPeriod();
-
+    this.reloadAfterRandomPeriod(1);
   }
 
 
-  reloadAfterRandomPeriod() {
-    let hour = 1000 * 3600
+  reloadAfterRandomPeriod(fractional: number) {
+    let hour = 1000 * 3600 / fractional;
     let minimalMillis = hour * 24;
     let maximalMillis = hour * 48;
     let actualMillis = Math.random() * (maximalMillis - minimalMillis) + minimalMillis;
 
-    setTimeout(function () { window.location.reload(true); }, actualMillis);
+    setTimeout(function () { this.putReloadBackIfInPartyMode() }, actualMillis);
   }
+
+  putReloadBackIfInPartyMode() {
+    if (this.tabservice.showPartyMode == true) {
+      this.reloadAfterRandomPeriod(20);
+    } else {
+      window.location.reload(true);
+    }
+  }
+
 }
 
