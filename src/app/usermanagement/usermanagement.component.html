@@ -91,6 +91,10 @@
       </div>
       <div class="checkbox">
         <label>
+          <input type="checkbox" [checked]="detailUser.is_sepa" (change)="detailUser.is_sepa = !detailUser.is_sepa" /> SEPA Lastschrift Mandat gegeben (wenn nicht angehakt, wird nur eine Rechnung gestellt, aber nichts eingezogen)</label>
+      </div>
+      <div class="checkbox">
+        <label>
           <input type="checkbox" [checked]="detailUser.is_billed" (change)="detailUser.is_billed = !detailUser.is_billed" /> Soll eine Rechnung erhalten</label>
       </div>
       <div class="checkbox">

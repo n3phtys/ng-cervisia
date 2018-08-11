@@ -256,6 +256,7 @@ export interface User {
     external_user_id: string;
     user_id: number;
     is_billed: boolean;
+    is_sepa: boolean;
     highlight_in_ui: boolean;
     deleted: boolean;
 }
@@ -448,7 +449,7 @@ export interface MakeFFAPurchase {
 
 
 export interface CreateFreeForAll {
-    allowed_categories:  Array<string>;
+    allowed_categories: Array<string>;
     allowed_drinks: Array<number>;
     allowed_number_total: number;
     text_message: string;

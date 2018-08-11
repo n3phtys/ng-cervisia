@@ -61,6 +61,7 @@ export interface CreateUser {
 export interface UpdateUser extends DeleteUser, CreateUser {
   external_user_id: string;
   is_billed: boolean;
+  is_sepa: boolean;
   highlight_in_ui: boolean;
 }
 
@@ -571,6 +572,7 @@ export class BackendService {
       username: user.username,
       external_user_id: user.external_user_id.trim().length > 0 ? user.external_user_id : null,
       is_billed: user.is_billed,
+      is_sepa: user.is_sepa,
       highlight_in_ui: user.highlight_in_ui,
     };
 
