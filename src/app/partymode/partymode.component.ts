@@ -28,6 +28,8 @@ export class PartymodeComponent implements OnInit {
 
   currentTime = new Date();
 
+  dateOfInit = new Date();
+
   constructor(public backend: BackendService, public modal: Modal, public tabs: TabService) {
     //clock ticks
     IntervalObservable.create(1000).subscribe(e => this.currentTime = new Date());
@@ -36,6 +38,6 @@ export class PartymodeComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.dateOfInit = new Date();
   }
 }
