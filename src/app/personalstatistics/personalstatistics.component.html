@@ -64,10 +64,10 @@
           <td>{{f.id}}</td>
           <td>{{f.created_timestamp | date:'medium'}}</td>
           <td>{{f.donor.username}}</td>
-          <td  *ngIf="f.total < 1">{{f.cents_worth_total / 100  | currency:'EUR'}}</td>
-          <td  *ngIf="f.total < 1">{{f.cents_worth_left / 100  | currency:'EUR'}}</td>
-          <td  *ngIf="f.total >= 1">{{f.total}}</td>
-          <td  *ngIf="f.total >= 1">{{f.left}}</td>
+          <td *ngIf="f.total < 1">{{f.cents_worth_total / 100 | currency:'EUR'}}</td>
+          <td *ngIf="f.total < 1">{{f.cents_worth_left / 100 | currency:'EUR'}}</td>
+          <td *ngIf="f.total >= 1">{{f.total}}</td>
+          <td *ngIf="f.total >= 1">{{f.left}}</td>
           <td>{{f.text_message}}</td>
 
         </tr>
@@ -93,12 +93,12 @@
             <td>{{ bill.timestamp_from | date }}</td>
             <td>{{ bill.timestamp_to | date }}</td>
             <td>{{ bill.comment }}</td>
-            <td  *ngIf="bill.bill_state !== 'Created'">
+            <td *ngIf="bill.bill_state !== 'Created'">
               <div>
-                <a (click)="exportBill(bill)" class="btn btn-small btn-primary">Export per Email</a>
+                <!--a (click)="exportBill(bill)" class="btn btn-small btn-primary">Export per Email</a-->
               </div>
             </td>
-            <td  *ngIf="bill.bill_state === 'Created'">
+            <td *ngIf="bill.bill_state === 'Created'">
               Nicht finalisiert
             </td>
           </tr>
@@ -113,7 +113,7 @@
 
   </div>
   <div class="col-xs-6">
-    
+
     <label>Ausgehende (offene) Spenden</label>
     <table class="table table-striped">
       <thead>
@@ -131,10 +131,10 @@
           <td>{{f.id}}</td>
           <td>{{f.created_timestamp | date:'medium'}}</td>
           <td>{{f.recipient.username}}</td>
-          <td  *ngIf="f.total < 1">{{f.cents_worth_total / 100  | currency:'EUR'}}</td>
-          <td  *ngIf="f.total < 1">{{f.cents_worth_left / 100  | currency:'EUR'}}</td>
-          <td  *ngIf="f.total >= 1">{{f.total}}</td>
-          <td  *ngIf="f.total >= 1">{{f.left}}</td>
+          <td *ngIf="f.total < 1">{{f.cents_worth_total / 100 | currency:'EUR'}}</td>
+          <td *ngIf="f.total < 1">{{f.cents_worth_left / 100 | currency:'EUR'}}</td>
+          <td *ngIf="f.total >= 1">{{f.total}}</td>
+          <td *ngIf="f.total >= 1">{{f.left}}</td>
           <td>{{f.text_message}}</td>
 
         </tr>
