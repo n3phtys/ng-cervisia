@@ -1,5 +1,5 @@
 export enum FreebyEnum {
     FFA,
-    Budget,
+    //Budget,
     Set,
 }

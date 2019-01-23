@@ -32,8 +32,8 @@
         <option *ngFor="let fbt of freebytypes | enumPipe" [value]="fbt.key">{{fbt.value}}</option>
       </select>
       <p>
-        Willst du allen etwas ausgeben, wähle "FFA". Du kannst auch alternativ einer einzelnen Person etwas ausgeben: Entweder eine
-        Anzahl an Freigetränken oder einen Freibetrag.
+        Willst du allen etwas ausgeben, wähle "FFA". Du kannst auch alternativ einer einzelnen Person eine Anzahl von
+        Getränken ausgeben.
       </p>
     </div>
 
@@ -77,8 +77,8 @@
 
     <div class="form-group">
       <label for="comment">Nachricht:</label>
-      <input type="textarea" [matKeyboard]="'de'" style="height:100px;" class="form-control" rows="5" id="comment" [(ngModel)]="message"
-        placeholder="Eine Nachricht für den Begünstigten. Gibt es einen Anlass fürs Ausgeben?" />
+      <input type="textarea" [matKeyboard]="'de'" style="height:100px;" class="form-control" rows="5" id="comment"
+        [(ngModel)]="message" placeholder="Eine Nachricht für den Begünstigten. Gibt es einen Anlass fürs Ausgeben?" />
     </div>
 
   </div>

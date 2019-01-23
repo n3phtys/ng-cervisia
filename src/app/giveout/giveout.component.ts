@@ -60,10 +60,10 @@ export class GiveoutComponent implements OnInit {
   isPossible(): boolean {
     let x = true;
     switch (+this.freebytype) {
-      case FreebyEnum.Budget: {
+      /*case FreebyEnum.Budget: {
         x = this.selectedPersonId != null && this.amountEuro > 0;
         break;
-      }
+      }*/
       case FreebyEnum.Set: {
         x = this.selectedPersonId != null && this.amountUnits > 0 && this.selectedCategories.length + this.selectedItems.length > 0;
         break;
@@ -85,7 +85,7 @@ export class GiveoutComponent implements OnInit {
   }
 
   finalize() {
-    
+
 
     this.allowed = this.isPossible();
     const doner_id: number = this.backend.viewstate.personal_detail_infos.user_id;
@@ -94,7 +94,7 @@ export class GiveoutComponent implements OnInit {
       console.log("switching: ");
       console.log(this.freebytype);
       switch (+this.freebytype) { // reason for '+': https://stackoverflow.com/a/43178834/1907778
-        case FreebyEnum.Budget: {
+        /*case FreebyEnum.Budget: {
           console.log("Budget!");
           const recipient_id: number = this.selectedPersonId.user_id;
           this.backend.createBudgetFreeby(doner_id, recipient_id, this.amountEuro * 100, this.message).subscribe(() => {
@@ -106,7 +106,7 @@ export class GiveoutComponent implements OnInit {
             this.processing = false;
           });
           break;
-        }
+        }*/
         case FreebyEnum.Set: {
           console.log("Count!");
           const recipient_id: number = this.selectedPersonId.user_id;
@@ -155,7 +155,7 @@ export class GiveoutComponent implements OnInit {
 
   static calcInputPlusRounded(oldValue: number, isPositive: boolean, amount: number, min: number, max: number): number {
     const oldMod = Math.floor(oldValue / amount);
-    const procValue = amount * (oldMod + (isPositive ? (1) : ( oldMod * amount == oldValue ? -1 : 0)));
+    const procValue = amount * (oldMod + (isPositive ? (1) : (oldMod * amount == oldValue ? -1 : 0)));
 
     console.log("oldValue = " + oldValue + " oldMod = " + oldMod + " leads to procValue = " + procValue);
 
