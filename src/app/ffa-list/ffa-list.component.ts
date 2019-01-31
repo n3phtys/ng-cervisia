@@ -15,12 +15,15 @@ export class FfaListComponent implements OnInit {
 
   constructor(public backend: BackendService, public modal: Modal) { }
 
+  counter(i: number) {
+    return new Array(i);
+  }
 
   ngOnInit() {
     this.backend.updateOpenFFAs();
   }
-    
+
   openFFAModal(f: EnrichedFFA) {
-    return this.modal.open(FfaModalComponent,  overlayConfigFactory({ freeby: f }, BSModalContext));
+    return this.modal.open(FfaModalComponent, overlayConfigFactory({ freeby: f }, BSModalContext));
   }
 }
