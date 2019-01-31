@@ -1,17 +1,12 @@
 <div *ngIf="backend.content.OpenFFAFreebies.total_count > 0" style="height:14vh;width:100%;overflow-y: auto;overflow-x: hidden;">
-
   <div>
-    <div *ngFor="let fb of backend.content.OpenFFAFreebies.results" style="height:9vh;padding:3px;margin: 3px;border: gold;border-radius: 4px;border-style: solid;border-width: 2px; overflow-x: auto;overflow-y: hidden;">
-      <div class="col-xs-3" style="color: white;  text-align:left; font-size: 2vh;overflow: hidden;overflow-wrap: break-word;">{{fb.text_message
+    <div *ngFor="let fb of backend.content.OpenFFAFreebies.results" style="height:9vh;padding:1vh;margin: 1vh;border: gold;border-radius: 4px;border-style: solid;border-width: 2px; overflow-x: auto;overflow-y: hidden;">
+      <div class="col-xs-2" style="color: white;  text-align:left; font-size: 2vh;overflow: hidden;overflow-wrap: break-word;">{{fb.text_message
         | freebyMessage}}
       </div>
-      <div class="col-xs-9" style="overflow: hidden;" (click)="openFFAModal(fb)">
-        <span *ngFor="let nmbr of counter(fb.total); let idx = index" style="margin-left: 5px;margin-top: 5px;">
-          <span *ngIf="idx < fb.left" class="glyphicon glyphicon-glass" style="color: gold;font-size: 6vh;"></span>
-          <span *ngIf="idx >= fb.left" class="glyphicon glyphicon-glass" style="color:white;font-size: 6vh;"></span>
-        </span>
+      <div class="col-xs-10" style="overflow: hidden;" (click)="openFFAModal(fb)">
+        <span *ngFor="let nmbr of counter(fb.total); let idx = index" class="glyphicon glyphicon-glass" [ngStyle]="{'color': idx < fb.left ? 'gold' : 'white', 'font-size': '6vh', 'margin-right':'5px'}"></span>
       </div>
     </div>
   </div>
-
 </div>
