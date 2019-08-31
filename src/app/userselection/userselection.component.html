@@ -1,15 +1,17 @@
 <div class="grid-container">
   <div class="grid-item">
 
-    <button (click)="tabs.goToAdministration()" class="btn btn-default" style="position:fixed; top:15px; left: 40px">
+    <button (click)="tabs.goToAdministration()" class="btn btn-secondary" style="position:fixed; top:15px; left: 40px">
       Administration
     </button>
   </div>
   <div class="grid-item" style="grid-column-start: 2;grid-column-end: 7;">
 
     <form class="navbar-form" role="search">
-      <input [matKeyboard]="'de'" class="form-control" style="margin:0px;margin-top:5px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;"
-        id="allUsersSearchBar" placeholder="Suche nach weiteren Nutzern (ohne Groß-/Kleinschreibung)" [formControl]="searchControl">
+      <input [matKeyboard]="'de'" class="form-control"
+        style="margin:0px;margin-top:5px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;"
+        id="allUsersSearchBar" placeholder="Suche nach weiteren Nutzern (ohne Groß-/Kleinschreibung)"
+        [formControl]="searchControl">
     </form>
 
   </div>
@@ -36,8 +38,9 @@
 </div>
 
 <div class="userSelectionContainer">
-  <div *ngFor="let user of backend.content.computed_users_in_list; let i = index" (click)="pressedUser($event, user)" [attr.id]="'AllUsersUserSelectionBtn_' + i"
-    [ngClass]="{'highlighted-user' : user.highlight_in_ui, 'userSelectionItem' : true, 'largerSelectionItem': backend.content.OpenFFAFreebies.total_count == 0}">
+  <div *ngFor="let user of backend.content.computed_users_in_list; let i = index" (click)="pressedUser($event, user)"
+    [attr.id]="'AllUsersUserSelectionBtn_' + i"
+    [ngClass]="{'highlighted-user' : user.highlight_in_ui, 'shadow' : true, 'userSelectionItem' : true, 'largerSelectionItem': backend.content.OpenFFAFreebies.total_count == 0}">
     {{user.username}}
   </div>
 </div>
@@ -59,17 +62,23 @@
 
 
       <div>
-        <div *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].SimplePurchase != null">
+        <div
+          *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].SimplePurchase != null">
           #{{backend.content.LastPurchases.results[0].SimplePurchase.unique_id}} - {{backend.content.LastPurchases.results[0].SimplePurchase.timestamp_epoch_millis
-          | date:'short'}} : {{backend.content.LastPurchases.results[0].SimplePurchase.consumer.username}} kaufte {{backend.content.LastPurchases.results[0].SimplePurchase.item.name}}
+          | date:'short'}} : {{backend.content.LastPurchases.results[0].SimplePurchase.consumer.username}} kaufte
+          {{backend.content.LastPurchases.results[0].SimplePurchase.item.name}}
         </div>
-        <div *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].SpecialPurchase != null">
+        <div
+          *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].SpecialPurchase != null">
           #{{backend.content.LastPurchases.results[0].SpecialPurchase.unique_id}} - {{backend.content.LastPurchases.results[0].SpecialPurchase.timestamp_epoch_millis
-          | date:'short'}} : {{backend.content.LastPurchases.results[0].SpecialPurchase.consumer.username}} kaufte {{backend.content.LastPurchases.results[0].SpecialPurchase.special_name}}
+          | date:'short'}} : {{backend.content.LastPurchases.results[0].SpecialPurchase.consumer.username}} kaufte
+          {{backend.content.LastPurchases.results[0].SpecialPurchase.special_name}}
         </div>
-        <div *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].FFAPurchase != null">
+        <div
+          *ngIf="backend.content.LastPurchases.total_count > 0 && backend.content.LastPurchases.results[0].FFAPurchase != null">
           #{{backend.content.LastPurchases.results[0].FFAPurchase.unique_id}} - {{backend.content.LastPurchases.results[0].FFAPurchase.timestamp_epoch_millis
-          | date:'short'}} : Jemand kaufte {{backend.content.LastPurchases.results[0].FFAPurchase.item.name}} (FFA Ausgabe,
+          | date:'short'}} : Jemand kaufte {{backend.content.LastPurchases.results[0].FFAPurchase.item.name}} (FFA
+          Ausgabe,
           gespendet von {{backend.content.LastPurchases.results[0].FFAPurchase.donor.username}})
         </div>
       </div>

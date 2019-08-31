@@ -1,7 +1,7 @@
 <div class="grid-container">
   <div class="grid-item">
 
-    <button (click)="tabs.goToUserSelection()" class="btn btn-default" style="position:relative; top:20%;">
+    <button (click)="tabs.goToUserSelection()" class="btn btn-secondary" style="position:relative; top:20%;">
       <span class="glyphicon glyphicon-chevron-left">
       </span> Zurück zu Übersicht
     </button>
@@ -31,7 +31,8 @@
 
     <div>
       <form class="navbar-form" role="search">
-        <input class="form-control" [matKeyboard]="'de'" style="margin:20px;padding:20px;" placeholder="Suche nach Getränk" [formControl]="searchControl">
+        <input class="form-control" [matKeyboard]="'de'" style="margin:20px;padding:20px;"
+          placeholder="Suche nach Getränk" [formControl]="searchControl">
       </form>
     </div>
     <div *ngFor="let category of backend.content.all_items_per_category">
@@ -81,7 +82,8 @@
 
       <div style="border: 1px solid black;">
         <label style="font-size: 16pt">Warenkorb:</label>
-        <div *ngFor="let item of shoppingCart; let idx = index" class="btn btn-info shoppingCartBtn" (click)="onShoppingCarElementPressed(item, idx, $event)">
+        <div *ngFor="let item of shoppingCart; let idx = index" class="btn btn-info shoppingCartBtn"
+          (click)="onShoppingCarElementPressed(item, idx, $event)">
 
           <div class="col-xs-1 nowrap">
             {{item.count}}

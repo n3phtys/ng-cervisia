@@ -1,7 +1,7 @@
 <div class="grid-container">
   <div class="grid-item">
 
-    <button (click)="tabs.goToUserSelection()" class="btn btn-default" style="position:relative; top:20%;">
+    <button (click)="tabs.goToUserSelection()" class="btn btn-secondary" style="position:relative; top:20%;">
       <span class="glyphicon glyphicon-chevron-left">
       </span> Zurück zu Übersicht
     </button>
@@ -12,7 +12,8 @@
     </div>
   </div>
   <div class="grid-item" style="grid-column-start: 7;">
-    <button class="btn btn-default" style="position:relative; top:20%;" (click)="tabs.goToAdministrationWithoutPassword()">
+    <button class="btn btn-secondary" style="position:relative; top:20%;"
+      (click)="tabs.goToAdministrationWithoutPassword()">
       Zurück zu Hauptadministration
     </button>
   </div>
@@ -35,7 +36,8 @@
 
   <div *ngIf="detailUser == null">
     <form class="navbar-form" role="search">
-      <input [matKeyboard]="'de'" class="form-control" style="margin:20px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;"
+      <input [matKeyboard]="'de'" class="form-control"
+        style="margin:20px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;"
         placeholder="Suche nach Benutzer" [formControl]="searchControl">
     </form>
 
@@ -75,7 +77,8 @@
     </div>
 
 
-    <app-paginator [parameters]="backend.content.AllUsers" [pageSizeOverride]="pagesize" (onPageChange)="pageNavigation($event)"></app-paginator>
+    <app-paginator [parameters]="backend.content.AllUsers" [pageSizeOverride]="pagesize"
+      (onPageChange)="pageNavigation($event)"></app-paginator>
 
 
   </div>
@@ -89,20 +92,25 @@
       </div>
       <div class="form-group">
         <label for="external_user_id">SEWOBE Identifikationsnummer:</label>
-        <input [matKeyboard]="'de'" [(ngModel)]="detailUser.external_user_id" class="form-control" id="external_user_id">
+        <input [matKeyboard]="'de'" [(ngModel)]="detailUser.external_user_id" class="form-control"
+          id="external_user_id">
       </div>
       <div class="checkbox">
         <label>
-          <input type="checkbox" [checked]="detailUser.is_sepa" (change)="detailUser.is_sepa = !detailUser.is_sepa" /> SEPA Lastschrift Mandat gegeben (wenn nicht angehakt, wird nur eine Rechnung gestellt, aber nichts eingezogen)</label>
+          <input type="checkbox" [checked]="detailUser.is_sepa" (change)="detailUser.is_sepa = !detailUser.is_sepa" />
+          SEPA Lastschrift Mandat gegeben (wenn nicht angehakt, wird nur eine Rechnung gestellt, aber nichts
+          eingezogen)</label>
       </div>
       <div class="checkbox">
         <label>
-          <input type="checkbox" [checked]="detailUser.is_billed" (change)="detailUser.is_billed = !detailUser.is_billed" /> Soll eine Rechnung erhalten</label>
+          <input type="checkbox" [checked]="detailUser.is_billed"
+            (change)="detailUser.is_billed = !detailUser.is_billed" /> Soll eine Rechnung erhalten</label>
       </div>
       <div class="checkbox">
         <label>
-          <input type="checkbox" [checked]="detailUser.highlight_in_ui" (change)="detailUser.highlight_in_ui = !detailUser.highlight_in_ui"
-          /> in der Benutzerliste anpinnen und herausstellen</label>
+          <input type="checkbox" [checked]="detailUser.highlight_in_ui"
+            (change)="detailUser.highlight_in_ui = !detailUser.highlight_in_ui" /> in der Benutzerliste anpinnen und
+          herausstellen</label>
       </div>
     </div>
 

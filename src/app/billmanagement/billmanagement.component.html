@@ -1,7 +1,7 @@
 <div class="grid-container">
   <div class="grid-item">
 
-    <button (click)="tabs.goToUserSelection()" class="btn btn-default" style="position:relative; top:20%;">
+    <button (click)="tabs.goToUserSelection()" class="btn btn-secondary" style="position:relative; top:20%;">
       <span class="glyphicon glyphicon-chevron-left">
       </span> Zurück zu Übersicht
     </button>
@@ -12,7 +12,8 @@
     </div>
   </div>
   <div class="grid-item" style="grid-column-start: 7;">
-    <button class="btn btn-default" style="position:relative; top:20%;" (click)="tabs.goToAdministrationWithoutPassword()">
+    <button class="btn btn-secondary" style="position:relative; top:20%;"
+      (click)="tabs.goToAdministrationWithoutPassword()">
       Zurück zu Hauptadministration
     </button>
   </div>
@@ -21,7 +22,8 @@
 
 
 
-<app-timespan-filter [timespan]="backend.viewstate.bills.count_pars" (onTimespanFilterChange)="timeFilterChange($event)"></app-timespan-filter>
+<app-timespan-filter [timespan]="backend.viewstate.bills.count_pars"
+  (onTimespanFilterChange)="timeFilterChange($event)"></app-timespan-filter>
 
 <div class="container">
   <table class="table table-striped table-condensed">
@@ -57,7 +59,8 @@
   </table>
 </div>
 
-<app-paginator [parameters]="backend.content.Bills" [pageSizeOverride]="pagesize" (onPageChange)="pageNavigation($event)"></app-paginator>
+<app-paginator [parameters]="backend.content.Bills" [pageSizeOverride]="pagesize"
+  (onPageChange)="pageNavigation($event)"></app-paginator>
 
 <div class="container">
 
@@ -67,19 +70,23 @@
     <div class="form-inline">
       <div class="form-group">
         <label>Datum von (ältester Kauf):</label>
-        <input type="datetime-local" class="form-control" [ngModel]="dt1 | date:'yyyy-MM-ddTHH:mm'" (ngModelChange)="datify1($event)">
+        <input type="datetime-local" class="form-control" [ngModel]="dt1 | date:'yyyy-MM-ddTHH:mm'"
+          (ngModelChange)="datify1($event)">
 
       </div>
       <div class="form-group" style="margin-left: 20px;">
         <label>Datum bis (neuester Kauf):</label>
 
-        <input type="datetime-local" [ngModel]="dt2 | date:'yyyy-MM-ddTHH:mm'" class="form-control" (ngModelChange)="datify2($event)">
+        <input type="datetime-local" [ngModel]="dt2 | date:'yyyy-MM-ddTHH:mm'" class="form-control"
+          (ngModelChange)="datify2($event)">
       </div>
     </div>
     <div class="form-group">
       <label for="comment">Kommentar zu Abrechnung:</label>
-      <textarea [matKeyboard]="'de'" class="form-control" ref-textarea [(ngModel)]="commentField" rows="3" id="comment"></textarea>
-      <button (click)="createBill()" style="margin: 15px;" class="btn btn-success" [disabled]="this.commentField.trim().length == 0">Erstelle
+      <textarea [matKeyboard]="'de'" class="form-control" ref-textarea [(ngModel)]="commentField" rows="3"
+        id="comment"></textarea>
+      <button (click)="createBill()" style="margin: 15px;" class="btn btn-success"
+        [disabled]="this.commentField.trim().length == 0">Erstelle
         neue Abrechnung</button>
     </div>
 

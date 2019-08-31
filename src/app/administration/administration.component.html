@@ -1,7 +1,7 @@
 <div class="grid-container">
   <div class="grid-item">
 
-    <button (click)="tabs.goToUserSelection()" class="btn btn-default" style="position:relative; top:20%;">
+    <button (click)="tabs.goToUserSelection()" class="btn btn-secondary" style="position:relative; top:20%;">
       <span class="glyphicon glyphicon-chevron-left">
       </span> Zurück zu Übersicht
     </button>
@@ -21,22 +21,27 @@
   <div class="list-group">
     <a (click)="tabs.goToUserManagement()" class="list-group-item">
       <h4 class="list-group-item-heading">Benutzer pflegen</h4>
-      <p class="list-group-item-text">Klicke hier um eine Übersicht über alle Benutzer im System aufzurufen und diese zu editieren. Du kannst hier auch neue
-        Benutzer anlegen. Du solltest auch für neue Mitglieder die zugehörige SEWOBE-Mitgliedsnummer mit einpflegen, da diese
+      <p class="list-group-item-text">Klicke hier um eine Übersicht über alle Benutzer im System aufzurufen und diese zu
+        editieren. Du kannst hier auch neue
+        Benutzer anlegen. Du solltest auch für neue Mitglieder die zugehörige SEWOBE-Mitgliedsnummer mit einpflegen, da
+        diese
         spätestens bei der nächsten Abrechnung benötigt wird.</p>
     </a>
     <a (click)="tabs.goToItemManagement()" class="list-group-item">
       <h4 class="list-group-item-heading">Getränke pflegen</h4>
-      <p class="list-group-item-text">Klicke hier um die Getränke zu verwalten, oder neue anzulegen. Getränke sind in Kategorien strukturiert, die du ebenfalls
+      <p class="list-group-item-text">Klicke hier um die Getränke zu verwalten, oder neue anzulegen. Getränke sind in
+        Kategorien strukturiert, die du ebenfalls
         anlegen kannst.</p>
     </a>
     <a (click)="tabs.goToBillManagement()" class="list-group-item">
       <h4 class="list-group-item-heading">Abrechnungen anlegen</h4>
-      <p class="list-group-item-text">Unter diesem Punkt findest du die Möglichkeit, eine neue Abrechnung zu erstellen. Abrechnungen haben drei Schritte:
-        </p>
+      <p class="list-group-item-text">Unter diesem Punkt findest du die Möglichkeit, eine neue Abrechnung zu erstellen.
+        Abrechnungen haben drei Schritte:
+      </p>
       <ol>
         <li>Anlegen der Abrechnung mit dem Datumsintervall und einem Kommentar</li>
-        <li>Finalisieren der Abrechnung - hierbei benötigst du die SEWOBE-Mitgliedsnummern aller Beteiligten und musst ggf. Spezialkäufe
+        <li>Finalisieren der Abrechnung - hierbei benötigst du die SEWOBE-Mitgliedsnummern aller Beteiligten und musst
+          ggf. Spezialkäufe
           mit einem Preis versehen</li>
         <li>Export per Email-Versand direkt aus Cervisia</li>
       </ol>
@@ -45,7 +50,8 @@
 
     <a (click)="tabs.goToPartyMode()" class="list-group-item">
       <h4 class="list-group-item-heading">Partymodus aktivieren</h4>
-      <p class="list-group-item-text">Hiermit wird der Partymodus aktiviert. Es kann nicht mehr abgestrichen werden in diesem Fall. Nur der Kantinier kann
+      <p class="list-group-item-text">Hiermit wird der Partymodus aktiviert. Es kann nicht mehr abgestrichen werden in
+        diesem Fall. Nur der Kantinier kann
         diesen Modus wieder verlassen.</p>
     </a>
 

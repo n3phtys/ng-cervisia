@@ -29,7 +29,7 @@
     "@ngx-material-keyboard/core": "^0.1.0",
     "@types/bootstrap": "^3.3.36",
     "@types/jquery": "^3.2.16",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.0.0",
     "chart.js": "^2.7.2",
     "classlist.js": "1.1.20150312",
     "core-js": "^2.5.3",

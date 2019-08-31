@@ -16,13 +16,14 @@
 
 
     <form class="navbar-form" role="search">
-      <input class="form-control" [matKeyboard]="'de'" [(ngModel)]="inputContent" [ngModelOptions]="{standalone: true}" style="margin:0px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;"
+      <input class="form-control" [matKeyboard]="'de'" [(ngModel)]="inputContent" [ngModelOptions]="{standalone: true}"
+        style="margin:0px;padding:20px;width:80%;text-align: center;margin-left: auto;margin-right: auto;"
         placeholder="Ihre Eingabe">
     </form>
 
   </div>
   <div class="row custom-modal-footer" style="margin-bottom: 10px;">
-    <button (click)="onCancel()" type="button" class="btn btn-default btn-lg">
+    <button (click)="onCancel()" type="button" class="btn btn-secondary btn-lg">
       Abbrechen
     </button>
     <button (click)="onOkay()" type="button" class="btn btn-primary btn-lg">
