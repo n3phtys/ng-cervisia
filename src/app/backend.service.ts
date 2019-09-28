@@ -1,7 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
 // Import HttpClient from @angular/common/http
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable, Observer } from 'rxjs/Rx';
 import 'rxjs/add/operator/debounceTime';
@@ -181,6 +181,8 @@ export class BackendService {
   checkPasswordAgainstServer(password: string): Observable<boolean> {
     return this.http.post<boolean>(post_endpoint_check_password, password);
   }
+
+  billQrCode: String = "";
 
   viewstate: ParametersAll = {
     top_users: { n: AllUserSelectionPageSize },
@@ -378,6 +380,21 @@ export class BackendService {
   updateItemlist(searchterm: string) {
     this.viewstate.all_items.count_pars.searchterm = searchterm;
     this.refreshAllItems();
+  }
+
+
+  updateBillQrCode(bill: Bill, limitedToUser: number | null): Observable<string> {
+    const queryjson = (JSON.stringify({ 'from': '' + bill.timestamp_from, 'to': '' + bill.timestamp_to, 'sewobeform': true, 'limitedtouser': 'none' }));
+    this.billQrCode = null;
+    console.log('querying for jwt');
+    const limituser: string = (limitedToUser == null) ? 'none' : '' + limitedToUser;
+    let params = new HttpParams().set("from", '' + bill.timestamp_from).set("to", '' + bill.timestamp_to).set("sewobeform", '' + true).set("limitedtouser", limituser); //Create new HttpParams
+    return this.http.get("api/bill/download/requestjwt", { params: params, responseType: 'text' }).map(response => {
+      console.log("Response came:");
+      console.log(response);
+      this.billQrCode = response as string;
+      return response as string;
+    });
   }
 
 

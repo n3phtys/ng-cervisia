@@ -1,0 +1,40 @@
+.qmChild {
+	flex: 1 1 45%;
+    box-sizing: border-box;
+    background: white;
+    width: 10%;
+    height: 15%;
+    margin: 2%;
+}
+
+.qmButton {
+    text-align: center;
+    vertical-align: center;
+    font-size: 3vh;
+    word-wrap: break-word;
+    font-weight: bold;
+    line-height: 15vh;
+}
+
+.qmChild:first-child {
+    background: skyblue;
+}
+.qmChild:last-child {
+    background: skyblue;
+}
+
+
+.qmContainer {
+    display: flex;
+    columns: 2;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    list-style-type: none;
+    width: 100%;
+    min-height: 100%;
+    background-color: white;
+}
+

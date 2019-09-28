@@ -52,6 +52,7 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
 import { FreebyMessagePipe } from './freeby-message.pipe';
 import { PrompterComponent } from './prompter/prompter.component';
 import { PartymodeComponent } from './partymode/partymode.component';
+import { BillQrCodeComponent } from './billqrcode/billqrcode.component';
 
 
 registerLocaleData(localeDe);
@@ -68,6 +69,7 @@ registerLocaleData(localeDe);
   declarations: [
     AppComponent,
     QuickmenuComponent,
+    BillQrCodeComponent,
     UserselectionComponent,
     FullPurchaseComponent,
     GiveoutComponent,
@@ -117,7 +119,7 @@ registerLocaleData(localeDe);
   // IMPORTANT:
   // Since 'AdditionCalculateWindow' is never explicitly used (in a template)
   // we must tell angular about it.
-  entryComponents: [QuickmenuComponent, PrompterComponent, FfaModalComponent, BillDetailModalComponent]
+  entryComponents: [QuickmenuComponent, BillQrCodeComponent, PrompterComponent, FfaModalComponent, BillDetailModalComponent]
 })
 export class AppModule {
 

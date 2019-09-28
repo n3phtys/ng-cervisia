@@ -42,6 +42,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 
 
 import { IKeyboardLayouts, keyboardLayouts, MAT_KEYBOARD_LAYOUTS, MatKeyboardModule } from '@ngx-material-keyboard/core';
+import { BillQrCodeComponent } from './billqrcode/billqrcode.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -69,6 +70,7 @@ describe('AppComponent', () => {
         AppComponent,
         FreebyMessagePipe,
         UserselectionComponent,
+        BillQrCodeComponent,
         QuickmenuComponent,
         SingleUserSelectionComponent,
         MultiItemSelectionComponent,

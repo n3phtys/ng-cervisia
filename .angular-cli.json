@@ -23,7 +23,10 @@
         "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css",
         "styles.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/qrcode-generator/qrcode.js",
+        "assets/js/qrcode.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

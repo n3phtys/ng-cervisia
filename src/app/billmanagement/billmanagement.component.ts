@@ -9,6 +9,7 @@ import { ParametersPurchaseLogGlobalCount, Bill, ExportBill } from '../backend-t
 import { BillDetailModalComponent } from '../bill-detail-modal/bill-detail-modal.component';
 import { BillManagementPageSize } from '../constants.layouts';
 import { promptModal } from '../password-check.service';
+import { BillQrCodeComponent } from '../billqrcode/billqrcode.component';
 
 @Component({
   selector: 'app-billmanagement',
@@ -85,6 +86,10 @@ export class BillmanagementComponent implements OnInit {
     this.backend.refreshDetailedBill();
 
     return this.modal.open(BillDetailModalComponent, overlayConfigFactory({ comment: bill.comment, timestamp_from: bill.timestamp_from, timestamp_to: bill.timestamp_to, exclude_user_ids: bill.users_that_will_not_be_billed }, BSModalContext));
+  }
+
+  openBillQrCode(bill: Bill) {
+    return this.modal.open(BillQrCodeComponent, overlayConfigFactory({ bill: bill }, BSModalContext));
   }
 
   datify1(event): void {
