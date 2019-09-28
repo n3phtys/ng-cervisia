@@ -383,12 +383,16 @@ export class BackendService {
   }
 
 
-  updateBillQrCode(bill: Bill, limitedToUser: number | null): Observable<string> {
-    const queryjson = (JSON.stringify({ 'from': '' + bill.timestamp_from, 'to': '' + bill.timestamp_to, 'sewobeform': true, 'limitedtouser': 'none' }));
+  updateBillQrCode(bill: Bill, limitedToUser: number | null, useSewobeForm: boolean): Observable<string> {
+    console.log("sending:");
+    console.log(bill);
+    console.log(limitedToUser);
     this.billQrCode = null;
     console.log('querying for jwt');
     const limituser: string = (limitedToUser == null) ? 'none' : '' + limitedToUser;
-    let params = new HttpParams().set("from", '' + bill.timestamp_from).set("to", '' + bill.timestamp_to).set("sewobeform", '' + true).set("limitedtouser", limituser); //Create new HttpParams
+    console.log(limituser);
+    let params = new HttpParams().set("from", '' + bill.timestamp_from).set("to", '' + bill.timestamp_to).set("sewobeform", '' + useSewobeForm).set("limitedtouser", limituser); //Create new HttpParams
+    console.log(params);
     return this.http.get("api/bill/download/requestjwt", { params: params, responseType: 'text' }).map(response => {
       console.log("Response came:");
       console.log(response);

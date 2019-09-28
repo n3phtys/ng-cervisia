@@ -9,6 +9,8 @@ import { User, Item, Bill } from '../backend-types';
 
 export class CustomQrCodeModalContext extends BSModalContext {
   public bill: Bill;
+  public limitedToUser: number | null;
+  public useSewobeForm: boolean;
 }
 
 //defined in /assets/js/qrcode.js
@@ -30,7 +32,7 @@ export class BillQrCodeComponent implements CloseGuard, ModalComponent<CustomQrC
     this.context.dialogClass = 'modal-dialog modal-lg';
     console.log(this.context);
     dialog.setCloseGuard(this);
-    this.backend.updateBillQrCode(this.context.bill, null).subscribe(payload => {
+    this.backend.updateBillQrCode(this.context.bill, this.context.limitedToUser, this.context.useSewobeForm).subscribe(payload => {
       console.log("received final: " + payload);
       printGenerateQrCode('qrCodePlaceHolder', payload);
       generateQrCode('qrCodePlaceHolder', payload);

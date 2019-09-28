@@ -25,24 +25,29 @@
   <div class="col-xs-6">
     <label>Persönliche Einkäufe seit letzter Abrechnung</label>
 
-    <app-timespan-filter [timespan]="backend.viewstate.personal_log.count_pars" (onTimespanFilterChange)="timeFilterChange($event)"></app-timespan-filter>
+    <app-timespan-filter [timespan]="backend.viewstate.personal_log.count_pars"
+      (onTimespanFilterChange)="timeFilterChange($event)"></app-timespan-filter>
 
 
 
     <div *ngFor="let purchase of backend.content.PurchaseLogPersonal.results" class="purchaseLogLine">
       <div *ngIf="purchase.SimplePurchase != null">
-        #{{purchase.SimplePurchase.unique_id}} on {{purchase.SimplePurchase.timestamp_epoch_millis | date:'short'}} : {{purchase.SimplePurchase.item.name}}
+        #{{purchase.SimplePurchase.unique_id}} on {{purchase.SimplePurchase.timestamp_epoch_millis | date:'short'}} :
+        {{purchase.SimplePurchase.item.name}}
       </div>
       <div *ngIf="purchase.SpecialPurchase != null">
-        #{{purchase.SpecialPurchase.unique_id}} on {{purchase.SpecialPurchase.timestamp_epoch_millis | date:'short'}} : {{purchase.SpecialPurchase.special_name}}
+        #{{purchase.SpecialPurchase.unique_id}} on {{purchase.SpecialPurchase.timestamp_epoch_millis | date:'short'}} :
+        {{purchase.SpecialPurchase.special_name}}
       </div>
       <div *ngIf="purchase.FFAPurchase != null">
-        #{{purchase.FFAPurchase.unique_id}} on {{purchase.FFAPurchase.timestamp_epoch_millis | date:'short'}} : FFA-Ausgabe = {{purchase.FFAPurchase.item.name}}
+        #{{purchase.FFAPurchase.unique_id}} on {{purchase.FFAPurchase.timestamp_epoch_millis | date:'short'}} :
+        FFA-Ausgabe = {{purchase.FFAPurchase.item.name}}
       </div>
 
     </div>
 
-    <app-paginator [parameters]="backend.content.PurchaseLogPersonal" [pageSizeOverride]="pageSizePersonalLog" (onPageChange)="pageNavigationForPersonalLog($event)"></app-paginator>
+    <app-paginator [parameters]="backend.content.PurchaseLogPersonal" [pageSizeOverride]="pageSizePersonalLog"
+      (onPageChange)="pageNavigationForPersonalLog($event)"></app-paginator>
 
 
   </div>
@@ -85,7 +90,7 @@
             <th style="min-width: 60px;">Von</th>
             <th style="min-width: 60px;">Bis</th>
             <th style="min-width: 80px;">Kommentar des Kantinier</th>
-            <th style="width:50px;"> </th>
+            <th style="width:30px;"> Download </th>
           </tr>
         </thead>
         <tbody>
@@ -96,6 +101,7 @@
             <td *ngIf="bill.bill_state !== 'Created'">
               <div>
                 <!--a (click)="exportBill(bill)" class="btn btn-small btn-primary">Export per Email</a-->
+                <a (click)="openBillQrCode(bill)" class="btn btn-small btn-success">QR Code</a>
               </div>
             </td>
             <td *ngIf="bill.bill_state === 'Created'">
@@ -106,7 +112,8 @@
       </table>
     </div>
     <div>
-      <app-paginator [parameters]="backend.content.Bills" [pageSizeOverride]="pageSizePersonalBill" (onPageChange)="pageNavigationBills($event)"></app-paginator>
+      <app-paginator [parameters]="backend.content.Bills" [pageSizeOverride]="pageSizePersonalBill"
+        (onPageChange)="pageNavigationBills($event)"></app-paginator>
     </div>
 
 

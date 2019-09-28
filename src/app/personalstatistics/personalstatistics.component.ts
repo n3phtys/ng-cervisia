@@ -6,6 +6,8 @@ import { PersonalLogPageSize, PersonalLogBillPageSize } from '../constants.layou
 import { ParametersPurchaseLogGlobalCount, Bill, ExportBill } from '../backend-types';
 import { Modal, BSModalContext } from 'ngx-modialog/plugins/bootstrap';
 import { promptModal } from '../password-check.service';
+import { BillQrCodeComponent } from '../billqrcode/billqrcode.component';
+import { overlayConfigFactory } from 'ngx-modialog';
 
 @Component({
   selector: 'app-personalstatistics',
@@ -56,6 +58,10 @@ export class PersonalstatisticsComponent implements OnInit {
     });
   }
 
+
+  openBillQrCode(bill: Bill) {
+    return this.modal.open(BillQrCodeComponent, overlayConfigFactory({ bill: bill, limitedToUser: this.backend.viewstate.bills.count_pars.scope_user_id, useSewobeForm: false }, BSModalContext));
+  }
 
   timeFilterChange(filter: ParametersPurchaseLogGlobalCount) {
     this.backend.viewstate.personal_log.count_pars.millis_start = filter.millis_start;

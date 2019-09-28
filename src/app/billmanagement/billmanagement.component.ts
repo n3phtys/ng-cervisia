@@ -89,7 +89,7 @@ export class BillmanagementComponent implements OnInit {
   }
 
   openBillQrCode(bill: Bill) {
-    return this.modal.open(BillQrCodeComponent, overlayConfigFactory({ bill: bill }, BSModalContext));
+    return this.modal.open(BillQrCodeComponent, overlayConfigFactory({ bill: bill, limitedToUser: null, useSewobeForm: true }, BSModalContext));
   }
 
   datify1(event): void {
