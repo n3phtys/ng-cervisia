@@ -60,7 +60,7 @@ export class PersonalstatisticsComponent implements OnInit {
 
 
   openBillQrCode(bill: Bill) {
-    return this.modal.open(BillQrCodeComponent, overlayConfigFactory({ bill: bill, limitedToUser: this.backend.viewstate.bills.count_pars.scope_user_id, useSewobeForm: false }, BSModalContext));
+    return this.modal.open(BillQrCodeComponent, overlayConfigFactory({ bill: bill, limitedToUser: this.backend.viewstate.bills.count_pars.scope_user_id, useSewobeForm: true }, BSModalContext));
   }
 
   timeFilterChange(filter: ParametersPurchaseLogGlobalCount) {
