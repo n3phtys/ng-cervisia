@@ -1,8 +1,8 @@
 <div>
 
-<div class="grid-container">
+  <div class="grid-container">
     <div class="grid-item">
-  
+
       <button (click)="tabs.goToUserSelection()" class="btn btn-default" style="position:relative; top:20%;">
         <span class="glyphicon glyphicon-chevron-left">
         </span> Zurück zu Übersicht
@@ -14,49 +14,80 @@
       </div>
     </div>
     <div class="grid-item" style="grid-column-start: 7;">
-  
+      <button type="button" class="btn btn-info" (click)="show_log = !show_log"
+        style="position:relative; top:20%;"><span class="glyphicon glyphicon-list-alt">
+        </span>Programm Changelog</button>
     </div>
   </div>
 
+  <div *ngIf="show_log">
+    <div class="card card-body">
+      <pre>{{GIT_LOG}}</pre>
+    </div>
+    <button type="button" class="btn btn-info" (click)="show_log = false"
+      style="position:fixed; right: 20px; bottom: 20px;"><span class="glyphicon glyphicon-list-alt">
+      </span>Changelog schließen</button>
+  </div>
 
 
-<app-timespan-filter [timespan]="backend.viewstate.global_log.count_pars"  (onTimespanFilterChange)="timeFilterChange($event)"></app-timespan-filter>
+  <app-timespan-filter [timespan]="backend.viewstate.global_log.count_pars"
+    (onTimespanFilterChange)="timeFilterChange($event)"></app-timespan-filter>
 
 
-<label>
-  Einkäufe können rückgängig gemacht werden, wenn sie nach {{breakpoint | date:'short'}} durchgeführt wurden. Im Falle älterer Einträge, frage bitte den Kantinier, diese zu entfernen.
-</label>
+  <label>
+    Einkäufe können rückgängig gemacht werden, wenn sie nach {{breakpoint | date:'short'}} durchgeführt wurden. Im Falle
+    älterer Einträge, frage bitte den Kantinier, diese zu entfernen.
+  </label>
 
-<!--*ngIf="backend.content.PurchaseLogGlobal !== null"-->
+  <!--*ngIf="backend.content.PurchaseLogGlobal !== null"-->
   <div *ngFor="let purchase of backend.content.PurchaseLogGlobal.results" class="purchaseLogLine">
-    
-    
-    
-    
+
+
+
+
     <div *ngIf="purchase.SimplePurchase != null">
-      #{{purchase.SimplePurchase.unique_id}} on date {{purchase.SimplePurchase.timestamp_epoch_millis | date:'short'}} : {{purchase.SimplePurchase.consumer.username}} bought {{purchase.SimplePurchase.item.name}}
-      <a (click)="undoPurchase(purchase.SimplePurchase.unique_id, purchase.SimplePurchase.timestamp_epoch_millis)"  class="btn btn-danger" *ngIf="purchase.SimplePurchase.timestamp_epoch_millis >= breakpoint">Rückgängig machen</a>
-      <a (click)="undoPurchaseByAdmin(purchase.SimplePurchase.unique_id, purchase.SimplePurchase.timestamp_epoch_millis)" class="btn btn-default" *ngIf="breakpoint >= purchase.SimplePurchase.timestamp_epoch_millis">Löschen (nur als Kantinier)</a>
-  </div>
-  <div *ngIf="purchase.SpecialPurchase != null">
-      #{{purchase.SpecialPurchase.unique_id}} on date {{purchase.SpecialPurchase.timestamp_epoch_millis | date:'short'}} : {{purchase.SpecialPurchase.consumer.username}} bought {{purchase.SpecialPurchase.special_name}}
-      <a (click)="undoPurchase(purchase.SpecialPurchase.unique_id, purchase.SpecialPurchase.timestamp_epoch_millis)"  class="btn btn-danger" *ngIf="purchase.SpecialPurchase.timestamp_epoch_millis >= breakpoint">Rückgängig machen</a>
-      <a (click)="undoPurchaseByAdmin(purchase.SpecialPurchase.unique_id, purchase.SpecialPurchase.timestamp_epoch_millis)" class="btn btn-default" *ngIf="breakpoint >= purchase.SpecialPurchase.timestamp_epoch_millis">Löschen (nur als Kantinier)</a>
-  </div>
-  <div *ngIf="purchase.FFAPurchase != null">
-      #{{purchase.FFAPurchase.unique_id}} on date {{purchase.FFAPurchase.timestamp_epoch_millis | date:'short'}} : Someone bought {{purchase.FFAPurchase.item.name}} (FFA Purchase donated by {{purchase.FFAPurchase.donor.username}})
-      <a (click)="undoPurchase(purchase.FFAPurchase.unique_id, purchase.FFAPurchase.timestamp_epoch_millis)"  class="btn btn-danger" *ngIf="purchase.FFAPurchase.timestamp_epoch_millis >= breakpoint">Rückgängig machen</a>
-      <a (click)="undoPurchaseByAdmin(purchase.FFAPurchase.unique_id, purchase.FFAPurchase.timestamp_epoch_millis)" class="btn btn-default" *ngIf="breakpoint >= purchase.FFAPurchase.timestamp_epoch_millis">Löschen (nur als Kantinier)</a>
-  </div>
-    
+      #{{purchase.SimplePurchase.unique_id}} on date {{purchase.SimplePurchase.timestamp_epoch_millis | date:'short'}} :
+      {{purchase.SimplePurchase.consumer.username}} bought {{purchase.SimplePurchase.item.name}}
+      <a (click)="undoPurchase(purchase.SimplePurchase.unique_id, purchase.SimplePurchase.timestamp_epoch_millis)"
+        class="btn btn-danger" *ngIf="purchase.SimplePurchase.timestamp_epoch_millis >= breakpoint">Rückgängig
+        machen</a>
+      <a (click)="undoPurchaseByAdmin(purchase.SimplePurchase.unique_id, purchase.SimplePurchase.timestamp_epoch_millis)"
+        class="btn btn-default" *ngIf="breakpoint >= purchase.SimplePurchase.timestamp_epoch_millis">Löschen (nur als
+        Kantinier)</a>
+    </div>
+    <div *ngIf="purchase.SpecialPurchase != null">
+      #{{purchase.SpecialPurchase.unique_id}} on date {{purchase.SpecialPurchase.timestamp_epoch_millis | date:'short'}}
+      : {{purchase.SpecialPurchase.consumer.username}} bought {{purchase.SpecialPurchase.special_name}}
+      <a (click)="undoPurchase(purchase.SpecialPurchase.unique_id, purchase.SpecialPurchase.timestamp_epoch_millis)"
+        class="btn btn-danger" *ngIf="purchase.SpecialPurchase.timestamp_epoch_millis >= breakpoint">Rückgängig
+        machen</a>
+      <a (click)="undoPurchaseByAdmin(purchase.SpecialPurchase.unique_id, purchase.SpecialPurchase.timestamp_epoch_millis)"
+        class="btn btn-default" *ngIf="breakpoint >= purchase.SpecialPurchase.timestamp_epoch_millis">Löschen (nur als
+        Kantinier)</a>
+    </div>
+    <div *ngIf="purchase.FFAPurchase != null">
+      #{{purchase.FFAPurchase.unique_id}} on date {{purchase.FFAPurchase.timestamp_epoch_millis | date:'short'}} :
+      Someone bought {{purchase.FFAPurchase.item.name}} (FFA Purchase donated by
+      {{purchase.FFAPurchase.donor.username}})
+      <a (click)="undoPurchase(purchase.FFAPurchase.unique_id, purchase.FFAPurchase.timestamp_epoch_millis)"
+        class="btn btn-danger" *ngIf="purchase.FFAPurchase.timestamp_epoch_millis >= breakpoint">Rückgängig machen</a>
+      <a (click)="undoPurchaseByAdmin(purchase.FFAPurchase.unique_id, purchase.FFAPurchase.timestamp_epoch_millis)"
+        class="btn btn-default" *ngIf="breakpoint >= purchase.FFAPurchase.timestamp_epoch_millis">Löschen (nur als
+        Kantinier)</a>
+    </div>
+
   </div>
 
 
-  <app-paginator [parameters]="backend.content.PurchaseLogGlobal" [pageSizeOverride]="pageSize" (onPageChange)="pageNavigation($event)"></app-paginator>
+  <app-paginator [parameters]="backend.content.PurchaseLogGlobal" [pageSizeOverride]="pageSize"
+    (onPageChange)="pageNavigation($event)"></app-paginator>
 
 
-  <div style="position: fixed;bottom: 15px;">
-  <!--a (click)="alert('Noch nicht implementiert, sorry')" -->Du brauchst einen älteren Eintrag oder hast deinen nicht finden können? Bereits abgerechnete Einkäufe stehen hier nicht, sondern sind nur sichtbar in der Übersicht der jeweiligen Abrechnung.<!--/a-->
+  <div style="position: static;bottom: 15px;">
+    <!--a (click)="alert('Noch nicht implementiert, sorry')" -->Du brauchst einen älteren Eintrag oder hast deinen nicht
+    finden können? Bereits abgerechnete Einkäufe stehen hier nicht, sondern sind nur sichtbar in der Übersicht der
+    jeweiligen Abrechnung.
+    <!--/a-->
   </div>
-  
+
 </div>
